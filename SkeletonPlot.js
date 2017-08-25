@@ -762,20 +762,8 @@ function removeMark(e){
 
 
 
-/*Render Graph Paper*/
 
 
 
-/*	TODO:
-	- Create Core Strip
-	- Core strip mag
-	- Add Answer and hint
-	- Enable functionality for drawing marks on master
-	- Add Extra markings on master graph paper
-	- Enable Master visibility functionality
-	- Draw false and absents	
-	- Enable sensitivity / ring number functionality
-	- Put in actual algorithms
-	- Add browser status*/
 
 
