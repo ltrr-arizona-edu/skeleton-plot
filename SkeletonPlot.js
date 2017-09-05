@@ -1,8 +1,38 @@
 
+function positionControls(){
+	var panel = document.getElementById("panel");
+	var anomaly = document.getElementById("anomalyControls");
+	var magnification = document.getElementById("magnificationControls");
+	var mouseAction = document.getElementById("mouseActionControls");
+	var showHide = document.getElementById("showHideControls");
+	var coreSettings = document.getElementById("coreSettingsControls");
 
+	
+	panel.width = 600;
+	panel.height = 120;
+	panel.style.width = panel.width+"px";
+	panel.style.height = panel.height+"px";
+
+	anomaly.style.width = 85/540*panel.width+"px";
+	anomaly.style.left = 0 + "px";
+	magnification.style.width = 110/540*panel.width+"px";
+	magnification.style.left = parseInt(anomaly.style.left) + parseInt(anomaly.style.width)+1+"px";
+	mouseAction.style.width = 130/540*panel.width+"px";
+	mouseAction.style.left = parseInt(magnification.style.left) + parseInt(magnification.style.width)+1 + "px";
+	showHide.style.width = 80/540*panel.width+"px";
+	showHide.style.left = parseInt(mouseAction.style.left) + parseInt(mouseAction.style.width)+1 + "px";
+	coreSettings.style.width = 135/540*panel.width+"px";
+	coreSettings.style.left = parseInt(showHide.style.left) + parseInt(showHide.style.width)+1 + "px";
+
+	console.log(anomaly.childNodes);
+	
+
+}
 
 /*Functions for app settings and logic*/
 function appInit(){
+	positionControls();
+
 	var userGraph = document.getElementById("userGraph");
 	var masterGraph = document.getElementById("masterGraph");
 	var coreStrip = document.getElementById("coreStrip");
@@ -230,7 +260,7 @@ function handleInputPress(e){
 
 		case "button":
 			switch(targ.value) {	//Toggles visibility of elements
-				case "     Hint     ":
+				case "Hint":
 					if(appSettings.hintVis == "Hidden"){
 						appSettings.hintVis = "Visible";
 					}
@@ -246,7 +276,7 @@ function handleInputPress(e){
 						appSettings.answerVis = "Hidden";
 					}
 				break;
-				case " Master":
+				case "Master":
 					if(appSettings.masterVis == "Hidden"){
 						appSettings.masterVis = "Visible";
 					}
@@ -647,6 +677,9 @@ function drawCoreStrip() {
 			break;
 		}
 		ctx.beginPath();
+		if(adjRingWidth < 3) {
+			console.log(adjRingWidth);
+		}
 		ctx.fillRect(Math.floor(adjRingX-adjRingWidth*0.25), 11, Math.floor(adjRingWidth*0.25)+1, 19);
 		ctx.moveTo(adjRingX+.5, 10);
 		ctx.lineTo(adjRingX+.5, 30);
@@ -670,7 +703,10 @@ function drawCoreStrip() {
 function writeAnswer() {
 	var answerText = document.getElementById("answerText");
 	var i;
+	//ctx.font = "italic bold 15px Times";
 	answerText.style.fontWeight = "900";
+	answerText.style.fontFamily = "Times";
+	answerText.style.fontSize = "16px";
 	answerText.style.whiteSpace = "pre-line";
 	answerText.innerHTML = "All of these are part of the answer:\n";
 	answerText.innerHTML += "Start year: " + answer.yearStart + "\n";
@@ -693,6 +729,7 @@ function writeAnswer() {
 
 function writeHint() {
 	var hintText = document.getElementById("hintText");
+	hintText.style.fontFamily = "Times";
 	hintText.style.fontWeight = "900";
 	hintText.style.fontSize="12px";
 
@@ -866,6 +903,7 @@ function populateRings() {
 	var absoluteValueCutoff = 2;
 	var firstDifferenceCutoff = 2;
 	var masterBoneWideCutoff = 0.95;
+	var numMinPixel = 0;
 
 	//Populate Master Plot
 	masterYearStartSeed = Math.random() * 0.75 + .05;
@@ -948,7 +986,7 @@ function populateRings() {
 				falses++;
 		}
 
-		data.coreLength += Math.floor(index[year+absents]/2*data.targetRingWidth)+1;
+		data.coreLength +=  Math.floor(index[year+absents]/2*data.targetRingWidth)+1 >=3 ? Math.floor(index[year+absents]/2*data.targetRingWidth)+1 : 3;
 		
 		var latewoodRandom = Math.random();
 		var newColor;
@@ -984,6 +1022,7 @@ function populateRings() {
 
 			for(i = 1; i < divisor+1; ++i) {
 				newWidth = Math.floor(index[year+tempAbsent]/2*data.targetRingWidth/divisor)+1;
+				if(newWidth < 3) {newWidth = 3};
 				if(markData.coreStrip.ring.length > 0) {
 					if(divisor == 2 && i == 1) {
 						adjIndex = 1;

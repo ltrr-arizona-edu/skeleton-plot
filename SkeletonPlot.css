@@ -4,17 +4,31 @@ form {
 	background: #fff;
 	position: absolute;
 	display:inline;
-	width:100px;
-	height:120px;
+	
+}
+form {
+	position: absolute;
+	top:0;
+	left:0;
 }
 input[type="button"] {
- 
+ 	background: #DADADA;
+ 	position: absolute;
+}
+input:focus {
+	outline:none;
+}
+span {
+
 }
 #panel {
 	background: #fff;
 	position: relative;
 	margin: auto;
 }	
+#anomalyControls {
+
+}
 #appFrame {
 	width: 760px;
 	height: 550px;
@@ -48,7 +62,7 @@ input[type="button"] {
 	position:absolute;
 	border: 1px solid black;
 	width:295px;
-	height:118px;
+	height:100px;
 	left:10px;
 	top:127px;
 }
