@@ -1,7 +1,6 @@
 div {display: block; margin: 0 auto; position: absolute;}
 canvas {display: block; margin: auto;}
 form {
-	background: #fff;
 	position: absolute;
 	display:inline;
 	
@@ -13,6 +12,7 @@ form {
 }
 input[type="button"] {
  	background: #DADADA;
+ 	border: outset #DADADA 2px;
  	position: absolute;
 }
 input:focus {

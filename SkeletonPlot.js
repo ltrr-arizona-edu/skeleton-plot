@@ -8,20 +8,20 @@ function positionControls(){
 	var coreSettings = document.getElementById("coreSettingsControls");
 
 	
-	panel.width = 600;
+	panel.width = 581;
 	panel.height = 120;
 	panel.style.width = panel.width+"px";
 	panel.style.height = panel.height+"px";
 
-	anomaly.style.width = 85/540*panel.width+"px";
+	anomaly.style.width = 98+"px";
 	anomaly.style.left = 0 + "px";
-	magnification.style.width = 110/540*panel.width+"px";
+	magnification.style.width = 127+"px";
 	magnification.style.left = parseInt(anomaly.style.left) + parseInt(anomaly.style.width)+1+"px";
-	mouseAction.style.width = 130/540*panel.width+"px";
+	mouseAction.style.width = 150+"px";
 	mouseAction.style.left = parseInt(magnification.style.left) + parseInt(magnification.style.width)+1 + "px";
-	showHide.style.width = 80/540*panel.width+"px";
+	showHide.style.width = 69+"px";
 	showHide.style.left = parseInt(mouseAction.style.left) + parseInt(mouseAction.style.width)+1 + "px";
-	coreSettings.style.width = 135/540*panel.width+"px";
+	coreSettings.style.width = 133+"px";
 	coreSettings.style.left = parseInt(showHide.style.left) + parseInt(showHide.style.width)+1 + "px";
 
 	console.log(anomaly.childNodes);

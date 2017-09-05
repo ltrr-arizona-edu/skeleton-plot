@@ -39,8 +39,8 @@
 				
 			</div>
 			<div id="magnificationControls" style="height: 120px">
-				<form >
-					<font size="2" face="Arial">
+				<form style="line-height:1.5">
+					<font  size="2" face="Arial">
 						<center> Magnification <br><br>
 								 Core &nbsp &nbsp Graphs
 						</center>
@@ -57,12 +57,12 @@
 				<font size="2" face="Arial">
 					<center> Mouse Actions </center>	
 				
-				<form style="width:60px;height:100px;top:20px">
+				<form style="width:60px;height:100px;top:27px;line-height:1.5">
 					<br>
 					<input type="radio" name="mouseMode" value="Draw" onmousedown="handleInputPress(event)" checked>Draw<br><br>
 					<input type="radio" name="mouseMode" value="Erase" onmousedown="handleInputPress(event)">Erase
 				</form>
-				<form style="width:70;height:100px;top:20px;left:60px">
+				<form style="width:70;height:100px;top:35px;left:60;line-height:1.5">
 					<input type="radio" name="mouseMark" value="Normal" onmousedown="handleInputPress(event)" checked>Normal<br>
 					<input type="radio" name="mouseMark" value="Wide" onmousedown="handleInputPress(event)">Wide<br>
 					<input type="radio" name="mouseMark" value="Absent" onmousedown="handleInputPress(event)">Absent<br>
@@ -71,34 +71,39 @@
 				</font>
 			</div>
 			<div id="showHideControls" style="height: 120px">
-				<form>
-					<font size="2" face="Arial">
-						<center> 
+				<form style="width: 68.89px">
+					<font size="2" face="Arial" style="line-height:1.5">
+						<center > 
 							Show <br>
 							 or <br>
 							 hide <br><br><br>
-							<input type="button" value="Answer" onmousedown="handleInputPress(event)">
-							<input type="button" value="Master" onmousedown="handleInputPress(event)">
 						</center>
 					</font>
+							<input style = "left: 0px; top: 77px; width: 68.88px" type="button" value="Answer" onmousedown="handleInputPress(event)">
+							<input style = "left: 0px; top: 99px; width: 68.88px" type="button" value="Master" onmousedown="handleInputPress(event)">
+						
+					
 				</form>	
 			</div>
 			<div id="coreSettingsControls" style="height: 120px">
-				<form>
+				<form style="line-height:1.5">
 					<font size="2" face="Arial">
-						<center>
+						<center style="position:relative; left:15px">
 							Core Series <br>
-							Settings <br>
+							Settings <br><br>
 						</center>
-							Sensitivity: <span id="sensitivityNumber"></span>
+							<span style="line-height:1.6">
+							&nbsp &nbsp Sensitivity: <span id="sensitivityNumber"></span>
 
-							<input type="button" id="decreaseSensitivity" value=&#8249 style="padding:1px" onmousedown="handleInputPress(event)">
-							<input type="button" id="increaseSensitivity" value=&#8250 style="padding:1px" onmousedown="handleInputPress(event)"> <br><br>
+							<input type="button" id="decreaseSensitivity" value=&#8249 style="padding:1px; left:97px" onmousedown="handleInputPress(event)">
+							<!--<div style="left:107;width:8;height:20.5;background:#c8c8c8"></div>-->
+							<input type="button" id="increaseSensitivity" value=&#8250 style="padding:1px; left:115px" onmousedown="handleInputPress(event)"> <br>
 							No. of Rings: <span id="ringNumber">1</span>
-							<input type="button" id="decreaseRings" value=&#8249 style="padding:1px" onmousedown="handleInputPress(event)">
-							<input type="button" id="increaseRings" value=&#8250 style="padding:1px" onmousedown="handleInputPress(event)"> <br><br>
+							<input type="button" id="decreaseRings" value=&#8249 style="padding:1px;left:97px" onmousedown="handleInputPress(event)">
+							<!--<div style="left:107;width:8;height:20.5;background:#c8c8c8"></div>-->
+							<input type="button" id="increaseRings" value=&#8250 style="padding:1px;left:115px" onmousedown="handleInputPress(event)"> <br><br>
 							<input type="button" value="Restart a New Core" style="top:99" onmousedown="handleInputPress(event)">
-						
+							</span>
 					</font>
 				</form>
 			</div>
