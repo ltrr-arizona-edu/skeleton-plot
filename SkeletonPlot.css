@@ -15,9 +15,15 @@ input[type="button"] {
  	border: outset #DADADA 2px;
  	position: absolute;
 }
+input {
+	font-family: "helvetica";
+}
+
 input:focus {
 	outline:none;
+
 }
+
 span {
 
 }

@@ -25,8 +25,6 @@ function positionControls(){
 	coreSettings.style.left = parseInt(showHide.style.left) + parseInt(showHide.style.width)+1 + "px";
 
 	console.log(anomaly.childNodes);
-	
-
 }
 
 /*Functions for app settings and logic*/
@@ -735,10 +733,7 @@ function writeHint() {
 
 	hintText.innerHTML = "Hint: Core is missing " + answer.absents.length + " rings and has ";
 	hintText.innerHTML += answer.falses.length / 2 + " false ring(s).";
-
 }
-
-
 
 
 //Mouse Action Functions
@@ -891,6 +886,7 @@ function removeMark(e){
 	}
 }
 
+//Creates ring data for master and dimensions of rings on core strip
 function populateRings() {
 	var i, masterYearStartSeed, coreStart, newMark, newX, newY, newWidth, year, falseYear;
 	var color = [];
@@ -907,17 +903,21 @@ function populateRings() {
 
 	//Populate Master Plot
 	masterYearStartSeed = Math.random() * 0.75 + .05;
-	index.length = data.masterLengthFactor*appSettings.rings;
+	index.length = data.masterLengthFactor*appSettings.rings; //index holds all ring data
 
+	//Randomly set start year of master plot
 	data.masterYearStart = Math.floor(1998 - index.length - masterYearStartSeed * 100);
 	data.masterYearStart -= Math.floor(1998 - index.length - masterYearStartSeed * 100)%10 - 5;
 
+	//Randomly set ring widths
 	for(i = 0; i < index.length; ++i) {
 		index[i] = 0;
+		//Width is averaged according to sensitivity
 		for(var replicate = 0; replicate<appSettings.sensitivity; ++replicate){
 			index[i] += Math.random()*2;
 		}
 		index[i] /= appSettings.sensitivity;
+		//Keep track of maximum and minimum indices
 		if(index[i] < indexMin) {
 			indexMin = index[i];
 		}
@@ -1047,27 +1047,5 @@ function populateRings() {
 }	
 
 
-
-
-
-
-
-
-
-/*Render Graph Paper*/
-
-
-
-/*	TODO:
-	- Create Core Strip
-	- Core strip mag
-	- Add Answer and hint
-	- Enable functionality for drawing marks on master
-	- Add Extra markings on master graph paper
-	- Enable Master visibility functionality
-	- Draw false and absents	
-	- Enable sensitivity / ring number functionality
-	- Put in actual algorithms
-	- Add browser status*/
 
 
