@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+	<META NAME="Author" CONTENT="Paul R. Sheppard">
+	<META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; U) [Netscape]">
+	<META NAME="KeyWords" CONTENT="dendrochronology, tree ring, crossdating, skeleton plot">
+	<TITLE>Crossdating: Pattern Matching</TITLE>
+	<script src="PatternMatching.js"></script>
+	<link href="PatternMatching.css" rel=stylesheet>
+	<LINK REL=stylesheet HREF="crossdatestyle.css" TYPE="text/css">
+</HEAD>
+<BODY>
+<H1>Pattern Matching</H1><BR>
+<H1>Skeleton Plot and Master Chronology</H1><BR>
+
+<TABLE>
+<TR><TD>The objective: To find the mirror image of the patterns 
+	<UL>
+	<LI>of the marks pointing up on the <A HREF="plotting.htm">skeleton plot</A>
+	<LI>with the marks hanging down on the <A HREF="masterchronology.htm">master dendrochronology</A>
+	</UL>
+How to move the skeleton plot (<EM>try it on the right</EM>):
+	<UL>
+	<LI>Put the mouse cursor in the <FONT COLOR="gray">gray region</FONT> of the plot
+	<LI>Click and hold the left mouse button
+	<LI>Move the mouse left or right
+	</UL>
+How to know when you have a match:
+	<UL>
+	<LI>All of the skeleton plot marks -- and even the "b" marks -- should line up with those on the dated master chronology
+	<LI>The mirror imaging should be visually obvious
+	<LI>If it's not obvious, the text above the skeleton plot will let you know
+	</UL></TD>
+<TD>
+<!--<APPLET code="PatternMatching.class" WIDTH=470 HEIGHT=330></APPLET>-->
+	<div id="appFrame" >
+		<input type="button" value="Try Again" onmousedown="appInit()" style="position:relative;top:10px">
+		<span id="answer" style="left:45; top:30"></span>
+		<canvas id="userGraph" height="91" width="241" style="left:15px; top: 50px" onmousedown="handleClick(event)"></canvas>
+		<canvas id="masterGraph" height = "181" width="451" style="left:15px; top:141"></canvas>
+	</div>
+	<script>
+		appInit();
+	</script>
+</TD></TR></TABLE>
+
+<P><EM>Good idea</EM>: Click the "Try Again" button to have more chances to match patterns of a skeleton plot and master chronology<BR><BR>
+<EM>Note</EM>: When <A HREF="SkeletonPlot18.htm">you try skeleton plotting for yourself</A>, you can move the master by mouse clicking within the time-series part (<FONT COLOR="gray">shaded gray above</FONT>) and moving left or right
+
+<HR>
+<CENTER>
+<A HREF="introcrossdate.htm">Introduction</A> |
+<A HREF="applications.htm">Dendrochronology Applications</A> |
+<A HREF="exampleapplication.htm">Crossdating Application</A> |
+<A HREF="ringanomalies.htm">Ring-Growth Anomalies</A><BR>
+<A HREF="sensitivitycomplacency.htm">Sensitivity-Complacency</A> |
+<A HREF="plotting.htm">Skeleton Plotting</A> |
+<A HREF="relativescale.htm">Relative Scale</A> |
+<A HREF="masterchronology.htm">Master Chronology</A><BR>
+<A HREF="patternmatching.htm">Pattern Matching</A> |
+<A HREF="findingdates.htm">Finding the Dates</A> |
+<A HREF="absentfalse.htm">Absent/False Rings</A> |
+<A HREF="SkeletonPlot18.htm">Try Skeleton Plotting for Yourself!</A><BR>
+<A HREF="http://www.ltrr.arizona.edu">Laboratory of Tree-Ring Research</A>
+</CENTER>
+<HR>
+<ADDRESS>Paul R. Sheppard<BR>
+Laboratory of Tree-Ring Research, The University of Arizona<BR>
+Tucson, Arizona 85721 USA<BR>
+office: (520) 621-6474, fax: (520) 621-8229<BR>
+Comments to: <A HREF="mailto:sheppard@ltrr.arizona.edu">sheppard@ltrr.arizona.edu</A>
+</ADDRESS><BR>
+Copyright &copy; 1998, Laboratory of Tree-Ring Research, The University of Arizona<BR>
+Revised -- December, 1998<BR>
+URL: <A HREF="patternmatching.htm">http://tree.ltrr.arizona.edu/skeletonplot/patternmatching.htm </A>
+</BODY>
+</HTML>

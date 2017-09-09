@@ -1,0 +1,14 @@
+#appFrame2 {
+	width: 130px;
+	height: 165px;
+	background: #ffffcc; 
+	position: relative;
+	overflow: hidden;
+	text-align: center;
+}
+
+#userGraph2 {
+	position: absolute;
+	top:44;
+	left:0;
+}

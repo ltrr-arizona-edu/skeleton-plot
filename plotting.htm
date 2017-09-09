@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Paul R. Sheppard">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; U) [Netscape]">
+   <META NAME="KeyWords" CONTENT="dendrochronology, tree ring, crossdating, skeleton plot">
+   <TITLE>Crossdating: Skeleton Plotting</TITLE>
+   	<script src="Plotting.js"></script>
+   	<script src="MakeMarks.js"></script>	
+	<link href="Plotting.css" rel=stylesheet>
+	<link href="MakeMarks.css" rel=stylesheet>
+	<LINK REL=stylesheet HREF="crossdatestyle.css" TYPE="text/css">
+</HEAD>
+<BODY>
+<H1>Making Skeleton Plots</H1><BR>
+<CENTER><TABLE><TR><TD>
+When skeleton plotting ring-width variation of a core, note that:
+	<UL>
+	<LI>Narrow rings merit marks on the skeleton plot
+	<LI>The narrower the ring, the longer the mark
+	<LI>very wide rings occasionally merit a little "b" mark (for big)
+	<LI>Normal or average rings <EM>DO NOT</EM> merit marks on the skeleton plot
+	<LI>For example, compare the core and skeleton plot below:
+		<UL>
+		<LI>The narrowest ring is connected (<FONT COLOR="blue">blue line</FONT>) with the longest skeleton mark
+		<LI>The widest ring is connected (<FONT COLOR="#669900">green line</FONT>) with a "b" mark (for big)
+		<LI>Note the <FONT COLOR="RED">red line</FONT>:
+<OL>
+<LI>Points to a ring of average width, but it seems narrow compared to the preceding ring
+<LI>Perhaps it merits a small mark because of the large year-to-year difference 
+</OL>
+		</UL><BR>
+	<LI><EM>Good idea:</EM> Hit the "Try Again" button to see more examples
+	</UL></TD></TR></TABLE><BR>
+
+<!--<APPLET code="Plotting.class" WIDTH="600" HEIGHT="220"></APPLET>-->
+<div id="appFrame1" >
+		<canvas id="coreStrip" style="top:40"></canvas>
+		<canvas id="userGraph1" style="left:180; top:90" height="121" width="241"></canvas>
+		<canvas id="overlay" width = "600" height = "220"></canvas>
+		<input type="button" value="Try Again" onmousedown="appInit1()" style="z-index:2; position: relative">
+	</div>
+	<script>
+		appInit1();
+	</script>
+<BR><BR>
+
+<TABLE>
+<TR><TH COLSPAN="3">How to make marks when <A HREF="SkeletonPlot18.htm">you try skeleton plotting for yourself</A>:</TR>
+<TR><TD><IMG SRC="mouseactions.gif" WIDTH="145" HEIGHT="116" ALT="mouse action options">
+<TD>
+	<UL>
+	<LI>You'll see a panel of circle options, as on the left:
+		<UL>
+		<LI>You can either draw or erase marks with your mouse
+		<LI>Marks may be either:
+			<OL>
+			<LI>normal lines for narrow rings
+			<LI>a "b" for wide rings
+			<LI>a mark for the <A HREF="ringanomalies.htm">ring-growth anomalies</A> of absent or false rings
+			</OL><BR>
+		<LI><EM>Practice</EM> making normal marks on the right:
+			<OL>
+			<LI>Align tip of cursor on vertical line of choice
+			<LI>Adjust height of cursor in bottom two-thirds of graph
+			<LI>Mouse click just once!
+			<LI>"Try Again" as necessary
+			</OL>
+		</UL><BR>
+	<LI><EM>If you mark something mistakenly</EM>:
+		<UL>
+		<LI>Just mouse click on the "Erase" circle option
+		<LI>Put mouse over the mistake and click it away
+		<LI>Don't forget to mouse click on "Draw" to continue plotting
+		</UL>
+	</UL>
+<TD>
+<!--<APPLET code="MakeMarks.class" WIDTH="130" HEIGHT="165"></APPLET>-->
+	<div id="appFrame2" >
+		<input type="button" value="Try Again" style="position:relative; top:10" onmousedown="appInit2()">
+		<canvas id="userGraph2" onmousedown="handleClick(event)"></canvas>
+	</div>
+	<script>
+		appInit2();
+	</script>
+</TR></TABLE><BR>
+</CENTER>
+<HR>
+<CENTER>
+<A HREF="introcrossdate.htm">Introduction</A> |
+<A HREF="applications.htm">Dendrochronology Applications</A> |
+<A HREF="exampleapplication.htm">Crossdating Application</A> |
+<A HREF="ringanomalies.htm">Ring-Growth Anomalies</A><BR>
+<A HREF="sensitivitycomplacency.htm">Sensitivity-Complacency</A> |
+<A HREF="plotting.htm">Skeleton Plotting</A> |
+<A HREF="relativescale.htm">Relative Scale</A> |
+<A HREF="masterchronology.htm">Master Chronology</A><BR>
+<A HREF="patternmatching.htm">Pattern Matching</A> |
+<A HREF="findingdates.htm">Finding the Dates</A> |
+<A HREF="absentfalse.htm">Absent/False Rings</A> |
+<A HREF="SkeletonPlot18.htm">Try Skeleton Plotting for Yourself!</A><BR>
+<A HREF="http://www.ltrr.arizona.edu">Laboratory of Tree-Ring Research</A>
+</CENTER>
+<HR>
+<ADDRESS>Paul R. Sheppard<BR>
+Laboratory of Tree-Ring Research, The University of Arizona<BR>
+Tucson, Arizona 85721 USA<BR>
+office: (520) 621-6474, fax: (520) 621-8229<BR>
+Comments to: <A HREF="mailto:sheppard@ltrr.arizona.edu">sheppard@ltrr.arizona.edu</A>
+</ADDRESS><BR>
+Copyright &copy; 1998, Laboratory of Tree-Ring Research, The University of Arizona<BR>
+Revised -- December, 1998<BR>
+URL: <A HREF="plotting.htm">http://tree.ltrr.arizona.edu/skeletonplot/plotting.htm </A>
+</BODY>
+</HTML>
