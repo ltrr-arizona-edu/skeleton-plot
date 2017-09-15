@@ -1,0 +1,20 @@
+#appFrame {
+	width: 600px;
+	height: 65px;
+	background: #ffffcc; 
+	position: relative;
+	overflow: hidden;
+	text-align: center;
+}
+
+#coreStrip {
+	background: #cff;
+	position:absolute;
+}
+
+.appBorder {
+	background:black;
+	height:40;
+	width:2;
+	position:absolute;
+}

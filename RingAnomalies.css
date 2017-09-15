@@ -1,0 +1,55 @@
+input[type="button"] {
+ 	background: #DADADA;
+ 	border: outset #DADADA 2px;
+ 	position: absolute;
+}
+input {
+	font-family: "helvetica";
+}
+
+input:focus {
+	outline:none;
+
+}
+
+#appFrame {
+	width: 470px;
+	height: 330px;
+	background: #ffffcc;  
+	position: relative;
+	overflow: hidden;
+	text-align: center;
+}
+
+#appFrame > * {
+	-webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+
+}
+
+#coreStrip {
+	background: #cff;
+	position:absolute;
+	top: 0;
+}
+
+#userGraph {
+	background: #fff;
+	position: absolute;
+}
+
+#masterGraph {
+	background: #fff;
+	position: absolute;
+}
+
+#answer {
+	position:absolute;
+}
+
+#overlay {
+	position:absolute;
+	left: 0;
+	top: 0;
+}

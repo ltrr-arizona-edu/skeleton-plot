@@ -1,0 +1,21 @@
+#appFrame2 {
+	width: 130px;
+	height: 165px;
+	background: #ffffcc; 
+	position: relative;
+	overflow: hidden;
+	text-align: center;
+}
+
+#userGraph2 {
+	position: absolute;
+	top:44;
+	left:0;
+}
+
+#appFrame2 > * {
+	-webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+
+}

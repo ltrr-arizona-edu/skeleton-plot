@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Author" CONTENT="Paul R. Sheppard">
+<META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; U) [Netscape]">
+<TITLE>Crossdating in Dendrochronology</TITLE>
+<script src="RingAnomalies.js"></script>
+<link href="RingAnomalies.css" rel=stylesheet>
+<LINK REL=stylesheet HREF="crossdatestyle.css" TYPE="text/css">
+</HEAD>
+<BODY>
+&nbsp;
+<H1>Skeleton Plotting Absent and False Rings</H1><BR>
+<TABLE >
+<TR><TD><!--<APPLET code="RingAnomalies.class" WIDTH=470 HEIGHT=330></APPLET>-->
+	<div id="appFrame" >
+		<input type="button" value="Try Again" onmousedown="appInit()" style="position:relative;top:10px">
+		<span id="answer" style="left:45; top:30"></span>
+		<canvas id="userGraph" height="91" width="421" style="left:15px; top: 50px" onmousedown="handleClick(event)"></canvas>
+		<canvas id="masterGraph" height = "181" width="451" style="left:15px; top:141"></canvas>
+	</div>
+	<script>
+		appInit();
+	</script>
+</TD>
+<TD>How to mark ring-growth anomalies on a skeleton plot:
+	<UL>
+	<LI>Missing Ring:
+		<UL>
+		<LI>Sample at left didn't have a ring for year 1905 of the chronology (index value of 0.0)
+		<LI>A dashed mark is drawn on the skeleton plot between the 19th and 20th lines
+		<LI><EM>Try This:</EM> Move skeleton plot one position to the right
+		</UL><BR>
+	<LI>False Ring
+		<UL>
+		<LI>Sample at right had a false ring for year 1925 of the chronology (index value of 2.0)
+		<LI>Diagonal marks are drawn on the skeleton plot on the 39th line
+		<LI><EM>Try This:</EM> Move skeleton plot one position to the left
+		</UL>
+	</UL>
+<EM>Good idea:</EM> Hit the "Try again" button to see more examples</TD></TR></TABLE><BR>
+
+<CENTER>
+<TABLE>
+<TR><TD>When <A HREF="SkeletonPlot18.htm">you try skeleton plotting for yourself</A>, you can turn on or off ring-growth anomalies:
+	<UL>
+	<LI>There will be square options for absent or false rings, as on the right
+		<UL>
+		<LI>Check one or both options to allow these growth anomalies
+		<LI>Un-Check the options to disallow these growth anomalies
+		<LI>Mouse click the "Restart" button
+		</UL>
+	<LI><EM>Important point #1</EM>: With options checked:
+		<UL>
+		<LI>Ring-growth anomalies are only <U>possible</U>, not for certain (just like in real life!)
+		<LI>Mouse click the "Hint" button to learn if your new core has ring-growth anomalies
+		<LI>Mouse click the "Hint" button again to hide the hint
+		</UL>
+	<LI><EM>Important point #2</EM>:
+		<UL>
+		<LI>When there are absent/false rings, include their dates when you <A HREF="findingdates.htm">find the dates</A>
+		</UL>
+	</UL></TD>
+<TD><IMG SRC="anomalies.gif" WIDTH="88" HEIGHT="119" ALT="ring-growth anomaly options"></TD></TR></TABLE><BR>
+<HR>
+<A HREF="introcrossdate.htm">Introduction</A> |
+<A HREF="applications.htm">Dendrochronology Applications</A> |
+<A HREF="exampleapplication.htm">Crossdating Application</A> |
+<A HREF="ringanomalies.htm">Ring-Growth Anomalies</A><BR>
+<A HREF="sensitivitycomplacency.htm">Sensitivity-Complacency</A> |
+<A HREF="plotting.htm">Skeleton Plotting</A> |
+<A HREF="relativescale.htm">Relative Scale</A> |
+<A HREF="masterchronology.htm">Master Chronology</A><BR>
+<A HREF="patternmatching.htm">Pattern Matching</A> |
+<A HREF="findingdates.htm">Finding the Dates</A> |
+<A HREF="absentfalse.htm">Absent/False Rings</A> |
+<A HREF="SkeletonPlot18.htm">Try Skeleton Plotting for Yourself!</A><BR>
+<A HREF="http://www.ltrr.arizona.edu">Laboratory of Tree-Ring Research</A>
+</CENTER>
+<HR>
+<ADDRESS>Paul R. Sheppard<BR>
+Laboratory of Tree-Ring Research, The University of Arizona<BR>
+Tucson, Arizona 85721 USA<BR>
+office: (520) 621-6474, fax: (520) 621-8229<BR>
+Comments to: <A HREF="mailto:sheppard@ltrr.arizona.edu">sheppard@ltrr.arizona.edu</A>
+</ADDRESS><BR>
+Copyright &copy; 1998, Laboratory of Tree-Ring Research, The University of Arizona<BR>
+Revised -- December, 1998<BR>
+URL: <A HREF="absentfalse.htm">http://tree.ltrr.arizona.edu/skeletonplot/absentfalse.htm </A>
+</BODY>
+</HTML>
