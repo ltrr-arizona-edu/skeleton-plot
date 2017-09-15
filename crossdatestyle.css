@@ -1,0 +1,78 @@
+A:link   { color: #CC0000; background-color: #FFFFCC; text-decoration: underline }
+A:visited{ color: #330099; background-color: #FFFFCC; text-decoration: underline }
+A:active { color: #FF3300; background-color: #FFFFCC; text-decoration: underline }
+
+H1 { color: #000000; background-color: #FFFFCC; font-family: Verdana, Arial, sans-serif; font-size: 150%; font-weight: normal; text-align: center; clear: left; text-decoration: none }
+
+H2 { color: #000000; background-color: #FFFFCC; font-family: Verdana, Arial, sans-serif; font-size: 140%; font-weight: normal; text-align: center; clear: left }
+
+H3 { color: #000000; background-color: #FFFFCC; font-family: Verdana, Arial, sans-serif; font-size: 130%; font-weight: normal; text-align: center; clear: left }
+
+H4 { color: #000000; background-color: #FFFFCC; font-family: Verdana, Arial, sans-serif; font-size: 120%; font-weight: normal; text-align: center; clear: left }
+
+H5 { color: #000000; background-color: #FFFFCC; font-family: Verdana, Arial, sans-serif; font-size: 110%; font-weight: normal; text-align: center; clear: left }
+
+H6 { color: #000000; background-color: #FFFFCC; font-family: Verdana, Arial, sans-serif; font-size: 105%; font-weight: lighter; text-align: center; clear: left }
+
+BODY { color: #000000; background-color: #FFFFCC;
+       font-family: Verdana, sans-serif; font-size: small }
+P    { color: #000000; background-color: #FFFFCC;
+      font-family: Verdana, sans-serif; font-size: small; text-decoration: none }
+ADDRESS    { color: #000000; background-color: #FFFFCC;
+       font-family: Verdana, sans-serif; font-size: small; margin: 0em; text-decoration: none }
+OL   { color: #000000; background-color: #FFFFCC;
+       font-family: Verdana, sans-serif; font-size: small }
+UL   { color: #000000; background-color: #FFFFCC; 
+       margin-top: 0em;
+       font-family: Verdana, sans-serif; font-size: small }
+LI   { color: #000000; background-color: #FFFFCC; 
+       margin-top: 0em;
+       font-family: Verdana, sans-serif; font-size: small }
+DL   { color: #000000; background-color: #FFFFCC;
+      font-family: Verdana, sans-serif; font-size: small }
+DT   { color: #000000; background-color: #FFFFCC;
+       font-family: Verdana, sans-serif; font-size: 112%; font-weight: bold }
+DD   { color: #000000; background-color: #FFFFCC;
+       font-family: Verdana, sans-serif; font-size: small }
+PRE  { color: #000000;  background-color: #FFFFCC;
+       font-size: small }
+EM   { color: #CC3300; background-color: #FFFFCC; font-style: normal }
+
+TABLE  { color: #FFFFFF; background-color: #FFFFCC; font-family: Verdana, sans-serif;
+         border-color: #FFFFFF; border-width: 1px; border-style: solid;
+         vertical-align: baseline }
+TH     { color: #000000; background-color: #FFFFCC;
+         font-family: Verdana, sans-serif; font-size: medium; font-weight: normal}
+TD     { color: #000000; background-color: #FFFFCC;
+         font-family: Verdana, sans-serif; font-size: small }
+LABEL  { color: #000000; background-color: #FFFFCC;
+         font-family: Verdana, sans-serif }
+INPUT  { color: #000000; background-color: #FFFFCC;
+         font-family: Helvetica, sans-serif }
+
+IMG.ICONIC { float: left; margin: 1em; height: 64px; width: 64px }
+
+.DISPLAYFIG { margin: 12px 32px }
+.FORMPANEL   { color: #FFFFFF; background-color: #FFFFCC;
+               font-family: Verdana, sans-serif }
+.FORMPANE    { color: #FFFFFF; background-color: #FFFFCC;
+               font-family: Verdana, sans-serif }
+.FORMSUBPANE { color: #FFFFFF; background-color: #FFFFCC;
+               font-family: Verdana, sans-serif }
+.LOWKEY { color: #000000; background-color: #FFFFFF }
+.SEQUENCE { text-align: right }
+.BOXED { color: #000000; background-color: #FFFF33;
+         border: groove 0.5em #9999CC; padding:1em; width: 25%;
+         font-family: Verdana, sans-serif; font-size: small;
+         float: left; margin: 1em } 
+.CREDIT { color: #000000; background-color: #FFFFCC; text-align: center; 
+       font-family: Verdana, sans-serif; font-size: x-small }
+.FOOTER { color: #000000; background-color: #FFFFCC;
+
+       font-family: Verdana, sans-serif; font-size: small; margin: 0em }
+
+.LINKS { color: #000000; background-color: #FFFFCC;
+
+       font-family: Verdana, sans-serif; font-size: small; margin: 0em }
+
+
