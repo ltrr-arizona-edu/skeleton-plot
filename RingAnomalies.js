@@ -1,3 +1,4 @@
+
 function appInit(){
 
 	var userGraph = document.getElementById("userGraph");
@@ -591,4 +592,5 @@ function stopDrag() {
     document.onmousemove = null;
     document.onmouseup = null;
     document.dragTarg = null;
+
 }

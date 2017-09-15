@@ -1,3 +1,4 @@
+
 #appFrame1 {
 	width: 600px;
 	height: 220px;
@@ -42,5 +43,6 @@ input {
 
 input:focus {
 	outline:none;
+
 
 }

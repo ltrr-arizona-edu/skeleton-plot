@@ -1,3 +1,4 @@
+
 function appInit(){
 
 	var userGraph = document.getElementById("userGraph");
@@ -486,30 +487,36 @@ function dragHoriz(e) {
     targ.style.left=coordX+e.clientX-offsetX+'px';
     answer.style.left = coordX+e.clientX-offsetX+5*graphUnit+'px';
 
+    limitDrag(e);
+
     checkAnswer();
+
+
 
     return false;
 }
 
-function dragHorizLimited(e) {
-	var targ = document.dragTarg;
+function limitDrag(e) {
 
-    // move element
-    if(parseInt(coordX+e.clientX-offsetX) <= 381 && parseInt(coordX+e.clientX-offsetX) + parseInt(targ.width) >= 379){
-    	targ.style.left=coordX+e.clientX-offsetX+'px';
+   var targ = document.dragTarg;
+	if(parseInt(targ.style.left) + parseInt(targ.width) < 50) {	
+		targ.style.left=50 - parseInt(targ.width) + "px";
 	}
-	if(parseInt(targ.style.left) > 381) {
-		targ.style.left="380px";
+	if(parseInt(targ.style.left) > 420){
+		targ.style.left =  "420px";
 	}
-	if(parseInt(targ.style.left) < 379 - parseInt(targ.width)) {
-		targ.style.left = 380 - parseInt(targ.width) + "px";
-	}
+	
+
 	
     return false;
 
 }
 
 function stopDrag() {
+
+
+
+
     document.onmousemove = null;
     document.onmouseup = null;
     document.dragTarg = null;

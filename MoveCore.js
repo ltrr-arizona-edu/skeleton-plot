@@ -1,4 +1,5 @@
 
+
 function appInit(){
 	var coreStrip = document.getElementById("coreStrip");
 
@@ -191,6 +192,16 @@ function dragHoriz(e) {
 
 
     // move element
+
+    if(parseInt(coordX+e.clientX-offsetX) <= 580 && parseInt(coordX+e.clientX-offsetX) + parseInt(targ.width) >= 20){
+    	targ.style.left=coordX+e.clientX-offsetX+'px';
+
+	}
+	
+
+
+
+
     targ.style.left=coordX+e.clientX-offsetX+'px';
     return false;
 }
@@ -214,7 +225,18 @@ function dragHorizLimited(e) {
 }
 
 function stopDrag() {
+
+	var targ = document.dragTarg;
+	if(parseInt(targ.style.left) + parseInt(targ.width) < 50) {	
+		targ.style.left=50 - parseInt(targ.width) + "px";
+	}
+	if(parseInt(targ.style.left) > 550) {
+		targ.style.left =  "550px";
+	}
+
+
     document.onmousemove = null;
     document.onmouseup = null;
     document.dragTarg = null;
+
 }

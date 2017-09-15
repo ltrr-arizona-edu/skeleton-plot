@@ -1,10 +1,11 @@
+
 function appInit2(){
 
 	var userGraph = document.getElementById("userGraph2");
 	graphUnit = 8;
 	/*Define global variables*/
 	//data for the marks to be rendered on canvases
-	markData = {
+	markData2 = {
 		userGraph: { normal: [] //Members: x, y 
 		}
 	};
@@ -36,7 +37,7 @@ function addMark(e) {
 
 	
 	var newMark = {x:e.offsetX, y:e.offsetY};
-	markData.userGraph.normal.push(newMark);
+	markData2.userGraph.normal.push(newMark);
 }
 		
 function redraw2(){
@@ -52,10 +53,10 @@ function redraw2(){
 
 	ctxU.lineWidth = 3;
 
-	for(i = 0; i < markData.userGraph.normal.length; ++i) {
+	for(i = 0; i < markData2.userGraph.normal.length; ++i) {
 		ctxU.beginPath();
-		ctxU.moveTo(markData.userGraph.normal[i].x-.5, markData.userGraph.normal[i].y-.5);
-		ctxU.lineTo(markData.userGraph.normal[i].x-.5, userGraph.height);
+		ctxU.moveTo(markData2.userGraph.normal[i].x-.5, markData2.userGraph.normal[i].y-.5);
+		ctxU.lineTo(markData2.userGraph.normal[i].x-.5, userGraph.height);
 		ctxU.strokeStyle = "rgb(0,0,0)";
 		ctxU.stroke();
 		ctxU.closePath();
@@ -123,5 +124,5 @@ function renderGraphPaper2(canvas) {
 		ctx.fillText(txt, i-txtWidth/2, 4*graphUnit + 5);
 	}
 		
-	
+
 }

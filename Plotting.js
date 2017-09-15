@@ -1,3 +1,4 @@
+
 function appInit1(){
 
 	var userGraph = document.getElementById("userGraph1");
@@ -5,7 +6,7 @@ function appInit1(){
 
 	/*Define global variables*/
 	//data for the marks to be rendered on canvases
-	markData = {
+	markData1 = {
 		userGraph: { normal: [], //Members: x, y
 					 wide: []   //Members: x
 		},
@@ -101,11 +102,11 @@ function drawCoreStrip() {
 	ctx.fillRect(11.5,11.5,coreStrip.width-22,18);
 
 
-	for(i = 0; i < markData.coreStrip.ring.length; ++i) {
-		adjRingX = markData.coreStrip.ring[i].x + 10;;
-		adjRingWidth = markData.coreStrip.ring[i].width;
+	for(i = 0; i < markData1.coreStrip.ring.length; ++i) {
+		adjRingX = markData1.coreStrip.ring[i].x + 10;;
+		adjRingWidth = markData1.coreStrip.ring[i].width;
 
-		switch(markData.coreStrip.ring[i].color) {
+		switch(markData1.coreStrip.ring[i].color) {
 			case "earlyWood":
 				ctx.fillStyle="rgb(255,255,051)"
 			break;
@@ -232,77 +233,77 @@ function redraw1(){
 
 	ctxU.lineWidth = 3;
 
-	for(i = 0; i < markData.userGraph.normal.length; ++i) {
+	for(i = 0; i < markData1.userGraph.normal.length; ++i) {
 		ctxU.beginPath();
-		ctxU.moveTo(markData.userGraph.normal[i].x-.5, Math.floor(userGraph.height - markData.userGraph.normal[i].y ) -.5);
-		ctxU.lineTo(markData.userGraph.normal[i].x-.5, userGraph.height);
+		ctxU.moveTo(markData1.userGraph.normal[i].x-.5, Math.floor(userGraph.height - markData1.userGraph.normal[i].y ) -.5);
+		ctxU.lineTo(markData1.userGraph.normal[i].x-.5, userGraph.height);
 		ctxU.strokeStyle = "rgb(0,0,0)";
 		ctxU.stroke();
 		ctxU.closePath();
 	}
 
-	for(i = 0; i < markData.userGraph.wide.length; ++i) {
+	for(i = 0; i < markData1.userGraph.wide.length; ++i) {
 		ctxU.font = "bold 16px Times  ";
 		txt = "b";
 		txtWidth = ctxU.measureText(txt).width;
-		ctxU.fillText(txt, markData.userGraph.wide[i].x - txtWidth/2, 6.5*graphUnit);
+		ctxU.fillText(txt, markData1.userGraph.wide[i].x - txtWidth/2, 6.5*graphUnit);
 	}
 
 	//Draw on Overlay
 
 	ctxO.clearRect(0,0,overlay.width,overlay.height);
 
-	markData.overlay.narrow.start.y = coreStrip.height - 10 + parseInt(coreStrip.style.top);
-	markData.overlay.medium.start.y = coreStrip.height - 10 + parseInt(coreStrip.style.top);
-	markData.overlay.wide.start.y = coreStrip.height - 10 + parseInt(coreStrip.style.top);
+	markData1.overlay.narrow.start.y = coreStrip.height - 10 + parseInt(coreStrip.style.top);
+	markData1.overlay.medium.start.y = coreStrip.height - 10 + parseInt(coreStrip.style.top);
+	markData1.overlay.wide.start.y = coreStrip.height - 10 + parseInt(coreStrip.style.top);
 
 
-	markData.overlay.narrow.start.x = markData.coreStrip.ring[markData.index.narrow].x - .5*markData.coreStrip.ring[markData.index.narrow].width + parseInt(coreStrip.style.left) + 10;
-	markData.overlay.medium.start.x = markData.coreStrip.ring[markData.index.medium].x - .5*markData.coreStrip.ring[markData.index.medium].width + parseInt(coreStrip.style.left) + 10;
-	markData.overlay.wide.start.x = markData.coreStrip.ring[markData.index.wide].x - .5*markData.coreStrip.ring[markData.index.wide].width + parseInt(coreStrip.style.left) + 10;
+	markData1.overlay.narrow.start.x = markData1.coreStrip.ring[markData1.index.narrow].x - .5*markData1.coreStrip.ring[markData1.index.narrow].width + parseInt(coreStrip.style.left) + 10;
+	markData1.overlay.medium.start.x = markData1.coreStrip.ring[markData1.index.medium].x - .5*markData1.coreStrip.ring[markData1.index.medium].width + parseInt(coreStrip.style.left) + 10;
+	markData1.overlay.wide.start.x = markData1.coreStrip.ring[markData1.index.wide].x - .5*markData1.coreStrip.ring[markData1.index.wide].width + parseInt(coreStrip.style.left) + 10;
 	
 
-	markData.overlay.narrow.end.y = graphUnit * 5 + 1 + parseInt(userGraph.style.top);
-	markData.overlay.medium.end.y = graphUnit * 5 + 1 + parseInt(userGraph.style.top);
-	markData.overlay.wide.end.y = graphUnit * 5 + 1 + parseInt(userGraph.style.top);
+	markData1.overlay.narrow.end.y = graphUnit * 5 + 1 + parseInt(userGraph.style.top);
+	markData1.overlay.medium.end.y = graphUnit * 5 + 1 + parseInt(userGraph.style.top);
+	markData1.overlay.wide.end.y = graphUnit * 5 + 1 + parseInt(userGraph.style.top);
 	
 
-	for(i=0; i < markData.userGraph.normal.length; ++i) {
-		if( markData.userGraph.normal[i].y > 70) {
-			markData.overlay.narrow.end.x = markData.userGraph.normal[i].x + parseInt(userGraph.style.left);
+	for(i=0; i < markData1.userGraph.normal.length; ++i) {
+		if( markData1.userGraph.normal[i].y > 70) {
+			markData1.overlay.narrow.end.x = markData1.userGraph.normal[i].x + parseInt(userGraph.style.left);
 		}
 	}
 
 	
-	for(i=0; i < markData.userGraph.normal.length; ++i) {
-		if( markData.index.medium > (markData.userGraph.normal[i].x)/graphUnit - 5 - 1 && markData.index.medium < (markData.userGraph.normal[i].x)/graphUnit - 5 + 1)  {
-			markData.overlay.medium.end.x = markData.userGraph.normal[i].x + parseInt(userGraph.style.left);
+	for(i=0; i < markData1.userGraph.normal.length; ++i) {
+		if( markData1.index.medium > (markData1.userGraph.normal[i].x)/graphUnit - 5 - 1 && markData1.index.medium < (markData1.userGraph.normal[i].x)/graphUnit - 5 + 1)  {
+			markData1.overlay.medium.end.x = markData1.userGraph.normal[i].x + parseInt(userGraph.style.left);
 		}
 		
 	}
 	 
-	markData.overlay.wide.end.x = markData.userGraph.wide[0].x + parseInt(userGraph.style.left);
+	markData1.overlay.wide.end.x = markData1.userGraph.wide[0].x + parseInt(userGraph.style.left);
 
 	ctxO.lineWidth = 1;
 
 	ctxO.beginPath();
-	ctxO.moveTo(markData.overlay.narrow.start.x, markData.overlay.narrow.start.y);
-	ctxO.lineTo(markData.overlay.narrow.end.x, markData.overlay.narrow.end.y);
+	ctxO.moveTo(markData1.overlay.narrow.start.x, markData1.overlay.narrow.start.y);
+	ctxO.lineTo(markData1.overlay.narrow.end.x, markData1.overlay.narrow.end.y);
 	ctxO.strokeStyle = "rgb(0,0,255)";
 	
 	ctxO.stroke();
 	ctxO.closePath();
 
 	ctxO.beginPath();
-	ctxO.moveTo(markData.overlay.medium.start.x, markData.overlay.medium.start.y);
-	ctxO.lineTo(markData.overlay.medium.end.x, markData.overlay.medium.end.y);
+	ctxO.moveTo(markData1.overlay.medium.start.x, markData1.overlay.medium.start.y);
+	ctxO.lineTo(markData1.overlay.medium.end.x, markData1.overlay.medium.end.y);
 	ctxO.strokeStyle = "rgb(255,0,0)";
 	ctxO.stroke();
 	ctxO.closePath();
 
 	ctxO.beginPath();
-	ctxO.moveTo(markData.overlay.wide.start.x, markData.overlay.wide.start.y);
-	ctxO.lineTo(markData.overlay.wide.end.x, markData.overlay.wide.end.y);
+	ctxO.moveTo(markData1.overlay.wide.start.x, markData1.overlay.wide.start.y);
+	ctxO.lineTo(markData1.overlay.wide.end.x, markData1.overlay.wide.end.y);
 	ctxO.strokeStyle = "rgb(0,255,0)";
 	ctxO.stroke();
 	ctxO.closePath();
@@ -314,7 +315,7 @@ function populateRings() {
 	var color = [];
 	var falses = 0; var absents = 0;
 	var coreLength = 0;
-	var index = markData.index;
+	var index = markData1.index;
 	var indexMin = 100;
 	var indexMax = 0;
 	var absoluteValueCutoff = 2;
@@ -330,21 +331,21 @@ function populateRings() {
 	
 	do {
 		index.medium = Math.floor(Math.random() * appSettings.rings);
-	} while(markData.index.medium == markData.index.narrow);
+	} while(markData1.index.medium == markData1.index.narrow);
 	
 	do {
 		index.wide = Math.floor(Math.random() * appSettings.rings);
-	} while(markData.index.wide == markData.index.medium || markData.index.wide == markData.index.narrow);
+	} while(markData1.index.wide == markData1.index.medium || markData1.index.wide == markData1.index.narrow);
 
 	//Randomly set ring widths
 	for(i = 0; i < index.all.length; ++i) {
-		if(i == markData.index.narrow) {
+		if(i == markData1.index.narrow) {
 			index.all[i] = 0.06;
 		}
-		else if (i == markData.index.medium) {
+		else if (i == markData1.index.medium) {
 			index.all[i] = 2 * 0.215;
 		}
-		else if (i == markData.index.wide) {
+		else if (i == markData1.index.wide) {
 			index.all[i] = 2;
 		}
 		else {
@@ -381,14 +382,14 @@ function populateRings() {
 		
 			newMark = {x:newX, y:newY*graphUnit};
 			
-			markData.userGraph.normal.push(newMark);
+			markData1.userGraph.normal.push(newMark);
 		
 		}
 		
 	
 		if(index.all[i] > masterBoneWideCutoff*indexMax) {
 			newX = (5 + i)*graphUnit;
-			markData.userGraph.wide.push({x:newX});
+			markData1.userGraph.wide.push({x:newX});
 		}
 
 	}
@@ -427,15 +428,16 @@ function populateRings() {
 			
 				newWidth = Math.floor(index.all[ring]/2*data.targetRingWidth)+1;
 				if(newWidth < 3) {newWidth = 3};
-				if(markData.coreStrip.ring.length > 0) {
+				if(markData1.coreStrip.ring.length > 0) {
 				
-					newX = markData.coreStrip.ring[ring - 1].x + Math.floor(newWidth);
+					newX = markData1.coreStrip.ring[ring - 1].x + Math.floor(newWidth);
 				
 				}
 				else {newX = Math.floor(newWidth);}
 
-				markData.coreStrip.ring.push({x:Math.floor(newX), width: Math.floor(newWidth), color:color[ring]});
+				markData1.coreStrip.ring.push({x:Math.floor(newX), width: Math.floor(newWidth), color:color[ring]});
 				
 			ring++;
 	}
+
 }	
