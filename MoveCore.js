@@ -1,4 +1,5 @@
 
+
 function appInit(){
 	var coreStrip = document.getElementById("coreStrip");
 
@@ -237,4 +238,5 @@ function stopDrag() {
     document.onmousemove = null;
     document.onmouseup = null;
     document.dragTarg = null;
+
 }
