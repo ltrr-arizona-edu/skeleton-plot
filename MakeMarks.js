@@ -1,4 +1,3 @@
-
 function appInit2(){
 
 	var userGraph = document.getElementById("userGraph2");
@@ -124,5 +123,5 @@ function renderGraphPaper2(canvas) {
 		ctx.fillText(txt, i-txtWidth/2, 4*graphUnit + 5);
 	}
 		
-
+	
 }

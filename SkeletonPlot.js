@@ -23,8 +23,6 @@ function positionControls(){
 	showHide.style.left = parseInt(mouseAction.style.left) + parseInt(mouseAction.style.width)+1 + "px";
 	coreSettings.style.width = 133+"px";
 	coreSettings.style.left = parseInt(showHide.style.left) + parseInt(showHide.style.width)+1 + "px";
-
-	console.log(anomaly.childNodes);
 }
 
 /*Functions for app settings and logic*/
@@ -153,7 +151,7 @@ function restart(){
 	populateRings();
 	writeAnswer();
 	writeHint();
-	//renderGraphics();
+	
 }
 
 //Reads appSettings, makes necessary changes
@@ -341,12 +339,7 @@ function renderGraphPaper(canvas) {
 		ctx.beginPath();
 		ctx.moveTo(i+.5, 0);
 		ctx.lineTo(i+.5, height);
-		if((i/graphUnit)%5 == 0) {	//Draw dark green line
-			ctx.strokeStyle = "rgb(000,204,051)"
-		}
-		else {	//Draw light green line
-			ctx.strokeStyle = "rgb(102,255,102)";
-		}
+		ctx.strokeStyle = "rgb(102,255,102)";
 		ctx.stroke();
 		ctx.closePath();
 	}
@@ -356,18 +349,14 @@ function renderGraphPaper(canvas) {
 		ctx.beginPath();
 		ctx.moveTo(graphUnit*5, i+.5);	//Leave room for margin
 		ctx.lineTo(width, i+.5);
-		if((i/graphUnit)%5 == 0) {	//Dark green lines
-			ctx.strokeStyle = "rgb(000,204,051)"
-		}
-		else {	//Light green lines
-			ctx.strokeStyle = "rgb(102,255,102)";
-		}
+		ctx.strokeStyle = "rgb(102,255,102)";
 		ctx.stroke();
 		ctx.closePath();
 	}
 
-	//Redundant code?
-	/*for (i = graphUnit*5; i < width; i+=graphUnit*5) {
+
+	//Dark Green Lines every 5 squares
+	for (i = graphUnit*5; i < width; i+=graphUnit*5) {
 		ctx.beginPath();
 		ctx.moveTo(i+.5, 0);
 		ctx.lineTo(i+.5, height);
@@ -383,7 +372,7 @@ function renderGraphPaper(canvas) {
 		ctx.strokeStyle = "rgb(000,204,051)"
 		ctx.stroke();
 		ctx.closePath();
-	}*/
+	}
 
 	//Draw special margins; depend on which graph it is
 	switch(canvas){
@@ -504,15 +493,12 @@ function scaleGraphs(){
 	masterGraph.height = graphUnit*30 + 1;
 	masterGraph.width = (markData.masterGraph.index.length*graphUnit) + graphUnit*20  - graphUnit - 1;
 	//Reposition Graphs
-	
-
-	
 	masterGraph.style.top = parseInt(userGraph.style.top) + userGraph.height + "px";
 
-	redraw();
+	drawGraphMarks();
 }
 
-function redraw(){
+function drawGraphMarks(){
 	var userGraph = document.getElementById("userGraph");
 	var masterGraph = document.getElementById("masterGraph");
 	var ctxU = userGraph.getContext("2d");
@@ -640,6 +626,7 @@ function drawCoreStrip() {
 	coreStrip.height = 40;
 	coreStrip.width = 20 + data.coreLength * parseInt(appSettings.coreMag);
 
+	//Reposition strip so that it does not leave center anchor
 	if(prevMag > 0 && prevMag < 4) {
 		coreStrip.style.left = 760/2 - (760/2 - parseInt(coreStrip.style.left)) * parseInt(appSettings.coreMag)/prevMag +"px";
 	}
@@ -655,15 +642,13 @@ function drawCoreStrip() {
 	ctx.fillStyle="rgb(255,255,41)";
 	ctx.fillRect(11.5,11.5,coreStrip.width-22,18);
 
-
+	//Draw rings
 	for(i = 0; i < markData.coreStrip.ring.length; ++i) {
+		//Adjust ring position and width according to magnification setting
 		adjRingX = markData.coreStrip.ring[i].x * parseInt(appSettings.coreMag) + 10;;
 		adjRingWidth = markData.coreStrip.ring[i].width * parseInt(appSettings.coreMag);
 
 		switch(markData.coreStrip.ring[i].color) {
-			case "earlyWood":
-				ctx.fillStyle="rgb(255,255,051)"
-			break;
 			case "lightLatewood":
 				ctx.fillStyle="rgb(255,204,051)"
 			break;
@@ -674,22 +659,21 @@ function drawCoreStrip() {
 				ctx.fillStyle="rgb(153,102,000)"
 			break;
 		}
+
 		ctx.beginPath();
-		if(adjRingWidth < 3) {
-			console.log(adjRingWidth);
-		}
+		//Draw latewood on left 0.25 of ring
 		ctx.fillRect(Math.floor(adjRingX-adjRingWidth*0.25), 11, Math.floor(adjRingWidth*0.25)+1, 19);
 		ctx.moveTo(adjRingX+.5, 10);
 		ctx.lineTo(adjRingX+.5, 30);
 		ctx.stroke();
 		ctx.closePath();
+		//Draw circle and ring number on every 10th ring
 		ctx.fillStyle="rgb(0,0,0)";
 		if(i % 10 == 0) {
 			ctx.beginPath();
 			ctx.arc(adjRingX-adjRingWidth/2, 20, 2, 0, 2*Math.PI);
 			ctx.fill();
-			ctx.closePath();
-			
+			ctx.closePath();			
 			ctx.font = "bold 12px Times";
 			txt = i;
 			txtWidth = ctx.measureText(txt).width;
@@ -698,10 +682,10 @@ function drawCoreStrip() {
 		}
 	}
 }
+
 function writeAnswer() {
 	var answerText = document.getElementById("answerText");
 	var i;
-	//ctx.font = "italic bold 15px Times";
 	answerText.style.fontWeight = "900";
 	answerText.style.fontFamily = "Times";
 	answerText.style.fontSize = "16px";
@@ -736,14 +720,18 @@ function writeHint() {
 }
 
 
-//Mouse Action Functions
+/*Mouse Action Functions*/
+
+//If element has multiple mouse actions, determine which one to use
+//Here, only used on userGraph
 function handleClick(e) {
 	var targ = e.target ? e.target : e.srcElement;
 
+	//If top 1/3 of element, drag
 	if(e.offsetY < targ.height / 3) {
 		startDrag(e);
 	}
-	//To draw, must be in upper 1/3 of graph and be on or left of first margin
+	//If lower 1/3 of graph and outside of white margin, draw/erase
 	else if (e.offsetY >= targ.height / 3 && e.offsetX >= 5*graphUnit) {
 		if(appSettings.mouseMode == "Draw"){
 			addMark(e);
@@ -751,7 +739,7 @@ function handleClick(e) {
 		else if (appSettings.mouseMode == "Erase"){
 			removeMark(e);
 		}
-		redraw();
+		drawGraphMarks();
 	}	
 }
 
@@ -774,9 +762,7 @@ function startDrag(e) {
     coordY = parseInt(targ.style.top);
     // move element
     document.onmouseup = stopDrag;
-
-    if (targ == document.getElementById("coreStrip")){ document.onmousemove = dragHorizLimited;}
-    else {document.onmousemove=dragHoriz;}
+    document.onmousemove=dragHoriz;
 
     return false;
 
@@ -787,25 +773,37 @@ function dragHoriz(e) {
 
     // move element
     targ.style.left=coordX+e.clientX-offsetX+'px';
+    //Restrain element
+    dragLimit(e);
+
     return false;
 }
 
-function dragHorizLimited(e) {
+//Conforms dragged element to specific restraints
+function dragLimit(e) {
 	var targ = document.dragTarg;
-
-    // move element
-    if(parseInt(coordX+e.clientX-offsetX) <= 381 && parseInt(coordX+e.clientX-offsetX) + parseInt(targ.width) >= 379){
-    	targ.style.left=coordX+e.clientX-offsetX+'px';
+	var frame = document.getElementById("appFrame");
+	switch(targ) {
+		//Keep graphs inside appFrame by 50px
+		case document.getElementById("userGraph"):
+		case document.getElementById("masterGraph"):
+			if(parseInt(targ.style.left) > parseInt(frame.style.width) - 50) {
+				targ.style.left=parseInt(frame.style.width) - 50 + "px";
+			}
+			if(parseInt(targ.style.left) < 50 - parseInt(targ.width)) {
+				targ.style.left = 50 - parseInt(targ.width) + "px";
+			}
+		break;
+		//Keep coreStrip anchored to middle of screen
+		case document.getElementById("coreStrip"):
+			if(parseInt(targ.style.left) > parseInt(frame.style.width) / 2) {
+				targ.style.left=parseInt(frame.style.width) / 2 +"px";
+			}
+			if(parseInt(targ.style.left) < parseInt(frame.style.width) / 2 - parseInt(targ.width)) {
+				targ.style.left = parseInt(frame.style.width) / 2 - parseInt(targ.width) + "px";
+			}
+		break;
 	}
-	if(parseInt(targ.style.left) > 381) {
-		targ.style.left="380px";
-	}
-	if(parseInt(targ.style.left) < 379 - parseInt(targ.width)) {
-		targ.style.left = 380 - parseInt(targ.width) + "px";
-	}
-	
-    return false;
-
 }
 
 function stopDrag() {
@@ -815,9 +813,9 @@ function stopDrag() {
 }
 
 
-//Functions for mark Data
+/*Functions for mark Data*/
 
-
+//Add a mark to array when userGraph is drawn on by user
 function addMark(e) {
 	var targ = e.target ? e.target : e.srcElement;
 
@@ -841,13 +839,15 @@ function addMark(e) {
 	}
 }
 
+//Remove mark from array when user erases userGraph mark
 function removeMark(e){
 	var targ = e.target ? e.target : e.srcElement;
 	var bestArray = null;
 	var bestIdx = 0;
-	var bestNum = graphUnit;
+	var bestNum = graphUnit;	//user must click within one graphUnit away from desired mark
 	var i;
 
+	//For each type of mark, sift through array and find closest mark. Save its index and array
 	for(i = 0; i < markData.userGraph.normal.length; ++i) {
 		if(Math.abs(e.offsetX - markData.userGraph.normal[i].x) < bestNum) {
 			bestNum = Math.abs(e.offsetX - markData.userGraph.normal[i].x);
@@ -880,7 +880,7 @@ function removeMark(e){
 		}
 	}
 
-
+	//If no mark is found, do nothing
 	if(bestArray != null) {
 		bestArray.splice(bestIdx, 1);
 	}
@@ -926,7 +926,7 @@ function populateRings() {
 		}	
 	}
 	
-
+	//Populate masterGraph with marks for rings that conform to certainparameters
 	for(i = 0; i < index.length; ++i) {
 		if(i > 0 && index[i] < (1-(1-indexMin)/absoluteValueCutoff) ||
 			index[i]-index[i-1] < (indexMin-indexMax)/firstDifferenceCutoff){
@@ -986,8 +986,10 @@ function populateRings() {
 				falses++;
 		}
 
+		//Adjust coreLength according to ring widths - if ring width is less than 3, it will be set to 3
 		data.coreLength +=  Math.floor(index[year+absents]/2*data.targetRingWidth)+1 >=3 ? Math.floor(index[year+absents]/2*data.targetRingWidth)+1 : 3;
 		
+		//Randomly select latewood color
 		var latewoodRandom = Math.random();
 		var newColor;
 		if(latewoodRandom > 0.85) {
@@ -1013,7 +1015,7 @@ function populateRings() {
 			if(year == falseYear) {
 				divisor = 2;
 				tempFalses++;
-				debugger;
+				
 			}
 			while(index[year+tempAbsent] < 0.06 &&
 				ring > 0 && ring < appSettings.rings-1) {

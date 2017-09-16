@@ -1,4 +1,3 @@
-
 function appInit(){
 
 	var userGraph = document.getElementById("userGraph");
@@ -58,6 +57,13 @@ function renderGraphPaper(canvas) {
 	var ctx = canvas.getContext("2d");
 	var i, txt, txtWidth, temp;
 
+	if(canvas == document.getElementById("userGraph")) {
+	//highlight upper 1/3 in grey
+		ctx.beginPath();
+		ctx.fillStyle = "rgb(204,204,204)";
+		ctx.fillRect(0,0, width, height/3);
+		ctx.closePath();
+	}
 
 	//Draw graph squares
 	ctx.lineWidth = 1;
@@ -118,6 +124,7 @@ function renderGraphPaper(canvas) {
 			//Write Ring Numbers
 			for (i=graphUnit*5; i<width; i+=10*graphUnit) {
 				ctx.font = "italic bold 15px Times";
+				ctx.fillStyle = "rgb(0,0,0)";
 				txt = i/graphUnit - 5;
 				txtWidth = ctx.measureText(txt).width;
 				ctx.fillText(txt, i-txtWidth/2, 4*graphUnit + 5);
@@ -192,13 +199,15 @@ function redraw(){
 	//Wide Marks
 	for(i = 0; i < markData.userGraph.wide.length; ++i) {
 		ctxU.font = "bold 16px Times  ";
+		ctx.fillStyle = "rgb(0,0,0)";
 		txt = "b";
 		txtWidth = ctxU.measureText(txt).width;
 		ctxU.fillText(txt, markData.userGraph.wide[i].x - txtWidth/2, 6.5*graphUnit);
 	}
 
 	for(i = 0; i < markData.masterGraph.wide.length; ++i) {
-		ctxM.font = "bold 16px Times  ";
+		ctxM.font = "bold 16px Times";
+		ctx.fillStyle = "rgb(0,0,0)";
 		txt = "b";
 		txtWidth = ctxM.measureText(txt).width;
 		ctxM.fillText(txt, markData.masterGraph.wide[i].x - txtWidth/2, 9.5*graphUnit);
@@ -312,96 +321,7 @@ function populateRings() {
 
 	}
 
-	//Populate Core
-	
-	
-	/*
-	for(year = Math.floor(coreStart*index.length); year < Math.floor(coreStart*index.length) + appSettings.rings - falses; ++year){
-		var ring = year - Math.floor(coreStart*index.length);
-		//mising rings; can't be first or last
-		while(index[year+absents] < 0.06) {
-			if(appSettings.absents=="off") {
-				index[year+absents]=0.06;
-			}
-			else if (year > Math.floor(coreStart*index.length) && year < Math.floor(coreStart*index.length) + appSettings.rings - 1 ){
-				answer.absents.push(year + data.masterYearStart + absents);
-				absents++;
-			}
-		}
 
-		if(index[year+absents] >= 0.06 && index[year+absents < 0.15]) {
-			index[year+absents] = 0.15;
-		}
-
-		//False rings; can't be first or last
-		if(appSettings.falses == "on" && index[year+absents] > 1.95 && year > Math.floor(coreStart*index.length) &&
-			Math.floor(coreStart*index.length) + appSettings.rings - 1 && falses == 0 && year- Math.floor(coreStart*index.length)%10 != 0 &&
-			(year - Math.floor(coreStart*index.length)+1)%10 != 0) {
-				falseYear = year;
-				index[year+absents] = 2.00;
-				answer.falses.push(falseYear - Math.floor(coreStart*index.length));
-				answer.falses.push(falseYear - Math.floor(coreStart*index.length)+1);
-				falses++;
-		}
-
-		data.coreLength +=  Math.floor(index[year+absents]/2*data.targetRingWidth)+1 >=3 ? Math.floor(index[year+absents]/2*data.targetRingWidth)+1 : 3;
-		
-		var latewoodRandom = Math.random();
-		var newColor;
-		if(latewoodRandom > 0.85) {
-			newColor = "darkLatewood";
-		}
-		else if(latewoodRandom < 0.15) {
-			newColor = "lightLatewood";
-		}
-		else {
-			newColor = "mediumLatewood";
-		}
-		color.push(newColor);
-	}*/
-
-	/*
-	var tempFalses = 0;
-	var tempAbsent = 0;
-	var ring = 0;
-	var newX = 0;
-	var adjIndex;
-	while(ring < appSettings.rings - tempFalses){
-			year = ring + Math.floor(coreStart*index.length);
-			var divisor = 1;
-			if(year == falseYear) {
-				divisor = 2;
-				tempFalses++;
-				debugger;
-			}
-			while(index[year+tempAbsent] < 0.06 &&
-				ring > 0 && ring < appSettings.rings-1) {
-				tempAbsent++;
-			}
-
-			for(i = 1; i < divisor+1; ++i) {
-				newWidth = Math.floor(index[year+tempAbsent]/2*data.targetRingWidth/divisor)+1;
-				if(newWidth < 3) {newWidth = 3};
-				if(markData.coreStrip.ring.length > 0) {
-					if(divisor == 2 && i == 1) {
-						adjIndex = 1;
-						
-					}
-					else {
-						adjIndex = 0;
-					}
-					newX = markData.coreStrip.ring[ring +tempFalses-adjIndex- 1].x + Math.floor(newWidth);
-					//FIXME: fix newX calculation
-				}
-				else {newX = Math.floor(newWidth);}
-
-				markData.coreStrip.ring.push({x:Math.floor(newX), width: Math.floor(newWidth), color:color[ring]});
-			}
-			ring++;
-	}
-
-	answer.yearEnd = answer.yearStart + appSettings.rings + absents - falses - 1;
-	*/
 }
 
 function checkAnswer() {

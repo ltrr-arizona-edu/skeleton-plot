@@ -1,4 +1,3 @@
-
 function appInit(){
 
 	var userGraph = document.getElementById("userGraph");
@@ -568,11 +567,21 @@ function dragHoriz(e) {
     var targ = document.dragTarg;
 
     // move element AND answer text
+    targ.style.left=coordX+e.clientX-offsetX+'px';
+    answer.style.left = coordX+e.clientX-offsetX + 5*graphUnit + 'px';
 
-    if(parseInt(coordX+e.clientX-offsetX) >= masterGraphLeft && parseInt(coordX+e.clientX-offsetX) <= masterGraphLeft + graphUnit){
-    	targ.style.left=coordX+e.clientX-offsetX+'px';
-    	answer.style.left = coordX+e.clientX-offsetX+ + 5*graphUnit + 'px';
-	}
+   	dragLimit(e);
+
+    checkAnswer();
+
+    return false;
+}
+
+function dragLimit(e) {
+	var answer = document.getElementById("answer");
+	var masterGraphLeft = parseInt(document.getElementById("masterGraph").style.left);
+    var targ = document.dragTarg;
+
 	if(parseInt(targ.style.left) > masterGraphLeft + graphUnit) {
 		targ.style.left=masterGraphLeft + graphUnit + "px";
 		answer.style.left =masterGraphLeft + graphUnit  + 5*graphUnit + "px";
@@ -581,10 +590,6 @@ function dragHoriz(e) {
 		targ.style.left = masterGraphLeft + "px";
 		answer.style.left = masterGraphLeft + 5*graphUnit + "px";
 	}
-
-    checkAnswer();
-
-    return false;
 }
 
 
@@ -592,5 +597,4 @@ function stopDrag() {
     document.onmousemove = null;
     document.onmouseup = null;
     document.dragTarg = null;
-
 }
