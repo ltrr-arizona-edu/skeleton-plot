@@ -1,4 +1,3 @@
-
 input[type="button"] {
  	background: #DADADA;
  	border: outset #DADADA 2px;
@@ -53,5 +52,4 @@ input:focus {
 	position:absolute;
 	left: 0;
 	top: 0;
-
 }
