@@ -1,3 +1,4 @@
+
 function appInit1(){
 
 	var userGraph = document.getElementById("userGraph1");
@@ -438,4 +439,5 @@ function populateRings() {
 				
 			ring++;
 	}
+
 }	

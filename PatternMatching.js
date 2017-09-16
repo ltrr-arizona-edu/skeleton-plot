@@ -1,3 +1,4 @@
+
 function appInit(){
 
 	var userGraph = document.getElementById("userGraph");
