@@ -63,7 +63,7 @@ function redraw2(){
 
 }		
 
-//Render graphPaper background for userGraph and masterGraph
+//Render graphPaper background for userGraph 
 function renderGraphPaper2(canvas) {
 	var height = canvas.height;
 	var width = canvas.width;
@@ -122,6 +122,4 @@ function renderGraphPaper2(canvas) {
 		ctx.fillStyle="rgb(0,0,0)";
 		ctx.fillText(txt, i-txtWidth/2, 4*graphUnit + 5);
 	}
-		
-	
 }

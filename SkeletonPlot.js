@@ -373,6 +373,20 @@ function renderGraphPaper(canvas) {
 		ctx.stroke();
 		ctx.closePath();
 	}
+	
+
+    //adjust font size according to scale
+	switch(graphUnit) {
+		case 5:
+			ctx.font = "italic bold 10px Times";
+		break;
+		case 6:
+			ctx.font = "italic bold 12px Times";
+		break;
+		case 8:
+			ctx.font = "italic bold 15px Times";
+		break;
+	}
 
 	//Draw special margins; depend on which graph it is
 	switch(canvas){
@@ -401,7 +415,7 @@ function renderGraphPaper(canvas) {
 
 			//Write Ring Numbers
 			for (i=graphUnit*5; i<width; i+=10*graphUnit) {
-				ctx.font = "italic bold 15px Times";
+				
 				txt = i/graphUnit - 5;
 				txtWidth = ctx.measureText(txt).width;
 				ctx.fillText(txt, i-txtWidth/2, 4*graphUnit + 5);
@@ -421,7 +435,6 @@ function renderGraphPaper(canvas) {
 
 			//Write Year Numbers
 			for (i=graphUnit*10; i<width; i+=10*graphUnit) {
-				ctx.font = "italic bold 15px Times";
 				temp = data.masterYearStart + i/graphUnit - 5;
 				if(temp%100 != 0){temp = temp%100;}
 				txt = temp;
@@ -534,21 +547,53 @@ function drawGraphMarks(){
 	}
 
 	//Wide Marks
+
+	switch(graphUnit) {
+		case 5:
+			ctxU.font = "bold 10px Times";
+			ctxM.font = "bold 10px Times";
+		break;
+		case 6:
+			ctxU.font = "bold 12px Times";
+			ctxM.font = "bold 12px Times";
+		break;
+		case 8:
+			ctxU.font = "bold 16px Times";
+			ctxM.font = "bold 16px Times";
+		break;
+	}
+
+
 	for(i = 0; i < markData.userGraph.wide.length; ++i) {
-		ctxU.font = "bold 16px Times  ";
 		txt = "b";
 		txtWidth = ctxU.measureText(txt).width;
 		ctxU.fillText(txt, markData.userGraph.wide[i].x - txtWidth/2, 6.5*graphUnit);
 	}
 
 	for(i = 0; i < markData.masterGraph.wide.length; ++i) {
-		ctxM.font = "bold 16px Times  ";
 		txt = "b";
 		txtWidth = ctxM.measureText(txt).width;
 		ctxM.fillText(txt, markData.masterGraph.wide[i].x - txtWidth/2, 9.5*graphUnit);
 	}
 
 	//Absent Marks
+
+	switch(graphUnit) {
+		case 5:
+			ctxU.font = "normal 10px Times";
+			ctxM.font = "normal 10px Times";
+		break;
+		case 6:
+			ctxU.font = "normal 12px Times";
+			ctxM.font = "normal 12px Times";
+		break;
+		case 8:
+			ctxU.font = "normal 16px Times";
+			ctxM.font = "normal 16px Times";
+		break;
+	}
+
+
 	ctxU.lineWidth=2;
 	ctxU.strokeStyle= "rgb(0,0,0)";
 	for(i = 0; i < markData.userGraph.absent.length; ++i) {
@@ -564,7 +609,6 @@ function drawGraphMarks(){
 		ctxU.stroke();
 		ctxU.closePath();
 
-		ctxU.font = "normal 15px Times";
 		txt = ">"
 		txtWidth = ctxU.measureText(txt).width;
 		ctxU.fillText(txt, markData.userGraph.absent[i].x-txtWidth/2, graphUnit + graphUnit*.75);
@@ -585,7 +629,7 @@ function drawGraphMarks(){
 		ctxU.stroke();
 		ctxU.closePath();
 
-		ctxU.font = "normal 15px Times";
+
 		txt = "<"
 		txtWidth = ctxU.measureText(txt).width;
 		ctxU.fillText(txt, markData.userGraph.falses[i].x-txtWidth/2, graphUnit + graphUnit*.75);
