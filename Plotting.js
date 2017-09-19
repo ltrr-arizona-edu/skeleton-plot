@@ -9,7 +9,7 @@ function appInit1(){
 		userGraph: { normal: [], //Members: x, y
 					 wide: []   //Members: x
 		},
-		index: {all: [],
+		index: {all: [],		//index holds all marks, and keeps track of which ones the demo will point to
 				narrow: -1,
 				medium: -1,
 				wide: -1

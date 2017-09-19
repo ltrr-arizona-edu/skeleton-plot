@@ -37,6 +37,7 @@ function appInit(){
 
 	graphUnit = 6;
 
+	//Position draggable elements
 	answerTxt.style.left = "45px";
 	answerTxt.style.top = "30px";
 
@@ -74,12 +75,7 @@ function renderGraphPaper(canvas) {
 		ctx.beginPath();
 		ctx.moveTo(i+.5, 0);
 		ctx.lineTo(i+.5, height);
-		if((i/graphUnit)%5 == 0) {	//Draw dark green line
-			ctx.strokeStyle = "rgb(000,204,051)"
-		}
-		else {	//Draw light green line
-			ctx.strokeStyle = "rgb(102,255,102)";
-		}
+		ctx.strokeStyle = "rgb(102,255,102)";
 		ctx.stroke();
 		ctx.closePath();
 	}
@@ -89,17 +85,14 @@ function renderGraphPaper(canvas) {
 		ctx.beginPath();
 		ctx.moveTo(graphUnit*5, i+.5);	//Leave room for margin
 		ctx.lineTo(width, i+.5);
-		if((i/graphUnit)%5 == 0) {	//Dark green lines
-			ctx.strokeStyle = "rgb(000,204,051)"
-		}
-		else {	//Light green lines
-			ctx.strokeStyle = "rgb(102,255,102)";
-		}
+		ctx.strokeStyle = "rgb(102,255,102)";
 		ctx.stroke();
 		ctx.closePath();
 	}
 
 	
+
+	//Draw Dark Green Lines
 	for (i = graphUnit*5; i < width; i+=graphUnit*5) {
 		ctx.beginPath();
 		ctx.moveTo(i+.5, 0);
@@ -189,7 +182,7 @@ function redraw(){
 
 	for(i = 0; i < markData.masterGraph.normal.length; ++i) {
 		ctxM.beginPath();
-		ctxM.moveTo(markData.masterGraph.normal[i].x-.5, markData.masterGraph.normal[i].y-.5);
+		ctxM.moveTo(markData.masterGraph.normal[i].x-.5, markData.masterGraph.normal[i].y+1.5);
 		ctxM.lineTo(markData.masterGraph.normal[i].x-.5, 0);
 		ctxM.strokeStyle = "rgb(0,0,0)";
 		ctxM.stroke();
@@ -433,9 +426,6 @@ function limitDrag(e) {
 }
 
 function stopDrag() {
-
-
-
 
     document.onmousemove = null;
     document.onmouseup = null;
