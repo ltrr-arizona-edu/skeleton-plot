@@ -539,8 +539,8 @@ function drawGraphMarks(){
 
 	for(i = 0; i < markData.masterGraph.normal.length; ++i) {
 		ctxM.beginPath();
-		ctxM.moveTo(markData.masterGraph.normal[i].x-.5, markData.masterGraph.normal[i].y-.5);
-		ctxM.lineTo(markData.masterGraph.normal[i].x-.5, 0);
+		ctxM.moveTo(markData.masterGraph.normal[i].x+.5, markData.masterGraph.normal[i].y-.5);
+		ctxM.lineTo(markData.masterGraph.normal[i].x+.5, 0);
 		ctxM.strokeStyle = "rgb(0,0,0)";
 		ctxM.stroke();
 		ctxM.closePath();
@@ -866,6 +866,7 @@ function addMark(e) {
 	switch(appSettings.mouseMark) {
 		case "Normal":
 			var newMark = {x:e.offsetX, y:e.offsetY};
+			newMark.x = Math.round((newMark.x-1)/graphUnit)*graphUnit+1;
 			markData.userGraph.normal.push(newMark);
 		break;
 		case "Wide":
@@ -874,10 +875,26 @@ function addMark(e) {
 		break;
 		case "Absent":
 			var newMark = {x:e.offsetX};
+			tempVal = Math.round((newMark.x-1)/graphUnit)*graphUnit+1;
+			if(newMark.x < tempVal) {
+				newMark.x = Math.round((newMark.x-1)/graphUnit)*graphUnit-Math.round(graphUnit/2);
+			}
+
+			else if(newMark.x >= tempVal){
+				newMark.x = Math.round((newMark.x-1)/graphUnit)*graphUnit+Math.round(graphUnit/2);
+			}
 			markData.userGraph.absent.push(newMark);
 		break;
 		case "False":
 			var newMark = {x:e.offsetX};
+			tempVal = Math.round((newMark.x-1)/graphUnit)*graphUnit+1;
+			if(newMark.x < tempVal) {
+				newMark.x = Math.round((newMark.x-1)/graphUnit)*graphUnit-Math.round(graphUnit/2);
+			}
+
+			else if(newMark.x >= tempVal){
+				newMark.x = Math.round((newMark.x-1)/graphUnit)*graphUnit+Math.round(graphUnit/2);
+			}
 			markData.userGraph.falses.push(newMark);
 		break;
 	}

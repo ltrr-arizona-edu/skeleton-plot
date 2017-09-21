@@ -118,7 +118,7 @@ function renderGraphPaper(canvas) {
 		case document.getElementById("userGraph"):
 			//Write Ring Numbers
 			for (i=graphUnit*5; i<width; i+=10*graphUnit) {
-				ctx.font = "italic bold 15px Times";
+				ctx.font = "italic bold 12px Times";
 				txt = i/graphUnit - 5;
 				txtWidth = ctx.measureText(txt).width;
 				ctx.fillText(txt, i-txtWidth/2, 4*graphUnit + 5);
@@ -138,7 +138,7 @@ function renderGraphPaper(canvas) {
 
 			//Write Year Numbers
 			for (i=graphUnit*10; i<width; i+=10*graphUnit) {
-				ctx.font = "italic bold 15px Times";
+				ctx.font = "italic bold 12px Times";
 				temp = data.masterYearStart + i/graphUnit - 5;
 				if(temp%100 != 0){temp = temp%100;}
 				txt = temp;
@@ -174,8 +174,8 @@ function redraw(){
 
 	for(i = 0; i < markData.userGraph.normal.length; ++i) {
 		ctxU.beginPath();
-		ctxU.moveTo(markData.userGraph.normal[i].x-.5, Math.floor(userGraph.height - markData.userGraph.normal[i].y ) -.5);
-		ctxU.lineTo(markData.userGraph.normal[i].x-.5, userGraph.height);
+		ctxU.moveTo(markData.userGraph.normal[i].x+.5, Math.floor(userGraph.height - markData.userGraph.normal[i].y ) -.5);
+		ctxU.lineTo(markData.userGraph.normal[i].x+.5, userGraph.height);
 		ctxU.strokeStyle = "rgb(0,0,0)";
 		ctxU.stroke();
 		ctxU.closePath();
@@ -183,8 +183,8 @@ function redraw(){
 
 	for(i = 0; i < markData.masterGraph.normal.length; ++i) {
 		ctxM.beginPath();
-		ctxM.moveTo(markData.masterGraph.normal[i].x-.5, markData.masterGraph.normal[i].y-.5);
-		ctxM.lineTo(markData.masterGraph.normal[i].x-.5, 0);
+		ctxM.moveTo(markData.masterGraph.normal[i].x+.5, markData.masterGraph.normal[i].y-.5);
+		ctxM.lineTo(markData.masterGraph.normal[i].x+.5, 0);
 		ctxM.strokeStyle = "rgb(0,0,0)";
 		ctxM.stroke();
 		ctxM.closePath();
@@ -192,7 +192,7 @@ function redraw(){
 
 	//Wide Marks
 	for(i = 0; i < markData.userGraph.wide.length; ++i) {
-		ctxU.font = "bold 16px Times  ";
+		ctxU.font = "bold 14px Times  ";
 		txt = "b";
 		txtWidth = ctxU.measureText(txt).width;
 		ctxU.fillText(txt, markData.userGraph.wide[i].x - txtWidth/2, 6.5*graphUnit);

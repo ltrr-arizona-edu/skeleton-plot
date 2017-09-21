@@ -36,6 +36,10 @@ function addMark(e) {
 
 	
 	var newMark = {x:e.offsetX, y:e.offsetY};
+
+	//snap to grid
+	newMark.x = Math.round((newMark.x+2)/graphUnit)*graphUnit -2;
+
 	markData2.userGraph.normal.push(newMark);
 }
 		

@@ -173,8 +173,8 @@ function redraw(){
 
 	for(i = 0; i < markData.userGraph.normal.length; ++i) {
 		ctxU.beginPath();
-		ctxU.moveTo(markData.userGraph.normal[i].x-.5, Math.floor(userGraph.height - markData.userGraph.normal[i].y ) -.5);
-		ctxU.lineTo(markData.userGraph.normal[i].x-.5, userGraph.height);
+		ctxU.moveTo(markData.userGraph.normal[i].x+.5, Math.floor(userGraph.height - markData.userGraph.normal[i].y ) -.5);
+		ctxU.lineTo(markData.userGraph.normal[i].x+.5, userGraph.height);
 		ctxU.strokeStyle = "rgb(0,0,0)";
 		ctxU.stroke();
 		ctxU.closePath();
@@ -182,8 +182,8 @@ function redraw(){
 
 	for(i = 0; i < markData.masterGraph.normal.length; ++i) {
 		ctxM.beginPath();
-		ctxM.moveTo(markData.masterGraph.normal[i].x-.5, markData.masterGraph.normal[i].y+1.5);
-		ctxM.lineTo(markData.masterGraph.normal[i].x-.5, 0);
+		ctxM.moveTo(markData.masterGraph.normal[i].x+.5, markData.masterGraph.normal[i].y+1.5);
+		ctxM.lineTo(markData.masterGraph.normal[i].x+.5, 0);
 		ctxM.strokeStyle = "rgb(0,0,0)";
 		ctxM.stroke();
 		ctxM.closePath();
@@ -192,7 +192,7 @@ function redraw(){
 	//Wide Marks
 	for(i = 0; i < markData.userGraph.wide.length; ++i) {
 		ctxU.font = "bold 16px Times  ";
-		ctx.fillStyle = "rgb(0,0,0)";
+		ctxU.fillStyle = "rgb(0,0,0)";
 		txt = "b";
 		txtWidth = ctxU.measureText(txt).width;
 		ctxU.fillText(txt, markData.userGraph.wide[i].x - txtWidth/2, 6.5*graphUnit);
@@ -200,7 +200,7 @@ function redraw(){
 
 	for(i = 0; i < markData.masterGraph.wide.length; ++i) {
 		ctxM.font = "bold 16px Times";
-		ctx.fillStyle = "rgb(0,0,0)";
+		ctxM.fillStyle = "rgb(0,0,0)";
 		txt = "b";
 		txtWidth = ctxM.measureText(txt).width;
 		ctxM.fillText(txt, markData.masterGraph.wide[i].x - txtWidth/2, 9.5*graphUnit);
@@ -418,9 +418,7 @@ function limitDrag(e) {
 	if(parseInt(targ.style.left) > 420){
 		targ.style.left =  "420px";
 	}
-	
 
-	
     return false;
 
 }

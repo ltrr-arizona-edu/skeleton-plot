@@ -234,8 +234,8 @@ function redraw1(){
 
 	for(i = 0; i < markData1.userGraph.normal.length; ++i) {
 		ctxU.beginPath();
-		ctxU.moveTo(markData1.userGraph.normal[i].x-.5, Math.floor(userGraph.height - markData1.userGraph.normal[i].y ) -.5);
-		ctxU.lineTo(markData1.userGraph.normal[i].x-.5, userGraph.height);
+		ctxU.moveTo(markData1.userGraph.normal[i].x+.5, Math.floor(userGraph.height - markData1.userGraph.normal[i].y ) -.5);
+		ctxU.lineTo(markData1.userGraph.normal[i].x+.5, userGraph.height);
 		ctxU.strokeStyle = "rgb(0,0,0)";
 		ctxU.stroke();
 		ctxU.closePath();
