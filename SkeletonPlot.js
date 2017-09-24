@@ -83,8 +83,7 @@ function inputInit() {
 		if(allInputs[x].value == "Absents" || allInputs[x].value == "Falses"){
 		    allInputs[x].checked = false;
 		}
-	}
-	
+	}	
 }
 
 function restart(){
