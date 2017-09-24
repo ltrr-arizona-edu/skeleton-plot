@@ -1,33 +1,7 @@
 
-function positionControls(){
-	var panel = document.getElementById("panel");
-	var anomaly = document.getElementById("anomalyControls");
-	var magnification = document.getElementById("magnificationControls");
-	var mouseAction = document.getElementById("mouseActionControls");
-	var showHide = document.getElementById("showHideControls");
-	var coreSettings = document.getElementById("coreSettingsControls");
-
-	
-	panel.width = 581;
-	panel.height = 120;
-	panel.style.width = panel.width+"px";
-	panel.style.height = panel.height+"px";
-
-	anomaly.style.width = 98+"px";
-	anomaly.style.left = 0 + "px";
-	magnification.style.width = 127+"px";
-	magnification.style.left = parseInt(anomaly.style.left) + parseInt(anomaly.style.width)+1+"px";
-	mouseAction.style.width = 150+"px";
-	mouseAction.style.left = parseInt(magnification.style.left) + parseInt(magnification.style.width)+1 + "px";
-	showHide.style.width = 69+"px";
-	showHide.style.left = parseInt(mouseAction.style.left) + parseInt(mouseAction.style.width)+1 + "px";
-	coreSettings.style.width = 133+"px";
-	coreSettings.style.left = parseInt(showHide.style.left) + parseInt(showHide.style.width)+1 + "px";
-}
 
 /*Functions for app settings and logic*/
 function appInit(){
-	positionControls();
 
 	var userGraph = document.getElementById("userGraph");
 	var masterGraph = document.getElementById("masterGraph");
@@ -94,11 +68,22 @@ function appInit(){
 	coreStrip.style.left = "10px";
 
 
+	inputInit();
 	applySettings();
 	populateRings();
 	writeAnswer();
 	writeHint();
 	renderGraphics();
+}
+
+//Initializes check status of input elements
+function inputInit() {
+ 	var allInputs = document.getElementsByTagName("input");
+	for(var x=0;x<allInputs.length;x++){
+		if(allInputs[x].value == "Absents" || allInputs[x].value == "Falses"){
+		    allInputs[x].checked = false;
+		}
+	}	
 }
 
 function restart(){
