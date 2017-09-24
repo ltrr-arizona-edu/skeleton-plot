@@ -85,8 +85,17 @@ function appInit(){
 function inputInit() {
  	var allInputs = document.getElementsByTagName("input");
 	for(var x=0;x<allInputs.length;x++){
-		if(allInputs[x].value == "Absents" || allInputs[x].value == "Falses"){
-		    allInputs[x].checked = false;
+		switch(allInputs[x].value) {
+			case "Absents":
+			case "Falses":
+				allInputs[x].checked = false;
+			break;
+			case "Draw":
+			case "Normal":
+			case "Large":
+			case "1x":
+				allInputs[x].checked=true;
+			break;
 		}
 	}	
 }
