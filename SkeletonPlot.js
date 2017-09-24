@@ -22,6 +22,11 @@ function appInit(){
 		coreStrip: { ring: []		//Members: x, width, color
 		}
 	};
+
+	userAction = {
+		done: [],
+		undone: []
+	}; //Members: x, y(if applicable), type, mode
 	
 	//Corresponds to settings in control panel
 	appSettings = {
@@ -241,6 +246,12 @@ function handleInputPress(e){
 
 		case "button":
 			switch(targ.value) {	//Toggles visibility of elements
+				case "Undo":
+					undo();
+				break;
+				case "Redo":
+					redo();
+				break;
 				case "Hint":
 					if(appSettings.hintVis == "Hidden"){
 						appSettings.hintVis = "Visible";
@@ -853,10 +864,13 @@ function addMark(e) {
 			var newMark = {x:e.offsetX, y:e.offsetY};
 			newMark.x = Math.round((newMark.x-1)/graphUnit)*graphUnit+1;
 			markData.userGraph.normal.push(newMark);
+			userAction.done.push({x: newMark.x, y: newMark.y, array: markData.userGraph.normal, mode:"draw"});
 		break;
 		case "Wide":
 			var newMark = {x:e.offsetX};
 			markData.userGraph.wide.push(newMark);
+			userAction.done.push({x: newMark.x, array: markData.userGraph.wide, mode:"draw"});
+
 		break;
 		case "Absent":
 			var newMark = {x:e.offsetX};
@@ -869,6 +883,8 @@ function addMark(e) {
 				newMark.x = Math.round((newMark.x-1)/graphUnit)*graphUnit+Math.round(graphUnit/2);
 			}
 			markData.userGraph.absent.push(newMark);
+			userAction.done.push({x: newMark.x, array: markData.userGraph.absent, mode:"draw"});
+
 		break;
 		case "False":
 			var newMark = {x:e.offsetX};
@@ -881,6 +897,7 @@ function addMark(e) {
 				newMark.x = Math.round((newMark.x-1)/graphUnit)*graphUnit+Math.round(graphUnit/2);
 			}
 			markData.userGraph.falses.push(newMark);
+			userAction.done.push({x: newMark.x, array: markData.userGraph.falses, mode:"draw"});
 		break;
 	}
 }
@@ -928,9 +945,59 @@ function removeMark(e){
 
 	//If no mark is found, do nothing
 	if(bestArray != null) {
+		if(bestArray == markData.userGraph.normal) {
+				userAction.done.push({x: bestArray[bestIdx].x, y:bestArray[bestIdx].y, array:bestArray, mode:"erase"});
+			}
+		else {
+			userAction.done.push({x: bestArray[bestIdx].x, array:bestArray, mode:"erase"});
+
+		}
 		bestArray.splice(bestIdx, 1);
+	
 	}
 }
+
+function undo() {
+	if(!(userAction.done.length > 0) ){
+		return;
+	}
+
+	var mark = userAction.done[userAction.done.length - 1];
+	switch(mark.mode) {
+		case "draw":
+			mark.array.splice(mark.array.length - 1,1);
+		break;
+		case "erase":
+			mark.array.push(mark);
+		break;
+	}
+	userAction.undone.push(mark);
+	userAction.done.splice(userAction.done.length-1,1);
+
+
+	drawGraphMarks();
+}
+
+function redo() {
+	if(!(userAction.undone.length > 0) ){
+		return;
+	}
+	var mark = userAction.undone[userAction.undone.length-1];
+	switch(mark.mode) {
+		case "draw":
+			mark.array.push(mark);
+		break;
+		case "erase":
+			mark.array.splice(mark.array.length - 1,1);
+		break;
+	}
+	userAction.done.push(mark);
+	userAction.undone.splice(userAction.undone.length-1,1);
+
+	drawGraphMarks();
+}
+
+
 
 //Creates ring data for master and dimensions of rings on core strip
 function populateRings() {
