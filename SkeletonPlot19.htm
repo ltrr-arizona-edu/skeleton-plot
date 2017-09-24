@@ -28,9 +28,9 @@
 					</center>
 					
 				
-					<input type="checkbox" value="Absents" onmousedown="handleInputPress(event)">
+					<input type="checkbox" value="Absents"  onmousedown="handleInputPress(event)" unchecked>
 					<span>Absents<br></span>
-					<input type="checkbox" value="Falses" onmousedown="handleInputPress(event)">
+					<input type="checkbox" value="Falses" onmousedown="handleInputPress(event)" unchecked>
 					<span>Falses</span>
 					<input type="button" value="Hint" style="top:99; padding-left:30px; padding-right:30px;left:0"onmousedown="handleInputPress(event)">
 					</font>
@@ -55,10 +55,11 @@
 				<font size="2" face="Arial">
 					<center> Mouse Actions </center>	
 				
-				<form style="width:60px;height:100px;top:27px;line-height:1.5">
-					<br>
-					<input type="radio" name="mouseMode" value="Draw" onmousedown="handleInputPress(event)" checked>Draw<br><br>
-					<input type="radio" name="mouseMode" value="Erase" onmousedown="handleInputPress(event)">Erase
+				<form style="width:60px;height:100px;top:35px;line-height:1.5">
+					<input type="radio" name="mouseMode" value="Draw" onmousedown="handleInputPress(event)" checked>Draw<br>
+					<input type="radio" name="mouseMode" value="Erase" onmousedown="handleInputPress(event)">Erase <br>
+					<input style="left:0px; width:60px" type="button" value="Undo" onmousedown="handleInputPress(event)"><br>
+					<input style="left:0px; width:60px; top: 64px" type="button" value="Redo" onmousedown="handleInputPress(event)">
 				</form>
 				<form style="width:70;height:100px;top:35px;left:60;line-height:1.5">
 					<input type="radio" name="mouseMark" value="Normal" onmousedown="handleInputPress(event)" checked>Normal<br>
