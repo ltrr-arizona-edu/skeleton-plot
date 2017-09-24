@@ -68,11 +68,23 @@ function appInit(){
 	coreStrip.style.left = "10px";
 
 
+	inputInit();
 	applySettings();
 	populateRings();
 	writeAnswer();
 	writeHint();
 	renderGraphics();
+}
+
+//Initializes check status of input elements
+function inputInit() {
+ 	var allInputs = document.getElementsByTagName("input");
+	for(var x=0;x<allInputs.length;x++){
+		if(allInputs[x].value == "Absents" || allInputs[x].value == "Falses"){
+		    allInputs[x].checked = false;
+		}
+	}
+	
 }
 
 function restart(){
