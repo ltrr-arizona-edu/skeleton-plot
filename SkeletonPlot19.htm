@@ -7,6 +7,8 @@
    <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; U) [Netscape]">
    <META NAME="KeyWords" CONTENT="dendrochronology, tree ring, crossdating, skeleton plot">
    <TITLE>Crossdating: Relative Scale</TITLE>
+   <script src="common.js"></script>
+   <link href="common.css" rel="stylesheet">
    <script src="SkeletonPlot.js"></script>
 	<link href="SkeletonPlot.css" rel="stylesheet" type="text/css">
 <LINK REL=stylesheet HREF="crossdatestyle.css" TYPE="text/css">
@@ -109,16 +111,16 @@
 		<!--End Control Panel-->
 
 		<!-- Start Core Strip and Graphs-->
-		<canvas id="coreStrip" onmousedown="startDrag(event)">	
+		<canvas id="coreStrip" class="interactive" onpointerdown="startDrag(event)">	
 		</canvas>
 		<div class="centerMark" style="top:134px"></div>
 		<div class="centerMark" style="top:164px"></div>
 		<div style="top:176px; left:270px">
 			<span id="hintText"></span>
 		</div>
-		<canvas id="userGraph" onmousedown="handleClick(event)">
+		<canvas id="userGraph" class="interactive" onpointerdown="handleClick(event)">
 		</canvas>
-		<canvas id="masterGraph" onmousedown="startDrag(event)">
+		<canvas id="masterGraph" class="interactive" onpointerdown="startDrag(event)">
 		</canvas>
 		<div id="answerBox">
 			<div style="margin-left:10px">

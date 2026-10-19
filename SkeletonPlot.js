@@ -66,7 +66,7 @@ function appInit(){
 	userGraph.style.top = "190px";
 	userGraph.style.left = "10px";
 
-	masterGraph.style.top = masterGraph.style.top = parseInt(userGraph.style.top) + userGraph.height + "px";
+	masterGraph.style.top = parseInt(userGraph.style.top) + Skel.height(userGraph) + "px";
 	masterGraph.style.left = "10px";
 
 	coreStrip.style.top = "134px";
@@ -135,7 +135,7 @@ function restart(){
 	userGraph.style.top = "190px";
 	userGraph.style.left = "10px";
 
-	masterGraph.style.top = masterGraph.style.top = parseInt(userGraph.style.top) + userGraph.height + "px";
+	masterGraph.style.top = parseInt(userGraph.style.top) + Skel.height(userGraph) + "px";
 	masterGraph.style.left = "10px";
 
 	coreStrip.style.top = "134px";
@@ -323,70 +323,13 @@ function renderGraphics(){
 
 //Render graphPaper background for userGraph and masterGraph
 function renderGraphPaper(canvas) {
-	var height = canvas.height;
-	var width = canvas.width;
-	var mag = appSettings.graphMag;
+	var height = Skel.height(canvas);
+	var width = Skel.width(canvas);
 	var ctx = canvas.getContext("2d");
-	var i, txt, txtWidth, temp;
+	var font = "italic bold " + labelSize() + "px Times";
 
-
-	//Draw graph squares
-	ctx.lineWidth = 1;
-
-	//Draw vertical lines
 	//Leave 5 units for margin
-	for (i = graphUnit*5; i < width; i+=graphUnit) {
-		ctx.beginPath();
-		ctx.moveTo(i+.5, 0);
-		ctx.lineTo(i+.5, height);
-		ctx.strokeStyle = "rgb(102,255,102)";
-		ctx.stroke();
-		ctx.closePath();
-	}
-
-	//Draw horizontal lines
-	for (i = 0; i < height; i+=graphUnit) {
-		ctx.beginPath();
-		ctx.moveTo(graphUnit*5, i+.5);	//Leave room for margin
-		ctx.lineTo(width, i+.5);
-		ctx.strokeStyle = "rgb(102,255,102)";
-		ctx.stroke();
-		ctx.closePath();
-	}
-
-
-	//Dark Green Lines every 5 squares
-	for (i = graphUnit*5; i < width; i+=graphUnit*5) {
-		ctx.beginPath();
-		ctx.moveTo(i+.5, 0);
-		ctx.lineTo(i+.5, height);
-		ctx.strokeStyle = "rgb(000,204,051)";
-		ctx.stroke();
-		ctx.closePath();
-	}
-
-	for (i = 0; i < height; i+=graphUnit*5) {
-		ctx.beginPath();
-		ctx.moveTo(graphUnit*5, i+.5);
-		ctx.lineTo(width, i+.5);
-		ctx.strokeStyle = "rgb(000,204,051)"
-		ctx.stroke();
-		ctx.closePath();
-	}
-	
-
-    //adjust font size according to scale
-	switch(graphUnit) {
-		case 5:
-			ctx.font = "italic bold 10px Times";
-		break;
-		case 6:
-			ctx.font = "italic bold 12px Times";
-		break;
-		case 8:
-			ctx.font = "italic bold 15px Times";
-		break;
-	}
+	Skel.drawGrid(ctx, graphUnit*5, width, height, graphUnit);
 
 	//Draw special margins; depend on which graph it is
 	switch(canvas){
@@ -413,57 +356,43 @@ function renderGraphPaper(canvas) {
 			ctx.stroke();
 			ctx.closePath();
 
-			//Write Ring Numbers
-			for (i=graphUnit*5; i<width; i+=10*graphUnit) {
-				
-				txt = i/graphUnit - 5;
-				txtWidth = ctx.measureText(txt).width;
-				ctx.fillText(txt, i-txtWidth/2, 4*graphUnit + 5);
-			}
+			Skel.drawRingNumbers(ctx, graphUnit*5, width, graphUnit, font);
 		break;
 		case document.getElementById("masterGraph"):
-			//Draw black horizontal lines
-			ctx.lineWidth = 3;
-			ctx.beginPath();
-			ctx.moveTo(graphUnit*5, graphUnit*10 + .5);
-			ctx.lineTo(width, graphUnit*10 + .5);
-			ctx.moveTo(graphUnit*5, graphUnit*20 + .5);
-			ctx.lineTo(width, graphUnit*20 + .5);
-			ctx.strokeStyle = "rgb(0,0,0)";
-			ctx.stroke();
-			ctx.closePath();
-
-			//Write Year Numbers
-			for (i=graphUnit*10; i<width; i+=10*graphUnit) {
-				temp = data.masterYearStart + i/graphUnit - 5;
-				if(temp%100 != 0){temp = temp%100;}
-				txt = temp;
-				txtWidth = ctx.measureText(txt).width;
-				ctx.fillText(txt, i-txtWidth/2, 12*graphUnit);
-			}
-
-			//Note halfway mark on index plot
-			ctx.font = "bold 18px Times";
-			txt = "1.0";
-			txtWidth = ctx.measureText(txt).width;
-			ctx.fillText(txt, 2.5*graphUnit - txtWidth/2, 21*graphUnit);
+			Skel.drawMasterAxes(ctx, width, graphUnit, data.masterYearStart, font);
 		break;
+	}
+}
+
+//Font size for graph labels at the current magnification
+function labelSize() {
+	switch(graphUnit) {
+		case 5: return 10;
+		case 6: return 12;
+		case 8: return 15;
+	}
+}
+
+//Font size for marks at the current magnification
+function markSize() {
+	switch(graphUnit) {
+		case 5: return 10;
+		case 6: return 12;
+		case 8: return 16;
 	}
 }
 
 function scaleGraphs(){
 	var userGraph = document.getElementById("userGraph");
 	var masterGraph = document.getElementById("masterGraph");
-	var i;
 
 	if(typeof graphUnitPrev === 'undefined') {	//If first time, define previous graph unit as current graphunit
 		graphUnitPrev = graphUnit;	//Note: one graph square == 5 * graphUnit
 	}
 
 	//Modify userGraph dimensions
-	userGraph.height = graphUnit*15 + 1;	//15 squares tall
-	//userGraph must be long enough for all rings, the margin on left, and 3 large blocks to right
-	userGraph.width = graphUnit*(appSettings.rings-1) + graphUnit*20;	//one square for each ring, plut 5 left margin and 15 right margin
+	//15 squares tall, and long enough for one square per ring plus 5 units of margin on the left and 15 on the right
+	Skel.sizeCanvas(userGraph, graphUnit*(appSettings.rings-1) + graphUnit*20, graphUnit*15 + 1);
 
 	//Modify graph positions
 	userGraph.style.left = 760/2 - (760/2 - parseInt(userGraph.style.left)) * graphUnit/graphUnitPrev +"px";
@@ -472,10 +401,9 @@ function scaleGraphs(){
 	//Mark positions are stored in graph units, so they need no rescaling here
 
 	//Modify masterGraph dimensions
-	masterGraph.height = graphUnit*30 + 1;
-	masterGraph.width = (markData.masterGraph.index.length*graphUnit) + graphUnit*20  - graphUnit - 1;
+	Skel.sizeCanvas(masterGraph, (markData.masterGraph.index.length*graphUnit) + graphUnit*20  - graphUnit - 1, graphUnit*30 + 1);
 	//Reposition Graphs
-	masterGraph.style.top = parseInt(userGraph.style.top) + userGraph.height + "px";
+	masterGraph.style.top = parseInt(userGraph.style.top) + Skel.height(userGraph) + "px";
 
 	drawGraphMarks();
 }
@@ -485,216 +413,60 @@ function drawGraphMarks(){
 	var masterGraph = document.getElementById("masterGraph");
 	var ctxU = userGraph.getContext("2d");
 	var ctxM = masterGraph.getContext("2d");
-	var i, txt, txtWidth, x, y;
+	var userHeight = Skel.height(userGraph);
+	var marks = markData.userGraph;
+	var master = markData.masterGraph;
+	var i;
 
-	ctxU.clearRect(0, 0, userGraph.width, userGraph.height);
+	ctxU.clearRect(0, 0, Skel.width(userGraph), userHeight);
 	renderGraphPaper(userGraph);
 
-	ctxM.clearRect(0, 0, masterGraph.width, masterGraph.height);
+	ctxM.clearRect(0, 0, Skel.width(masterGraph), Skel.height(masterGraph));
 	renderGraphPaper(masterGraph);
 
-	//Make normal marks
-
+	//Normal marks: user marks rise from the bottom, master marks hang from the top
 	ctxU.lineWidth = 3;
-
-	for(i = 0; i < markData.userGraph.normal.length; ++i) {
-		ctxU.beginPath();
-		ctxU.moveTo(markData.userGraph.normal[i].x*graphUnit+.5, markData.userGraph.normal[i].y*graphUnit-.5);
-		ctxU.lineTo(markData.userGraph.normal[i].x*graphUnit+.5, userGraph.height);
-		ctxU.strokeStyle = "rgb(0,0,0)";
-		ctxU.stroke();
-		ctxU.closePath();
+	for(i = 0; i < marks.normal.length; ++i) {
+		Skel.drawBar(ctxU, marks.normal[i].x*graphUnit+.5, marks.normal[i].y*graphUnit-.5, userHeight);
 	}
 
-	for(i = 0; i < markData.masterGraph.normal.length; ++i) {
-		ctxM.beginPath();
-		ctxM.moveTo(markData.masterGraph.normal[i].x*graphUnit+.5, markData.masterGraph.normal[i].y*graphUnit-.5);
-		ctxM.lineTo(markData.masterGraph.normal[i].x*graphUnit+.5, 0);
-		ctxM.strokeStyle = "rgb(0,0,0)";
-		ctxM.stroke();
-		ctxM.closePath();
+	ctxM.lineWidth = 3;
+	for(i = 0; i < master.normal.length; ++i) {
+		Skel.drawBar(ctxM, master.normal[i].x*graphUnit+.5, master.normal[i].y*graphUnit-.5, 0);
 	}
 
 	//Wide Marks
-
-	switch(graphUnit) {
-		case 5:
-			ctxU.font = "bold 10px Times";
-			ctxM.font = "bold 10px Times";
-		break;
-		case 6:
-			ctxU.font = "bold 12px Times";
-			ctxM.font = "bold 12px Times";
-		break;
-		case 8:
-			ctxU.font = "bold 16px Times";
-			ctxM.font = "bold 16px Times";
-		break;
+	for(i = 0; i < marks.wide.length; ++i) {
+		Skel.drawWideMark(ctxU, marks.wide[i].x*graphUnit, 6.5*graphUnit, "bold " + markSize() + "px Times");
 	}
 
-
-	for(i = 0; i < markData.userGraph.wide.length; ++i) {
-		txt = "b";
-		txtWidth = ctxU.measureText(txt).width;
-		ctxU.fillText(txt, markData.userGraph.wide[i].x*graphUnit - txtWidth/2, 6.5*graphUnit);
+	for(i = 0; i < master.wide.length; ++i) {
+		Skel.drawWideMark(ctxM, master.wide[i].x*graphUnit, 9.5*graphUnit, "bold " + markSize() + "px Times");
 	}
 
-	for(i = 0; i < markData.masterGraph.wide.length; ++i) {
-		txt = "b";
-		txtWidth = ctxM.measureText(txt).width;
-		ctxM.fillText(txt, markData.masterGraph.wide[i].x*graphUnit - txtWidth/2, 9.5*graphUnit);
+	//Absent and False Marks
+	for(i = 0; i < marks.absent.length; ++i) {
+		Skel.drawAbsentMark(ctxU, marks.absent[i].x*graphUnit, userHeight, graphUnit, "normal " + markSize() + "px Times");
 	}
 
-	//Absent Marks
-
-	switch(graphUnit) {
-		case 5:
-			ctxU.font = "normal 10px Times";
-			ctxM.font = "normal 10px Times";
-		break;
-		case 6:
-			ctxU.font = "normal 12px Times";
-			ctxM.font = "normal 12px Times";
-		break;
-		case 8:
-			ctxU.font = "normal 16px Times";
-			ctxM.font = "normal 16px Times";
-		break;
-	}
-
-
-	ctxU.lineWidth=2;
-	ctxU.strokeStyle= "rgb(0,0,0)";
-	for(i = 0; i < markData.userGraph.absent.length; ++i) {
-		x = markData.userGraph.absent[i].x*graphUnit;
-		ctxU.beginPath();
-		ctxU.moveTo(x, userGraph.height -1);
-		ctxU.lineTo(x, userGraph.height - graphUnit*2 -1);
-		ctxU.stroke();
-		ctxU.moveTo(x, userGraph.height - graphUnit*4-1);
-		ctxU.lineTo(x, userGraph.height - graphUnit*6-1);
-		ctxU.stroke();
-		ctxU.moveTo(x, userGraph.height - graphUnit*8-1);
-		ctxU.lineTo(x, userGraph.height - graphUnit*10-1);
-		ctxU.stroke();
-		ctxU.closePath();
-
-		txt = ">"
-		txtWidth = ctxU.measureText(txt).width;
-		ctxU.fillText(txt, x-txtWidth/2, graphUnit + graphUnit*.75);
-	}
-
-	//False Marks
-	ctxU.lineWidth = 1;
-	for(i = 0; i < markData.userGraph.falses.length; ++i) {
-		x = markData.userGraph.falses[i].x*graphUnit;
-		ctxU.beginPath();
-		ctxU.moveTo(x + graphUnit*.5, userGraph.height -1);
-		ctxU.lineTo(x - graphUnit*.5, userGraph.height - graphUnit*2-1);
-		ctxU.stroke();
-		ctxU.moveTo(x + graphUnit*.5, userGraph.height - graphUnit*4-1);
-		ctxU.lineTo(x - graphUnit*.5, userGraph.height - graphUnit*6-1);
-		ctxU.stroke();
-		ctxU.moveTo(x + graphUnit*.5, userGraph.height - graphUnit*8-1);
-		ctxU.lineTo(x - graphUnit*.5, userGraph.height - graphUnit*10-1);
-		ctxU.stroke();
-		ctxU.closePath();
-
-
-		txt = "<"
-		txtWidth = ctxU.measureText(txt).width;
-		ctxU.fillText(txt, x-txtWidth/2, graphUnit + graphUnit*.75);
+	for(i = 0; i < marks.falses.length; ++i) {
+		Skel.drawFalseMark(ctxU, marks.falses[i].x*graphUnit, userHeight, graphUnit, "normal " + markSize() + "px Times");
 	}
 
 	//Master Index Plot
-	ctxM.lineWidth = 1;
-	
-	for(i = 1; i < markData.masterGraph.index.length; ++i){
-		ctxM.beginPath();
-		ctxM.strokeStyle = "rgb(0,0,0)";
-		if(i == 1){
-			x = 5*graphUnit;
-			y = (2-markData.masterGraph.index[i-1])*graphUnit*10 + 10*graphUnit;
-			
-		}
-			ctxM.moveTo(x+.5, y+.5);
-			x += graphUnit;
-			y = (2-markData.masterGraph.index[i])*graphUnit*10 + 10*graphUnit;
-			ctxM.lineTo(x+.5, y+.5);
-			ctxM.stroke();
-			
-		ctxM.closePath();
-		
-		
-	}
+	Skel.drawIndexPlot(ctxM, master.index, graphUnit);
 }
 
 function drawCoreStrip() {
-	var coreStrip =document.getElementById("coreStrip");
-	var ctx = coreStrip.getContext("2d");
-	var coreEdge1, coreEdge2;
-	var i, txt, txtWidth;
-	var adjRingWidth, adjRingX, prevMag;
+	var coreStrip = document.getElementById("coreStrip");
+	var mag = parseInt(appSettings.coreMag);
+	var prevMag = (Skel.width(coreStrip) - 20) / data.coreLength;
 
-	prevMag = (coreStrip.width - 20) / data.coreLength;
-
-	coreStrip.height = 40;
-	coreStrip.width = 20 + data.coreLength * parseInt(appSettings.coreMag);
+	Skel.drawCoreStrip(coreStrip, markData.coreStrip.ring, data.coreLength, mag);
 
 	//Reposition strip so that it does not leave center anchor
 	if(prevMag > 0 && prevMag < 4) {
-		coreStrip.style.left = 760/2 - (760/2 - parseInt(coreStrip.style.left)) * parseInt(appSettings.coreMag)/prevMag +"px";
-	}
-	
-	coreEdge1 = 10; coreEdge2 = coreStrip.width-20;
-
-	ctx.clearRect(0, 0, coreStrip.width, coreStrip.height);
-
-	ctx.lineWidth = 1;
-	ctx.rect(10.5,10.5,coreStrip.width - 20,20);
-	ctx.strokeStyle="rgb(0,0,0)";
-	ctx.stroke();
-	ctx.fillStyle="rgb(255,255,41)";
-	ctx.fillRect(11.5,11.5,coreStrip.width-22,18);
-
-	//Draw rings
-	for(i = 0; i < markData.coreStrip.ring.length; ++i) {
-		//Adjust ring position and width according to magnification setting
-		adjRingX = markData.coreStrip.ring[i].x * parseInt(appSettings.coreMag) + 10;;
-		adjRingWidth = markData.coreStrip.ring[i].width * parseInt(appSettings.coreMag);
-
-		switch(markData.coreStrip.ring[i].color) {
-			case "lightLatewood":
-				ctx.fillStyle="rgb(255,204,051)"
-			break;
-			case "mediumLatewood":
-				ctx.fillStyle="rgb(204,153,000)"
-			break;
-			case "darkLatewood":
-				ctx.fillStyle="rgb(153,102,000)"
-			break;
-		}
-
-		ctx.beginPath();
-		//Draw latewood on left 0.25 of ring
-		ctx.fillRect(Math.floor(adjRingX-adjRingWidth*0.25), 11, Math.floor(adjRingWidth*0.25)+1, 19);
-		ctx.moveTo(adjRingX+.5, 10);
-		ctx.lineTo(adjRingX+.5, 30);
-		ctx.stroke();
-		ctx.closePath();
-		//Draw circle and ring number on every 10th ring
-		ctx.fillStyle="rgb(0,0,0)";
-		if(i % 10 == 0) {
-			ctx.beginPath();
-			ctx.arc(adjRingX-adjRingWidth/2, 20, 2, 0, 2*Math.PI);
-			ctx.fill();
-			ctx.closePath();			
-			ctx.font = "bold 12px Times";
-			txt = i;
-			txtWidth = ctx.measureText(txt).width;
-			ctx.fillText(txt, adjRingX-adjRingWidth/2-txtWidth/2, 40);
-			
-		}
+		coreStrip.style.left = 760/2 - (760/2 - parseInt(coreStrip.style.left)) * mag/prevMag +"px";
 	}
 }
 
@@ -735,96 +507,63 @@ function writeHint() {
 }
 
 
-/*Mouse Action Functions*/
+/*Pointer Action Functions (mouse, touch and pen)*/
 
-//If element has multiple mouse actions, determine which one to use
+//If element has multiple pointer actions, determine which one to use
 //Here, only used on userGraph
 function handleClick(e) {
-	var targ = e.target ? e.target : e.srcElement;
+	var pos = Skel.position(e);
 
 	//If top 1/3 of element, drag
-	if(e.offsetY < targ.height / 3) {
+	if(pos.y < Skel.height(e.currentTarget) / 3) {
 		startDrag(e);
 	}
-	//If lower 1/3 of graph and outside of white margin, draw/erase
-	else if (e.offsetY >= targ.height / 3 && e.offsetX >= 5*graphUnit) {
-		if(appSettings.mouseMode == "Draw"){
-			addMark(e);
-		}
-		else if (appSettings.mouseMode == "Erase"){
-			removeMark(e);
-		}
-		drawGraphMarks();
-	}	
+	//If lower 2/3 of graph and outside of white margin, draw/erase on tap
+	else if (pos.x >= 5*graphUnit) {
+		Skel.onTap(e, function(point) {
+			if(appSettings.mouseMode == "Draw"){
+				addMark(point);
+			}
+			else if (appSettings.mouseMode == "Erase"){
+				removeMark(point);
+			}
+			drawGraphMarks();
+		});
+	}
 }
 
 function startDrag(e) {
-    // IE uses srcElement, others use target
-    var targ = e.target ? e.target : e.srcElement;
-    document.dragTarg = targ;
-
-    // calculate event X, Y coordinates
-    offsetX = e.clientX;
-    offsetY = e.clientY;
-
-    // assign default values for top and left properties
-    if(targ.style.left == "") { targ.style.left='0px'};
-    if(targ.style.top == "") { targ.style.top='0px'};
-
-    // calculate integer values for top and left 
-    // properties
-    coordX = parseInt(targ.style.left);
-    coordY = parseInt(targ.style.top);
-    // move element
-    document.onmouseup = stopDrag;
-    document.onmousemove=dragHoriz;
-
-    return false;
-
-}
-
-function dragHoriz(e) {
-    var targ = document.dragTarg;
-
-    // move element
-    targ.style.left=coordX+e.clientX-offsetX+'px';
-    //Restrain element
-    dragLimit(e);
-
-    return false;
+	Skel.dragHoriz(e, function(targ, left) {
+		targ.style.left = left + "px";
+		dragLimit(targ);
+	});
 }
 
 //Conforms dragged element to specific restraints
-function dragLimit(e) {
-	var targ = document.dragTarg;
+function dragLimit(targ) {
 	var frame = document.getElementById("appFrame");
+	var frameWidth = parseInt(frame.style.width);
 	switch(targ) {
 		//Keep graphs inside appFrame by 50px
 		case document.getElementById("userGraph"):
 		case document.getElementById("masterGraph"):
-			if(parseInt(targ.style.left) > parseInt(frame.style.width) - 50) {
-				targ.style.left=parseInt(frame.style.width) - 50 + "px";
+			if(parseInt(targ.style.left) > frameWidth - 50) {
+				targ.style.left = frameWidth - 50 + "px";
 			}
-			if(parseInt(targ.style.left) < 50 - parseInt(targ.width)) {
-				targ.style.left = 50 - parseInt(targ.width) + "px";
+			if(parseInt(targ.style.left) < 50 - Skel.width(targ)) {
+				targ.style.left = 50 - Skel.width(targ) + "px";
 			}
 		break;
 		//Keep coreStrip anchored to middle of screen
 		case document.getElementById("coreStrip"):
-			if(parseInt(targ.style.left) > parseInt(frame.style.width) / 2) {
-				targ.style.left=parseInt(frame.style.width) / 2 +"px";
+			if(parseInt(targ.style.left) > frameWidth / 2) {
+				targ.style.left = frameWidth / 2 +"px";
 			}
-			if(parseInt(targ.style.left) < parseInt(frame.style.width) / 2 - parseInt(targ.width)) {
-				targ.style.left = parseInt(frame.style.width) / 2 - parseInt(targ.width) + "px";
+			if(parseInt(targ.style.left) < frameWidth / 2 - Skel.width(targ)) {
+				targ.style.left = frameWidth / 2 - Skel.width(targ) + "px";
 			}
 		break;
 	}
-}
-
-function stopDrag() {
-    document.onmousemove = null;
-    document.onmouseup = null;
-    document.dragTarg = null;
 }
 
 
@@ -1040,21 +779,10 @@ function populateRings() {
 		}
 
 		//Adjust coreLength according to ring widths - if ring width is less than 3, it will be set to 3
-		data.coreLength +=  Math.floor(index[year+absents]/2*data.targetRingWidth)+1 >=3 ? Math.floor(index[year+absents]/2*data.targetRingWidth)+1 : 3;
-		
+		data.coreLength += Skel.ringWidth(index[year+absents], data.targetRingWidth);
+
 		//Randomly select latewood color
-		var latewoodRandom = Math.random();
-		var newColor;
-		if(latewoodRandom > 0.85) {
-			newColor = "darkLatewood";
-		}
-		else if(latewoodRandom < 0.15) {
-			newColor = "lightLatewood";
-		}
-		else {
-			newColor = "mediumLatewood";
-		}
-		color.push(newColor);
+		color.push(Skel.randomLatewood());
 	}
 
 	var tempFalses = 0;
@@ -1076,8 +804,7 @@ function populateRings() {
 			}
 
 			for(i = 1; i < divisor+1; ++i) {
-				newWidth = Math.floor(index[year+tempAbsent]/2*data.targetRingWidth/divisor)+1;
-				if(newWidth < 3) {newWidth = 3};
+				newWidth = Skel.ringWidth(index[year+tempAbsent], data.targetRingWidth, divisor);
 				if(markData.coreStrip.ring.length > 0) {
 					if(divisor == 2 && i == 1) {
 						adjIndex = 1;

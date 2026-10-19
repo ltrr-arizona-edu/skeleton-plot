@@ -1,0 +1,10 @@
+/*Shared styles for the interactive skeleton plot widgets*/
+
+/*Canvases that respond to drags and taps: horizontal finger movement goes to the widget,
+  vertical swipes still scroll the page*/
+canvas.interactive {
+	touch-action: pan-y;
+	-webkit-user-select: none;
+	user-select: none;
+	-webkit-touch-callout: none;
+}

@@ -5,6 +5,8 @@
    <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; U) [Netscape]">
    <META NAME="KeyWords" CONTENT="dendrochronology, tree ring, crossdating, skeleton plot">
    <TITLE>Crossdating: Relative Scale</TITLE>
+   	<script src="common.js"></script>
+   	<link href="common.css" rel="stylesheet">
    	<script src="MoveCore.js"></script>
 	<link href="MoveCore.css" rel=stylesheet>
 <LINK REL=stylesheet HREF="crossdatestyle.css" TYPE="text/css">
@@ -48,7 +50,7 @@ Note the three skeleton plots of the figure above:
 <TR><TD>
 <!--<APPLET code="MoveCore.class" WIDTH="600" HEIGHT="65"></APPLET>-->
 	<div id="appFrame" >
-		<canvas id="coreStrip" onmousedown="startDrag(event)" style="left:10px"></canvas>
+		<canvas id="coreStrip" class="interactive" onpointerdown="startDrag(event)" style="left:10px"></canvas>
 		<div class="appBorder" style="left:0px;top:0"></div>
 		<div class="appBorder" style="left:598px;top:0"></div>
 		<span style="position:relative; top:45px; font-weight:900"><==== Move core left or right ====></span>

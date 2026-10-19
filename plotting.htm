@@ -6,6 +6,8 @@
    <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; U) [Netscape]">
    <META NAME="KeyWords" CONTENT="dendrochronology, tree ring, crossdating, skeleton plot">
    <TITLE>Crossdating: Skeleton Plotting</TITLE>
+   	<script src="common.js"></script>
+   	<link href="common.css" rel="stylesheet">
    	<script src="Plotting.js"></script>
    	<script src="MakeMarks.js"></script>	
 	<link href="Plotting.css" rel=stylesheet>
@@ -79,7 +81,7 @@ When skeleton plotting ring-width variation of a core, note that:
 <!--<APPLET code="MakeMarks.class" WIDTH="130" HEIGHT="165"></APPLET>-->
 	<div id="appFrame2" >
 		<input type="button" value="Try Again" style="position:relative; top:10px" onmousedown="appInit2()">
-		<canvas id="userGraph2" onmousedown="handleClick(event)"></canvas>
+		<canvas id="userGraph2" class="interactive" onpointerdown="handleClick(event)"></canvas>
 	</div>
 	<script>
 		appInit2();
