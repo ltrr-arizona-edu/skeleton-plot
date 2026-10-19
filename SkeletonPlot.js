@@ -126,6 +126,10 @@ function restart(){
 		coreLength: 0
 	}
 
+	userAction = {
+		done: [],
+		undone: []
+	};
 
 	//Reposition elements
 	userGraph.style.top = "190px";
@@ -465,38 +469,7 @@ function scaleGraphs(){
 	userGraph.style.left = 760/2 - (760/2 - parseInt(userGraph.style.left)) * graphUnit/graphUnitPrev +"px";
 	masterGraph.style.left = 760/2 - (760/2 - parseInt(masterGraph.style.left)) * graphUnit/graphUnitPrev +"px";
 
-	//Scale dimensions of all graph marks
-	for(i = 0; i < markData.userGraph.normal.length; ++i){	
-		markData.userGraph.normal[i].x *= graphUnit/graphUnitPrev;
-		markData.userGraph.normal[i].y *= graphUnit/graphUnitPrev;
-	}
-	
-	for(i = 0; i < markData.userGraph.wide.length; ++i){
-		markData.userGraph.wide[i].x *= graphUnit/graphUnitPrev;
-		markData.userGraph.wide[i].y *= graphUnit/graphUnitPrev;
-	}
-
-	for(i = 0; i < markData.userGraph.absent.length; ++i){
-		markData.userGraph.absent[i].x *= graphUnit/graphUnitPrev;
-		markData.userGraph.absent[i].y *= graphUnit/graphUnitPrev;
-	}
-
-	for(i = 0; i < markData.userGraph.falses.length; ++i){
-		markData.userGraph.falses[i].x *= graphUnit/graphUnitPrev;
-		markData.userGraph.falses[i].y *= graphUnit/graphUnitPrev;
-	}
-
-	for(i = 0; i < markData.masterGraph.normal.length; ++i){
-		markData.masterGraph.normal[i].x *= graphUnit/graphUnitPrev;
-		markData.masterGraph.normal[i].y *= graphUnit/graphUnitPrev;
-	}
-
-	for(i = 0; i < markData.masterGraph.wide.length; ++i){
-		markData.masterGraph.wide[i].x *= graphUnit/graphUnitPrev;
-		markData.masterGraph.wide[i].y *= graphUnit/graphUnitPrev;
-	}
-
-
+	//Mark positions are stored in graph units, so they need no rescaling here
 
 	//Modify masterGraph dimensions
 	masterGraph.height = graphUnit*30 + 1;
@@ -526,8 +499,8 @@ function drawGraphMarks(){
 
 	for(i = 0; i < markData.userGraph.normal.length; ++i) {
 		ctxU.beginPath();
-		ctxU.moveTo(markData.userGraph.normal[i].x-.5, markData.userGraph.normal[i].y-.5);
-		ctxU.lineTo(markData.userGraph.normal[i].x-.5, userGraph.height);
+		ctxU.moveTo(markData.userGraph.normal[i].x*graphUnit+.5, markData.userGraph.normal[i].y*graphUnit-.5);
+		ctxU.lineTo(markData.userGraph.normal[i].x*graphUnit+.5, userGraph.height);
 		ctxU.strokeStyle = "rgb(0,0,0)";
 		ctxU.stroke();
 		ctxU.closePath();
@@ -535,8 +508,8 @@ function drawGraphMarks(){
 
 	for(i = 0; i < markData.masterGraph.normal.length; ++i) {
 		ctxM.beginPath();
-		ctxM.moveTo(markData.masterGraph.normal[i].x+.5, markData.masterGraph.normal[i].y-.5);
-		ctxM.lineTo(markData.masterGraph.normal[i].x+.5, 0);
+		ctxM.moveTo(markData.masterGraph.normal[i].x*graphUnit+.5, markData.masterGraph.normal[i].y*graphUnit-.5);
+		ctxM.lineTo(markData.masterGraph.normal[i].x*graphUnit+.5, 0);
 		ctxM.strokeStyle = "rgb(0,0,0)";
 		ctxM.stroke();
 		ctxM.closePath();
@@ -563,13 +536,13 @@ function drawGraphMarks(){
 	for(i = 0; i < markData.userGraph.wide.length; ++i) {
 		txt = "b";
 		txtWidth = ctxU.measureText(txt).width;
-		ctxU.fillText(txt, markData.userGraph.wide[i].x - txtWidth/2, 6.5*graphUnit);
+		ctxU.fillText(txt, markData.userGraph.wide[i].x*graphUnit - txtWidth/2, 6.5*graphUnit);
 	}
 
 	for(i = 0; i < markData.masterGraph.wide.length; ++i) {
 		txt = "b";
 		txtWidth = ctxM.measureText(txt).width;
-		ctxM.fillText(txt, markData.masterGraph.wide[i].x - txtWidth/2, 9.5*graphUnit);
+		ctxM.fillText(txt, markData.masterGraph.wide[i].x*graphUnit - txtWidth/2, 9.5*graphUnit);
 	}
 
 	//Absent Marks
@@ -593,42 +566,44 @@ function drawGraphMarks(){
 	ctxU.lineWidth=2;
 	ctxU.strokeStyle= "rgb(0,0,0)";
 	for(i = 0; i < markData.userGraph.absent.length; ++i) {
+		x = markData.userGraph.absent[i].x*graphUnit;
 		ctxU.beginPath();
-		ctxU.moveTo(markData.userGraph.absent[i].x, userGraph.height -1);
-		ctxU.lineTo(markData.userGraph.absent[i].x, userGraph.height - graphUnit*2 -1);
+		ctxU.moveTo(x, userGraph.height -1);
+		ctxU.lineTo(x, userGraph.height - graphUnit*2 -1);
 		ctxU.stroke();
-		ctxU.moveTo(markData.userGraph.absent[i].x, userGraph.height - graphUnit*4-1);
-		ctxU.lineTo(markData.userGraph.absent[i].x, userGraph.height - graphUnit*6-1);
+		ctxU.moveTo(x, userGraph.height - graphUnit*4-1);
+		ctxU.lineTo(x, userGraph.height - graphUnit*6-1);
 		ctxU.stroke();
-		ctxU.moveTo(markData.userGraph.absent[i].x, userGraph.height - graphUnit*8-1);
-		ctxU.lineTo(markData.userGraph.absent[i].x, userGraph.height - graphUnit*10-1);
+		ctxU.moveTo(x, userGraph.height - graphUnit*8-1);
+		ctxU.lineTo(x, userGraph.height - graphUnit*10-1);
 		ctxU.stroke();
 		ctxU.closePath();
 
 		txt = ">"
 		txtWidth = ctxU.measureText(txt).width;
-		ctxU.fillText(txt, markData.userGraph.absent[i].x-txtWidth/2, graphUnit + graphUnit*.75);
+		ctxU.fillText(txt, x-txtWidth/2, graphUnit + graphUnit*.75);
 	}
 
 	//False Marks
 	ctxU.lineWidth = 1;
 	for(i = 0; i < markData.userGraph.falses.length; ++i) {
+		x = markData.userGraph.falses[i].x*graphUnit;
 		ctxU.beginPath();
-		ctxU.moveTo(markData.userGraph.falses[i].x + graphUnit*.5, userGraph.height -1);
-		ctxU.lineTo(markData.userGraph.falses[i].x - graphUnit*.5, userGraph.height - graphUnit*2-1);
+		ctxU.moveTo(x + graphUnit*.5, userGraph.height -1);
+		ctxU.lineTo(x - graphUnit*.5, userGraph.height - graphUnit*2-1);
 		ctxU.stroke();
-		ctxU.moveTo(markData.userGraph.falses[i].x + graphUnit*.5, userGraph.height - graphUnit*4-1);
-		ctxU.lineTo(markData.userGraph.falses[i].x - graphUnit*.5, userGraph.height - graphUnit*6-1);
+		ctxU.moveTo(x + graphUnit*.5, userGraph.height - graphUnit*4-1);
+		ctxU.lineTo(x - graphUnit*.5, userGraph.height - graphUnit*6-1);
 		ctxU.stroke();
-		ctxU.moveTo(markData.userGraph.falses[i].x + graphUnit*.5, userGraph.height - graphUnit*8-1);
-		ctxU.lineTo(markData.userGraph.falses[i].x - graphUnit*.5, userGraph.height - graphUnit*10-1);
+		ctxU.moveTo(x + graphUnit*.5, userGraph.height - graphUnit*8-1);
+		ctxU.lineTo(x - graphUnit*.5, userGraph.height - graphUnit*10-1);
 		ctxU.stroke();
 		ctxU.closePath();
 
 
 		txt = "<"
 		txtWidth = ctxU.measureText(txt).width;
-		ctxU.fillText(txt, markData.userGraph.falses[i].x-txtWidth/2, graphUnit + graphUnit*.75);
+		ctxU.fillText(txt, x-txtWidth/2, graphUnit + graphUnit*.75);
 	}
 
 	//Master Index Plot
@@ -856,143 +831,107 @@ function stopDrag() {
 /*Functions for mark Data*/
 
 //Add a mark to array when userGraph is drawn on by user
+//Mark positions are stored in graph units (pixels / graphUnit) so they survive magnification changes
 function addMark(e) {
-	var targ = e.target ? e.target : e.srcElement;
+	var newMark, array;
+	var line = Math.round((e.offsetX-1)/graphUnit);	//nearest vertical graph line
 
 	switch(appSettings.mouseMark) {
 		case "Normal":
-			var newMark = {x:e.offsetX, y:e.offsetY};
-			newMark.x = Math.round((newMark.x-1)/graphUnit)*graphUnit+1;
-			markData.userGraph.normal.push(newMark);
-			userAction.done.push({x: newMark.x, y: newMark.y, array: markData.userGraph.normal, mode:"draw"});
+			newMark = {x:line, y:e.offsetY/graphUnit};
+			array = markData.userGraph.normal;
 		break;
 		case "Wide":
-			var newMark = {x:e.offsetX};
-			markData.userGraph.wide.push(newMark);
-			userAction.done.push({x: newMark.x, array: markData.userGraph.wide, mode:"draw"});
-
+			newMark = {x:e.offsetX/graphUnit};
+			array = markData.userGraph.wide;
 		break;
 		case "Absent":
-			var newMark = {x:e.offsetX};
-			tempVal = Math.round((newMark.x-1)/graphUnit)*graphUnit+1;
-			if(newMark.x < tempVal) {
-				newMark.x = Math.round((newMark.x-1)/graphUnit)*graphUnit-Math.round(graphUnit/2);
-			}
-
-			else if(newMark.x >= tempVal){
-				newMark.x = Math.round((newMark.x-1)/graphUnit)*graphUnit+Math.round(graphUnit/2);
-			}
-			markData.userGraph.absent.push(newMark);
-			userAction.done.push({x: newMark.x, array: markData.userGraph.absent, mode:"draw"});
-
-		break;
 		case "False":
-			var newMark = {x:e.offsetX};
-			tempVal = Math.round((newMark.x-1)/graphUnit)*graphUnit+1;
-			if(newMark.x < tempVal) {
-				newMark.x = Math.round((newMark.x-1)/graphUnit)*graphUnit-Math.round(graphUnit/2);
+			//Snap to the middle of the square on the clicked side of the nearest line
+			if(e.offsetX < line*graphUnit+1) {
+				newMark = {x:line - 0.5};
 			}
-
-			else if(newMark.x >= tempVal){
-				newMark.x = Math.round((newMark.x-1)/graphUnit)*graphUnit+Math.round(graphUnit/2);
+			else {
+				newMark = {x:line + 0.5};
 			}
-			markData.userGraph.falses.push(newMark);
-			userAction.done.push({x: newMark.x, array: markData.userGraph.falses, mode:"draw"});
+			array = appSettings.mouseMark == "Absent" ? markData.userGraph.absent : markData.userGraph.falses;
 		break;
 	}
+	array.push(newMark);
+	userAction.done.push({mark: newMark, array: array, mode:"draw"});
+	userAction.undone = [];
 }
 
 //Remove mark from array when user erases userGraph mark
 function removeMark(e){
-	var targ = e.target ? e.target : e.srcElement;
+	var arrays = [markData.userGraph.normal, markData.userGraph.falses, markData.userGraph.wide, markData.userGraph.absent];
 	var bestArray = null;
 	var bestIdx = 0;
 	var bestNum = graphUnit;	//user must click within one graphUnit away from desired mark
-	var i;
+	var i, j, dist;
 
 	//For each type of mark, sift through array and find closest mark. Save its index and array
-	for(i = 0; i < markData.userGraph.normal.length; ++i) {
-		if(Math.abs(e.offsetX - markData.userGraph.normal[i].x) < bestNum) {
-			bestNum = Math.abs(e.offsetX - markData.userGraph.normal[i].x);
-			bestArray = markData.userGraph.normal;
-			bestIdx = i;
-		}
-	}
-
-	for(i = 0; i < markData.userGraph.falses.length; ++i) {
-		if(Math.abs(e.offsetX - markData.userGraph.falses[i].x) < bestNum) {
-			bestNum = Math.abs(e.offsetX - markData.userGraph.falses[i].x);
-			bestArray = markData.userGraph.falses;
-			bestIdx = i;
-		}
-	}
-
-	for(i = 0; i < markData.userGraph.wide.length; ++i) {
-		if(Math.abs(e.offsetX - markData.userGraph.wide[i].x) < bestNum) {
-			bestNum = Math.abs(e.offsetX - markData.userGraph.wide[i].x);
-			bestArray = markData.userGraph.wide;
-			bestIdx = i;
-		}
-	}
-
-	for(i = 0; i < markData.userGraph.absent.length; ++i) {
-		if(Math.abs(e.offsetX - markData.userGraph.absent[i].x) < bestNum) {
-			bestNum = Math.abs(e.offsetX - markData.userGraph.absent[i].x);
-			bestArray = markData.userGraph.absent;
-			bestIdx = i;
+	for(j = 0; j < arrays.length; ++j) {
+		for(i = 0; i < arrays[j].length; ++i) {
+			dist = Math.abs(e.offsetX - arrays[j][i].x*graphUnit);
+			if(dist < bestNum) {
+				bestNum = dist;
+				bestArray = arrays[j];
+				bestIdx = i;
+			}
 		}
 	}
 
 	//If no mark is found, do nothing
 	if(bestArray != null) {
-		if(bestArray == markData.userGraph.normal) {
-				userAction.done.push({x: bestArray[bestIdx].x, y:bestArray[bestIdx].y, array:bestArray, mode:"erase"});
-			}
-		else {
-			userAction.done.push({x: bestArray[bestIdx].x, array:bestArray, mode:"erase"});
-
-		}
+		userAction.done.push({mark: bestArray[bestIdx], array: bestArray, mode:"erase"});
+		userAction.undone = [];
 		bestArray.splice(bestIdx, 1);
-	
+	}
+}
+
+//Remove a specific mark object from its array
+function removeFromArray(array, mark) {
+	var i = array.indexOf(mark);
+	if(i >= 0) {
+		array.splice(i, 1);
 	}
 }
 
 function undo() {
-	if(!(userAction.done.length > 0) ){
+	var action = userAction.done.pop();
+	if(!action) {
 		return;
 	}
 
-	var mark = userAction.done[userAction.done.length - 1];
-	switch(mark.mode) {
+	switch(action.mode) {
 		case "draw":
-			mark.array.splice(mark.array.length - 1,1);
+			removeFromArray(action.array, action.mark);
 		break;
 		case "erase":
-			mark.array.push(mark);
+			action.array.push(action.mark);
 		break;
 	}
-	userAction.undone.push(mark);
-	userAction.done.splice(userAction.done.length-1,1);
-
+	userAction.undone.push(action);
 
 	drawGraphMarks();
 }
 
 function redo() {
-	if(!(userAction.undone.length > 0) ){
+	var action = userAction.undone.pop();
+	if(!action) {
 		return;
 	}
-	var mark = userAction.undone[userAction.undone.length-1];
-	switch(mark.mode) {
+
+	switch(action.mode) {
 		case "draw":
-			mark.array.push(mark);
+			action.array.push(action.mark);
 		break;
 		case "erase":
-			mark.array.splice(mark.array.length - 1,1);
+			removeFromArray(action.array, action.mark);
 		break;
 	}
-	userAction.done.push(mark);
-	userAction.undone.splice(userAction.undone.length-1,1);
+	userAction.done.push(action);
 
 	drawGraphMarks();
 }
@@ -1043,7 +982,7 @@ function populateRings() {
 	for(i = 0; i < index.length; ++i) {
 		if(i > 0 && index[i] < (1-(1-indexMin)/absoluteValueCutoff) ||
 			index[i]-index[i-1] < (indexMin-indexMax)/firstDifferenceCutoff){
-			newX = (i+5)*graphUnit;
+			newX = i+5;
 			newY = 0;	
 		
 			if(absoluteValueCutoff>1) {
@@ -1053,14 +992,14 @@ function populateRings() {
 				newY = Math.max(newY, 10-((index[i] - index[i-1]) - (indexMin-indexMax)) / 
 					((indexMin-indexMax)/firstDifferenceCutoff-(indexMin-indexMax))*10);
 			}
-			newMark = {x:newX, y:newY*graphUnit, year:i+data.masterYearStart};
+			newMark = {x:newX, y:newY, year:i+data.masterYearStart};
 			masterNormal.push(newMark);
 
 		}
 		
 	
 		if(index[i] > masterBoneWideCutoff*indexMax) {
-			newX = (5 + i)*graphUnit;
+			newX = 5 + i;
 			markData.masterGraph.wide.push({x:newX});
 		}
 
@@ -1075,22 +1014,23 @@ function populateRings() {
 		var ring = year - Math.floor(coreStart*index.length);
 		//mising rings; can't be first or last
 		while(index[year+absents] < 0.06) {
-			if(appSettings.absents=="off") {
-				index[year+absents]=0.06;
-			}
-			else if (year > Math.floor(coreStart*index.length) && year < Math.floor(coreStart*index.length) + appSettings.rings - 1 ){
+			if (appSettings.absents=="on" && year > Math.floor(coreStart*index.length) && year < Math.floor(coreStart*index.length) + appSettings.rings - 1 ){
 				answer.absents.push(year + data.masterYearStart + absents);
 				absents++;
 			}
+			else {
+				//Absents are off, or this is the first or last ring
+				index[year+absents]=0.06;
+			}
 		}
 
-		if(index[year+absents] >= 0.06 && index[year+absents < 0.15]) {
+		if(index[year+absents] >= 0.06 && index[year+absents] < 0.15) {
 			index[year+absents] = 0.15;
 		}
 
-		//False rings; can't be first or last
+		//False rings; can't be first or last, or fall on a numbered (every 10th) ring
 		if(appSettings.falses == "on" && index[year+absents] > 1.95 && year > Math.floor(coreStart*index.length) &&
-			Math.floor(coreStart*index.length) + appSettings.rings - 1 && falses == 0 && year- Math.floor(coreStart*index.length)%10 != 0 &&
+			year < Math.floor(coreStart*index.length) + appSettings.rings - 1 && falses == 0 && (year - Math.floor(coreStart*index.length))%10 != 0 &&
 			(year - Math.floor(coreStart*index.length)+1)%10 != 0) {
 				falseYear = year;
 				index[year+absents] = 2.00;
