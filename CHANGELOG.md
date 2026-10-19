@@ -65,6 +65,33 @@ Newest first.
   Java-language applets … you must have a Java-capable web browser" → "This presentation has
   interactive figures … they work in any up-to-date web browser, with a mouse or on a touch
   screen"; "Java applet" → "interactive exercise".
+- Fixed: the footer replacement left a `div.centered` wrapper unclosed on seven pages; closed.
+
+### Rebuilt "Try Skeleton Plotting" app (`SkeletonPlot19.htm`, `SkeletonPlot.css`, `SkeletonPlot.js`)
+- **Control panel** rebuilt from absolutely positioned forms, `<font>` tags and `&nbsp;` spacing
+  into five `<fieldset>` groups with `<legend>`s: Ring-growth anomalies, Magnification,
+  Marking (was "Mouse Actions"), Show or hide, Core series settings. It's a flexbox row that
+  wraps onto more rows on narrow screens.
+  - Every option has a clickable `<label>`; buttons are real `<button>`s (Arizona Blue; *Restart a
+    new core* in Arizona Red) and are reachable and usable from the keyboard.
+  - Hint, Answer and Master are toggle buttons that turn Arizona Red while showing, with
+    `aria-pressed` set.
+  - Sensitivity and ring-count values are `<output>`s announced to screen readers; the ‹ › buttons
+    have descriptive labels.
+  - Checkboxes and radios respond to `change` and buttons to `click`, instead of `mousedown`.
+    This fixed the checkbox logic, which was written backwards to compensate for `mousedown`
+    firing before the box toggled.
+  - `autocomplete="off"` stops browsers restoring stale control states on reload.
+- **Workspace:** the core strip and graphs now live in their own area below the panel, which
+  is as wide as the page allows (it was a fixed 760×550px frame). Magnification zooms around
+  the middle of the workspace and drag limits follow its width, so it works at any screen
+  size, including phones.
+- The page has a proper heading, "Try Skeleton Plotting for Yourself!".
+- Answer box: white card with an Arizona Blue border; hint in Arizona Red; both use the site
+  font instead of Times. Centre marks are Azurite (still a blue line, as the tutorial text says).
+- `SkeletonPlot.css` rewritten and scoped to the app. The old stylesheet's
+  `div { position: absolute }` applied to every div on the page.
+
 - Demo widgets (`plotting.htm`, `relativescale.htm`, `patternmatching.htm`, `absentfalse.htm`):
   Warm Gray panel instead of pale yellow, centred, and "Try Again" buttons styled as Arizona
   Blue buttons. Removed `input:focus { outline: none }` so keyboard focus is visible.

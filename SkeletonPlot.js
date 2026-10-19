@@ -63,13 +63,13 @@ function appInit(){
 
 
 	//Position Elements
-	userGraph.style.top = "190px";
+	userGraph.style.top = "66px";
 	userGraph.style.left = "10px";
 
 	masterGraph.style.top = parseInt(userGraph.style.top) + Skel.height(userGraph) + "px";
 	masterGraph.style.left = "10px";
 
-	coreStrip.style.top = "134px";
+	coreStrip.style.top = "10px";
 	coreStrip.style.left = "10px";
 
 
@@ -132,13 +132,13 @@ function restart(){
 	};
 
 	//Reposition elements
-	userGraph.style.top = "190px";
+	userGraph.style.top = "66px";
 	userGraph.style.left = "10px";
 
 	masterGraph.style.top = parseInt(userGraph.style.top) + Skel.height(userGraph) + "px";
 	masterGraph.style.left = "10px";
 
-	coreStrip.style.top = "134px";
+	coreStrip.style.top = "10px";
 	coreStrip.style.left = "10px";
 
 	applySettings();
@@ -197,11 +197,29 @@ function applySettings() {
 		
 	}
 	
+	//Show which toggles are on
+	setPressed("Hint", appSettings.hintVis == "Visible");
+	setPressed("Answer", appSettings.answerVis == "Visible");
+	setPressed("Master", appSettings.masterVis == "Visible");
+
 	//Reads displayed values for ringNumber and sensitivity, sends them to appSettings
 	document.getElementById("sensitivityNumber").innerHTML = appSettings.sensitivityNext;
 	document.getElementById("ringNumber").innerHTML = appSettings.ringsNext;
 
 	renderGraphics();
+}
+
+//Horizontal middle of the workspace, in pixels: the point magnification zooms around
+function workspaceMiddle() {
+	return document.getElementById("workspace").clientWidth / 2;
+}
+
+//Mark a toggle button (Hint, Answer, Master) as on or off
+function setPressed(value, pressed) {
+	var button = document.querySelector('#panel button[value="' + value + '"]');
+	if(button) {
+		button.setAttribute("aria-pressed", pressed ? "true" : "false");
+	}
 }
 
 /*Detects and responds to interaction with control panel*/
@@ -213,20 +231,10 @@ function handleInputPress(e){
 		case "checkbox":
 			switch(targ.value) { //Toggle absents or falses on or off
 				case "Absents":
-					if(targ.checked){
-						appSettings.absents = "off";
-					}
-					else{
-						appSettings.absents = "on";
-					}
+					appSettings.absents = targ.checked ? "on" : "off";
 				break;
 				case "Falses":
-					if(targ.checked){
-						appSettings.falses = "off";
-					}
-					else{
-						appSettings.falses = "on";
-					}
+					appSettings.falses = targ.checked ? "on" : "off";
 				break;
 			}
 		break;
@@ -395,8 +403,9 @@ function scaleGraphs(){
 	Skel.sizeCanvas(userGraph, graphUnit*(appSettings.rings-1) + graphUnit*20, graphUnit*15 + 1);
 
 	//Modify graph positions
-	userGraph.style.left = 760/2 - (760/2 - parseInt(userGraph.style.left)) * graphUnit/graphUnitPrev +"px";
-	masterGraph.style.left = 760/2 - (760/2 - parseInt(masterGraph.style.left)) * graphUnit/graphUnitPrev +"px";
+	//Zoom around the middle of the workspace
+	userGraph.style.left = workspaceMiddle() - (workspaceMiddle() - parseInt(userGraph.style.left)) * graphUnit/graphUnitPrev +"px";
+	masterGraph.style.left = workspaceMiddle() - (workspaceMiddle() - parseInt(masterGraph.style.left)) * graphUnit/graphUnitPrev +"px";
 
 	//Mark positions are stored in graph units, so they need no rescaling here
 
@@ -466,17 +475,13 @@ function drawCoreStrip() {
 
 	//Reposition strip so that it does not leave center anchor
 	if(prevMag > 0 && prevMag < 4) {
-		coreStrip.style.left = 760/2 - (760/2 - parseInt(coreStrip.style.left)) * mag/prevMag +"px";
+		coreStrip.style.left = workspaceMiddle() - (workspaceMiddle() - parseInt(coreStrip.style.left)) * mag/prevMag +"px";
 	}
 }
 
 function writeAnswer() {
 	var answerText = document.getElementById("answerText");
 	var i;
-	answerText.style.fontWeight = "900";
-	answerText.style.fontFamily = "Times";
-	answerText.style.fontSize = "16px";
-	answerText.style.whiteSpace = "pre-line";
 	answerText.innerHTML = "All of these are part of the answer:\n";
 	answerText.innerHTML += "Start year: " + answer.yearStart + "\n";
 	answerText.innerHTML += "Absent rings: ";
@@ -498,9 +503,6 @@ function writeAnswer() {
 
 function writeHint() {
 	var hintText = document.getElementById("hintText");
-	hintText.style.fontFamily = "Times";
-	hintText.style.fontWeight = "900";
-	hintText.style.fontSize="12px";
 
 	hintText.innerHTML = "Hint: Core is missing " + answer.absents.length + " rings and has ";
 	hintText.innerHTML += answer.falses.length / 2 + " false ring(s).";
@@ -541,10 +543,9 @@ function startDrag(e) {
 
 //Conforms dragged element to specific restraints
 function dragLimit(targ) {
-	var frame = document.getElementById("appFrame");
-	var frameWidth = parseInt(frame.style.width);
+	var frameWidth = document.getElementById("workspace").clientWidth;
 	switch(targ) {
-		//Keep graphs inside appFrame by 50px
+		//Keep graphs inside the workspace by 50px
 		case document.getElementById("userGraph"):
 		case document.getElementById("masterGraph"):
 			if(parseInt(targ.style.left) > frameWidth - 50) {

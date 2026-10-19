@@ -1,77 +1,192 @@
-div {display: block; margin: 0 auto; position: absolute;}
-canvas {display: block; margin: auto;}
-form {
-	position: absolute;
-	display:inline;
-	
-}
-form {
-	position: absolute;
-	top:0;
-	left:0;
-}
-input[type="button"] {
- 	background: #DADADA;
- 	border: outset #DADADA 2px;
- 	position: absolute;
-}
-input {
-	font-family: "helvetica";
+/*"Try Skeleton Plotting" app: a control panel above a workspace in which the core strip and
+  graphs slide left and right. Colours are University of Arizona brand colours.*/
+
+.skeleton-app {
+	padding: 8px;
+	background: #f4ede5;	/*Warm Gray*/
+	border: 1px solid #e2e9eb;
+	-webkit-user-select: none;
+	user-select: none;
 }
 
+/*Control panel*/
 
-span {
-
-}
 #panel {
-	background: #fff;
-	position: relative;
-	margin: auto;
-}	
-#anomalyControls {
-
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 8px;
+	font-size: 0.875rem;
+	line-height: 1.3;
 }
-#appFrame {
-	width: 760px;
-	height: 550px;
-	background: #ffcc99; 
-	border: 1px solid black;
+
+#panel fieldset {
+	display: flex;
+	flex: 1 1 130px;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 4px;
+	margin: 0;
+	padding: 2px 10px 8px;
+	background: #fff;
+	border: 1px solid #e2e9eb;
+	border-radius: 4px;
+}
+
+#panel legend {
+	padding: 0 4px;
+	color: #0c234b;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+#panel label {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	cursor: pointer;
+}
+
+#panel input {
+	margin: 0;
+	accent-color: #0c234b;
+}
+
+#panel .columns {
+	display: flex;
+	gap: 16px;
+}
+
+#panel .columns > div {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+}
+
+#panel .group-label {
+	color: #49595e;
+	font-size: 0.75rem;
+	font-weight: 700;
+}
+
+#panel .buttons {
+	display: flex;
+	gap: 4px;
+	margin-top: 4px;
+}
+
+/*Hint, Answer and Master toggle between shown (pressed) and hidden*/
+#panel button[aria-pressed="true"] {
+	background: #ab0520;
+}
+
+#panel button.primary {
+	margin-top: 4px;
+	background: #ab0520;
+}
+
+#panel button.primary:hover,
+#panel button[aria-pressed="true"]:hover {
+	background: #91041b;
+}
+
+#panel .stepper {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+#panel .stepper span {
+	min-width: 5.5em;
+}
+
+#panel .stepper button {
+	padding: 1px 9px;
+	font-size: 1rem;
+	line-height: 1.2;
+}
+
+#panel output {
+	min-width: 2.2em;
+	font-weight: 700;
+	text-align: center;
+}
+
+/*Workspace. Positions here are matched in SkeletonPlot.js (appInit, restart).*/
+
+#workspace {
 	position: relative;
+	height: 430px;
 	overflow: hidden;
+	background: #ebe2d6;
+	border-radius: 4px;
 }
 
-#appFrame > * {
-	-webkit-user-select: none;  /* Chrome all / Safari all */
-    -moz-user-select: none;     /* Firefox all */
-    -ms-user-select: none;      /* IE 10+ */
-
-}
-
-#userGraph {
-	background: #fff;
+#workspace canvas {
 	position: absolute;
+	display: block;
 }
+
+#userGraph,
 #masterGraph {
 	background: #fff;
-	position: absolute;
 }
+
 #coreStrip {
-	background: #e2e9eb;	/*UA Cool Gray core mount*/
-	position:absolute;
+	background: #e2e9eb;	/*Cool Gray core mount*/
 }
-#answerBox {
-	background: #ffcc99;
-	position:absolute;
-	border: 1px solid black;
-	width:295px;
-	height:100px;
-	left:10px;
-	top:127px;
-}
-.centerMark{
-	background:#00f;
-	position:absolute;
+
+/*Short blue marks above and below the core show the middle of the workspace, the point the
+  magnification zooms around*/
+.centerMark {
+	position: absolute;
+	left: calc(50% - 1.5px);
 	width: 3px;
 	height: 10px;
-	left: 378px;
+	background: #1e5288;	/*Azurite*/
+	z-index: 1;
+}
+
+.centerMark.top {
+	top: 10px;
+}
+
+.centerMark.bottom {
+	top: 40px;
+}
+
+#hintBox {
+	position: absolute;
+	top: 50px;
+	left: 0;
+	right: 0;
+	text-align: center;
+	pointer-events: none;
+}
+
+#hintText {
+	color: #ab0520;
+	font-size: 0.8125rem;
+	font-weight: 700;
+}
+
+#answerBox {
+	position: absolute;
+	top: 3px;
+	left: 10px;
+	z-index: 2;
+	width: 295px;
+	padding: 8px 12px;
+	background: #fff;
+	border: 2px solid #0c234b;
+	border-radius: 4px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+	font-size: 0.9375rem;
+	line-height: 1.4;
+}
+
+#answerText {
+	white-space: pre-line;
 }

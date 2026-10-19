@@ -45,126 +45,95 @@
 	</div>
 </nav>
 <main class="wrap">
-<div id="appFrame" style="width: 760px; height: 550px">
-		<!--Start Control Panel-->
-		<div id="panel" style="height: 120px; width: 581px">
-			<div id="anomalyControls" style="height:120px; width:98px; left:0px">
-				
-				
-				<form style="width: 94.44px">
-				
-				<font  size="2" face="Arial">
-					 <center> Ring-Growth <br>
-							 Anomalies<br><br>
-					</center>
-					
-				
-					<input type="checkbox" value="Absents"  onmousedown="handleInputPress(event)" unchecked>
-					<span>Absents<br></span>
-					<input type="checkbox" value="Falses" onmousedown="handleInputPress(event)" unchecked>
-					<span>Falses</span>
-					<input type="button" value="Hint" style="top:99px; padding-left:30px; padding-right:30px;left:0"onmousedown="handleInputPress(event)">
-					</font>
-				</form>
-			</div>
-			<div id="magnificationControls" style="height: 120px; width:127px; left:99px">
-				<form style="line-height:1.5">
-					<font  size="2" face="Arial">
-						<center> Magnification <br><br>
-								 Core &nbsp &nbsp Graphs
-						</center>
-						<input style="padding:"type="radio" name="coreMag" value="1x" onmousedown="handleInputPress(event)" checked>1x
-						<input type="radio" name="graphMag" value="Large" onmousedown="handleInputPress(event)" checked>Large <br>
-						<input type="radio" name="coreMag" value="2x" onmousedown="handleInputPress(event)">2x
-						<input type="radio" name="graphMag" value="Medium" onmousedown="handleInputPress(event)">Medium <br>
-						<input type="radio" name="coreMag" value="3x" onmousedown="handleInputPress(event)">3x
-						<input type="radio" name="graphMag" value="Small" onmousedown="handleInputPress(event)">Small <br>
-					</font>
-				</form>
-			</div>
-			<div id="mouseActionControls" style="height: 120px; width: 150px; left: 227px">
-				<font size="2" face="Arial">
-					<center> Mouse Actions </center>	
-				
-				<form style="width:60px;height:100px;top:35px;line-height:1.5">
-					<input type="radio" name="mouseMode" value="Draw" onmousedown="handleInputPress(event)" checked>Draw<br>
-					<input type="radio" name="mouseMode" value="Erase" onmousedown="handleInputPress(event)">Erase <br>
-					<input style="left:0px; width:60px" type="button" value="Undo" onmousedown="handleInputPress(event)"><br>
-					<input style="left:0px; width:60px; top: 64px" type="button" value="Redo" onmousedown="handleInputPress(event)">
-				</form>
-				<form style="width:70px;height:100px;top:35px;left:60px;line-height:1.5">
-					<input type="radio" name="mouseMark" value="Normal" onmousedown="handleInputPress(event)" checked>Normal<br>
-					<input type="radio" name="mouseMark" value="Wide" onmousedown="handleInputPress(event)">Wide<br>
-					<input type="radio" name="mouseMark" value="Absent" onmousedown="handleInputPress(event)">Absent<br>
-					<input type="radio" name="mouseMark" value="False" onmousedown="handleInputPress(event)">False
-				</form>
-				</font>
-			</div>
-			<div id="showHideControls" style="height: 120px; width: 69px; left: 378px">
-				<form style="width: 68.89px">
-					<font size="2" face="Arial" style="line-height:1.5">
-						<center > 
-							Show <br>
-							 or <br>
-							 hide <br><br><br>
-						</center>
-					</font>
-							<input style = "left: 0px; top: 77px; width: 68.88px" type="button" value="Answer" onmousedown="handleInputPress(event)">
-							<input style = "left: 0px; top: 99px; width: 68.88px" type="button" value="Master" onmousedown="handleInputPress(event)">
-						
-					
-				</form>	
-			</div>
-			<div id="coreSettingsControls" style="height: 120px; width: 133px; left: 448px">
-				<form style="line-height:1.5">
-					<font size="2" face="Arial">
-						<center style="position:relative; left:15px">
-							Core Series <br>
-							Settings <br><br>
-						</center>
-							<span style="line-height:1.6">
-							&nbsp &nbsp Sensitivity: <span id="sensitivityNumber"></span>
+<h1>Try Skeleton Plotting for Yourself!</h1>
+<div id="appFrame" class="widget skeleton-app">
+	<!--Control panel: radios and checkboxes report on change, buttons on click-->
+	<form id="panel" autocomplete="off" onsubmit="return false">
+		<fieldset>
+			<legend>Ring-growth anomalies</legend>
+			<label><input type="checkbox" value="Absents" onchange="handleInputPress(event)"> Absent rings</label>
+			<label><input type="checkbox" value="Falses" onchange="handleInputPress(event)"> False rings</label>
+			<button type="button" value="Hint" aria-pressed="false" onclick="handleInputPress(event)">Hint</button>
+		</fieldset>
 
-							<input type="button" id="decreaseSensitivity" value=&#8249 style="padding:1px; left:97px" onmousedown="handleInputPress(event)">
-							<!--<div style="left:107;width:8;height:20.5;background:#c8c8c8"></div>-->
-							<input type="button" id="increaseSensitivity" value=&#8250 style="padding:1px; left:115px" onmousedown="handleInputPress(event)"> <br>
-							No. of Rings: <span id="ringNumber">1</span>
-							<input type="button" id="decreaseRings" value=&#8249 style="padding:1px;left:97px" onmousedown="handleInputPress(event)">
-							<!--<div style="left:107;width:8;height:20.5;background:#c8c8c8"></div>-->
-							<input type="button" id="increaseRings" value=&#8250 style="padding:1px;left:115px" onmousedown="handleInputPress(event)"> <br><br>
-							<input type="button" value="Restart a New Core" style="top:99px" onmousedown="handleInputPress(event)">
-							</span>
-					</font>
-				</form>
+		<fieldset>
+			<legend>Magnification</legend>
+			<div class="columns">
+				<div role="radiogroup" aria-label="Core magnification">
+					<span class="group-label">Core</span>
+					<label><input type="radio" name="coreMag" value="1x" checked onchange="handleInputPress(event)"> 1x</label>
+					<label><input type="radio" name="coreMag" value="2x" onchange="handleInputPress(event)"> 2x</label>
+					<label><input type="radio" name="coreMag" value="3x" onchange="handleInputPress(event)"> 3x</label>
+				</div>
+				<div role="radiogroup" aria-label="Graph size">
+					<span class="group-label">Graphs</span>
+					<label><input type="radio" name="graphMag" value="Large" checked onchange="handleInputPress(event)"> Large</label>
+					<label><input type="radio" name="graphMag" value="Medium" onchange="handleInputPress(event)"> Medium</label>
+					<label><input type="radio" name="graphMag" value="Small" onchange="handleInputPress(event)"> Small</label>
+				</div>
 			</div>
-		</div>
-		<!--End Control Panel-->
+		</fieldset>
 
-		<!-- Start Core Strip and Graphs-->
-		<canvas id="coreStrip" class="interactive" onpointerdown="startDrag(event)">	
-		</canvas>
-		<div class="centerMark" style="top:134px"></div>
-		<div class="centerMark" style="top:164px"></div>
-		<div style="top:176px; left:270px">
-			<span id="hintText"></span>
-		</div>
-		<canvas id="userGraph" class="interactive" onpointerdown="handleClick(event)">
-		</canvas>
-		<canvas id="masterGraph" class="interactive" onpointerdown="startDrag(event)">
-		</canvas>
-		<div id="answerBox">
-			<div style="margin-left:10px">
-			<span id="answerText" size="3" face="Times" color="black" ></span>
+		<fieldset>
+			<legend>Marking</legend>
+			<div class="columns">
+				<div role="radiogroup" aria-label="Draw or erase">
+					<label><input type="radio" name="mouseMode" value="Draw" checked onchange="handleInputPress(event)"> Draw</label>
+					<label><input type="radio" name="mouseMode" value="Erase" onchange="handleInputPress(event)"> Erase</label>
+					<span class="buttons">
+						<button type="button" value="Undo" onclick="handleInputPress(event)">Undo</button>
+						<button type="button" value="Redo" onclick="handleInputPress(event)">Redo</button>
+					</span>
+				</div>
+				<div role="radiogroup" aria-label="Kind of mark">
+					<label><input type="radio" name="mouseMark" value="Normal" checked onchange="handleInputPress(event)"> Normal</label>
+					<label><input type="radio" name="mouseMark" value="Wide" onchange="handleInputPress(event)"> Wide</label>
+					<label><input type="radio" name="mouseMark" value="Absent" onchange="handleInputPress(event)"> Absent</label>
+					<label><input type="radio" name="mouseMark" value="False" onchange="handleInputPress(event)"> False</label>
+				</div>
 			</div>
-		</div>
+		</fieldset>
 
-		<!-- End Core Strip and Graphs-->
+		<fieldset>
+			<legend>Show or hide</legend>
+			<button type="button" value="Answer" aria-pressed="false" onclick="handleInputPress(event)">Answer</button>
+			<button type="button" value="Master" aria-pressed="false" onclick="handleInputPress(event)">Master</button>
+		</fieldset>
+
+		<fieldset>
+			<legend>Core series settings</legend>
+			<div class="stepper">
+				<span>Sensitivity</span>
+				<button type="button" id="decreaseSensitivity" aria-label="Decrease sensitivity" onclick="handleInputPress(event)">&lsaquo;</button>
+				<output id="sensitivityNumber" aria-live="polite"></output>
+				<button type="button" id="increaseSensitivity" aria-label="Increase sensitivity" onclick="handleInputPress(event)">&rsaquo;</button>
+			</div>
+			<div class="stepper">
+				<span>Rings</span>
+				<button type="button" id="decreaseRings" aria-label="Fewer rings" onclick="handleInputPress(event)">&lsaquo;</button>
+				<output id="ringNumber" aria-live="polite"></output>
+				<button type="button" id="increaseRings" aria-label="More rings" onclick="handleInputPress(event)">&rsaquo;</button>
+			</div>
+			<button type="button" value="Restart a New Core" class="primary" onclick="handleInputPress(event)">Restart a new core</button>
+		</fieldset>
+	</form>
+
+	<!--Workspace: the core strip and graphs slide left and right inside it-->
+	<div id="workspace">
+		<canvas id="coreStrip" class="interactive" onpointerdown="startDrag(event)"></canvas>
+		<div class="centerMark top"></div>
+		<div class="centerMark bottom"></div>
+		<div id="hintBox"><span id="hintText"></span></div>
+		<canvas id="userGraph" class="interactive" onpointerdown="handleClick(event)"></canvas>
+		<canvas id="masterGraph" class="interactive" onpointerdown="startDrag(event)"></canvas>
+		<div id="answerBox" role="status">
+			<span id="answerText"></span>
+		</div>
 	</div>
-	<script> 		
+</div>
+<script>
 	appInit();
-	</script>
-
-
+</script>
 
 <nav class="pager" aria-label="Previous and next page">
 	<a class="prev" rel="prev" href="absentfalse.htm"><span>&larr; Previous</span>Absent/False Rings</a>
