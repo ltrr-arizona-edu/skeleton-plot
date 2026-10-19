@@ -87,7 +87,7 @@ function drawCoreStrip() {
 	coreStrip.width = 20 + data.coreLength;
 	
 	if(coreStrip.width >= 600) {appInit1();}
-	coreStrip.style.left = Math.floor(0.5 * (600-coreStrip.width));
+	coreStrip.style.left = Math.floor(0.5 * (600-coreStrip.width)) + "px";
 
 	coreEdge1 = 10; coreEdge2 = coreStrip.width-20;
 
