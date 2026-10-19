@@ -379,3 +379,11 @@ hr {
 	border-radius: 3px;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
+
+/*Photo credits under images*/
+.CREDIT {
+	display: block;
+	margin-top: 4px;
+	color: var(--muted);
+	font-size: 0.8125rem;
+}

@@ -140,6 +140,17 @@ Newest first.
 - Web copies at 2x display size, metadata stripped: 125 KB in total (originals 2.5–8 MB).
   The source files were not modified.
 
+### Fire-scar photo (`applications.htm`)
+- Replaced `ban.gif` (fire-scarred Douglas-fir, C.D. Allen and H.D. Grissino-Mayer; now removed)
+  with `fire-scars.jpg`: "Tree cross-section showing fire scars" by Ellis Margolis, USGS
+  (https://www.usgs.gov/media/images/tree-cross-section-showing-fire-scars), which USGS marks
+  **public domain**. Trimmed and saved at 720px wide (99 KB), shown at 360px.
+- Credit line links to the USGS page. Text "The white arrows indicate distinct fires of the
+  past" → "The white labels mark scars from distinct fires of the past", since the new photo
+  labels each scar with its year instead of using arrows.
+- Added a `.CREDIT` style (small grey text under the image) for the photo credits used on
+  this and other pages; it was lost when the stylesheet was rewritten.
+
 ### Demo widgets fit narrow screens
 - New `Skel.fitWidget(frame)` in `common.js` shrinks a fixed-size widget (470–600px wide) with a
   CSS transform when its container is narrower, and refits when the window is resized. It is
