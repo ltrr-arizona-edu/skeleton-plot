@@ -128,6 +128,18 @@ Newest first.
   - `findingdates.htm`: "a button to "Show or Hide Answers"" → "an "Answer" button under
     "Show or hide"".
 
+### Sensitive vs complacent illustrations (`sensitivitycomplacency.htm`)
+- Replaced the pixelated tree drawings with yellow wood insets (`sensitiveonly.gif`,
+  `complacentonly.gif`, now removed) with the artwork from the LTRR "Which trees are best for
+  dendrochronology?" poster (`~/Documents/Lab/LTRRPosters/SensitiveComplacent/`):
+  - `sensitive-tree.jpg` (from `sadtree.jpg`): tree on a steep, rocky slope with thin soil.
+  - `complacent-tree.jpg` (from `happytree.jpg`): tree on flat ground above the water table.
+  - `sensitive-rings.jpg` / `complacent-rings.jpg` (from `sensitiverings.jpg` /
+    `complacentrings.jpg`): photos of real wood, variable vs uniform rings.
+- Each tree is shown with its ring photo beside it (new `.site-figure` style), as on the poster.
+- Web copies at 2x display size, metadata stripped: 125 KB in total (originals 2.5–8 MB).
+  The source files were not modified.
+
 ### Demo widgets fit narrow screens
 - New `Skel.fitWidget(frame)` in `common.js` shrinks a fixed-size widget (470–600px wide) with a
   CSS transform when its container is narrower, and refits when the window is resized. It is

@@ -367,3 +367,15 @@ hr {
 		padding-right: 0;
 	}
 }
+
+/*A site illustration with a photo of its tree rings beside it (sensitivitycomplacency.htm)*/
+.site-figure {
+	display: flex;
+	gap: 10px;
+	align-items: flex-start;
+}
+
+.site-figure .rings {
+	border-radius: 3px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
