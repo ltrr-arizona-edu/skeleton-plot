@@ -343,3 +343,27 @@ hr {
 	margin-right: auto;
 	border-radius: 4px;
 }
+
+/*Holder that Skel.fitWidget wraps around a widget it may shrink*/
+.widget-fit {
+	width: 100%;
+	overflow: hidden;
+}
+
+/*On narrow screens, stack the cells of layout tables so text and figures get the full width*/
+@media (max-width: 640px) {
+	main table,
+	main tbody,
+	main tr,
+	main td,
+	main th {
+		display: block;
+		width: auto !important;
+	}
+
+	main td,
+	main th {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}

@@ -70,10 +70,11 @@ When skeleton plotting ring-width variation of a core, note that:
 		<canvas id="coreStrip" style="top:40px"></canvas>
 		<canvas id="userGraph1" style="left:180px; top:90px" height="121" width="241"></canvas>
 		<canvas id="overlay" width = "600" height = "220"></canvas>
-		<input type="button" value="Try Again" onmousedown="appInit1()" style="z-index:2; position: relative">
+		<input type="button" value="Try Again" onclick="appInit1()" style="z-index:2; position: relative">
 	</div>
 	<script>
 		appInit1();
+		Skel.fitWidget(document.getElementById("appFrame1"));
 	</script>
 <BR><BR>
 
@@ -108,11 +109,12 @@ When skeleton plotting ring-width variation of a core, note that:
 	</UL>
 <TD>
 	<div id="appFrame2" class="widget">
-		<input type="button" value="Try Again" style="position:relative; top:10px" onmousedown="appInit2()">
+		<input type="button" value="Try Again" style="position:relative; top:10px" onclick="appInit2()">
 		<canvas id="userGraph2" class="interactive" onpointerdown="handleClick(event)"></canvas>
 	</div>
 	<script>
 		appInit2();
+		Skel.fitWidget(document.getElementById("appFrame2"));
 	</script>
 </TR></TABLE><BR>
 </div>

@@ -46,13 +46,14 @@
 <H1>Skeleton Plotting Absent and False Rings</H1>
 <TABLE >
 <TR><TD>	<div id="appFrame" class="widget">
-		<input type="button" value="Try Again" onmousedown="appInit()" style="position:relative;top:10px">
+		<input type="button" value="Try Again" onclick="appInit()" style="position:relative;top:10px">
 		<span id="answer" style="left:45px; top:30px"></span>
 		<canvas id="userGraph" height="91" width="421" style="left:15px; top: 50px" class="interactive" onpointerdown="handleClick(event)"></canvas>
 		<canvas id="masterGraph" height = "181" width="451" style="left:15px; top:141px"></canvas>
 	</div>
 	<script>
 		appInit();
+		Skel.fitWidget(document.getElementById("appFrame"));
 	</script>
 </TD>
 <TD>How to mark ring-growth anomalies on a skeleton plot:

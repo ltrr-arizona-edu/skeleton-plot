@@ -92,6 +92,18 @@ Newest first.
 - `SkeletonPlot.css` rewritten and scoped to the app. The old stylesheet's
   `div { position: absolute }` applied to every div on the page.
 
+### Demo widgets fit narrow screens
+- New `Skel.fitWidget(frame)` in `common.js` shrinks a fixed-size widget (470–600px wide) with a
+  CSS transform when its container is narrower, and refits when the window is resized. It is
+  called once for each demo on `plotting.htm` (both), `relativescale.htm`,
+  `patternmatching.htm` and `absentfalse.htm`.
+- `Skel.position` and `Skel.dragHoriz` divide by that on-screen scale, so taps and drags land
+  in the right place on a shrunk widget.
+- On screens up to 640px wide, layout tables stack their cells vertically (CSS only), so text
+  and figures get the full width instead of overflowing.
+- "Try Again" buttons use `onclick` instead of `onmousedown`, so they work from the keyboard.
+  No `onmousedown` handlers remain on any page.
+
 - Demo widgets (`plotting.htm`, `relativescale.htm`, `patternmatching.htm`, `absentfalse.htm`):
   Warm Gray panel instead of pale yellow, centred, and "Try Again" buttons styled as Arizona
   Blue buttons. Removed `input:focus { outline: none }` so keyboard focus is visible.

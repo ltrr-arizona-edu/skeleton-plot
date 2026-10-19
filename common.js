@@ -360,21 +360,30 @@ var Skel = (function() {
 		var targ = e.currentTarget;
 		var startX = e.clientX;
 		var startLeft = parseInt(targ.style.left) || 0;
+		var scale = screenScale(targ);
 
 		if(!isPrimary(e)) {return;}
 		e.preventDefault();	//no text selection while dragging
 
 		track(targ, e.pointerId, function(ev) {
-			onMove(targ, startLeft + ev.clientX - startX);
+			onMove(targ, startLeft + (ev.clientX - startX)/scale);
 		}, function() {
 			if(onEnd) {onEnd(targ);}
 		});
 	}
 
-	//Pointer position within the element (which must have no border), in CSS pixels
+	//Pointer position within the element (which must have no border), in the element's own
+	//CSS pixels, even when a fitWidget scale is shrinking it on screen
 	function position(e) {
-		var rect = e.currentTarget.getBoundingClientRect();
-		return {x: e.clientX - rect.left, y: e.clientY - rect.top};
+		var targ = e.currentTarget;
+		var rect = targ.getBoundingClientRect();
+		var scale = screenScale(targ);
+		return {x: (e.clientX - rect.left)/scale, y: (e.clientY - rect.top)/scale};
+	}
+
+	//How much an element is shrunk on screen by CSS transforms (1 = not at all)
+	function screenScale(el) {
+		return el.offsetWidth ? el.getBoundingClientRect().width / el.offsetWidth : 1;
 	}
 
 	//Call fn({offsetX, offsetY, target}) with the pointerdown position once the pointer is
@@ -420,6 +429,32 @@ var Skel = (function() {
 			targ.setPointerCapture(pointerId);	//keep receiving events when the pointer leaves the element
 		}
 		catch(err) {}
+	}
+
+	/*Fitting fixed-size widgets on narrow screens*/
+
+	//Scale a fixed-size widget down to fit its container, and keep it fitted as the window
+	//resizes. Pointer helpers above allow for the scale. Call once per widget.
+	function fitWidget(frame) {
+		var holder = document.createElement("div");
+		holder.className = "widget-fit";
+		frame.parentNode.insertBefore(holder, frame);
+		holder.appendChild(frame);
+
+		function fit() {
+			var scale = Math.min(1, holder.clientWidth / frame.offsetWidth);
+			if(scale < 1) {
+				frame.style.transform = "scale(" + scale + ")";
+				frame.style.transformOrigin = "top left";
+				holder.style.height = frame.offsetHeight*scale + "px";
+			}
+			else {
+				frame.style.transform = "";
+				holder.style.height = "";
+			}
+		}
+		fit();
+		window.addEventListener("resize", fit);
 	}
 
 	//Left mouse button, or the first finger/pen
@@ -495,6 +530,7 @@ var Skel = (function() {
 		randomLatewood: randomLatewood,
 		drawCoreStrip: drawCoreStrip,
 		position: position,
+		fitWidget: fitWidget,
 		dragHoriz: dragHoriz,
 		onTap: onTap
 	};
