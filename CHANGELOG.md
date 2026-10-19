@@ -3,6 +3,15 @@
 Record of changes made while modernising the skeleton plot pages (branch `revamp`).
 Newest first.
 
+## Default page for the folder
+- Added `index.html`, which immediately sends visitors to `introcrossdate.htm` (meta refresh,
+  plus a script redirect that keeps any `#fragment`, plus a plain link as a fallback).
+- Why: the live site (www.ltrr.arizona.edu, served from Amazon S3) shows a folder's
+  `index.html` when someone visits `/skeletonplot/`. That is currently an automatically
+  generated file listing, including obsolete files such as `SkeletonPlot.jar`. Deploying this
+  `index.html` replaces it, so `/skeletonplot/` opens the tutorial. It also works when the
+  folder is opened locally or served by any other web server.
+
 ## Step 3 — Restyle (University of Arizona brand)
 
 ### Lifelike core strips (`common.js`)
