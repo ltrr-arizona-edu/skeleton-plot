@@ -1,168 +1,152 @@
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE html>
 <HTML>
 <HEAD>
-   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
    <META NAME="Author" CONTENT="Paul R. Sheppard">
-   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; U) [Netscape]">
    <META NAME="KeyWords" CONTENT="dendrochronology, tree ring, crossdating, skeleton plot">
-   <TITLE>Crossdating: Relative Scale</TITLE>
+   <TITLE>Crossdating: Try Skeleton Plotting for Yourself</TITLE>
+   <script src="common.js"></script>
+   <link href="common.css" rel="stylesheet">
    <script src="SkeletonPlot.js"></script>
 	<link href="SkeletonPlot.css" rel="stylesheet" type="text/css">
 <LINK REL=stylesheet HREF="crossdatestyle.css" TYPE="text/css">
 </HEAD>
 <BODY>
 
-	<div id="appFrame" style="width: 760px; height: 550px">
-		<!--Start Control Panel-->
-		<div id="panel" style="height: 120px; width: 581px">
-			<div id="anomalyControls" style="height:120px; width:98px; left:0px">
-				
-				
-				<form style="width: 94.44px">
-				
-				<font  size="2" face="Arial">
-					 <center> Ring-Growth <br>
-							 Anomalies<br><br>
-					</center>
-					
-				
-					<input type="checkbox" value="Absents"  onmousedown="handleInputPress(event)" unchecked>
-					<span>Absents<br></span>
-					<input type="checkbox" value="Falses" onmousedown="handleInputPress(event)" unchecked>
-					<span>Falses</span>
-					<input type="button" value="Hint" style="top:99; padding-left:30px; padding-right:30px;left:0"onmousedown="handleInputPress(event)">
-					</font>
-				</form>
-			</div>
-			<div id="magnificationControls" style="height: 120px; width:127px; left:99px">
-				<form style="line-height:1.5">
-					<font  size="2" face="Arial">
-						<center> Magnification <br><br>
-								 Core &nbsp &nbsp Graphs
-						</center>
-						<input style="padding:"type="radio" name="coreMag" value="1x" onmousedown="handleInputPress(event)" checked>1x
-						<input type="radio" name="graphMag" value="Large" onmousedown="handleInputPress(event)" checked>Large <br>
-						<input type="radio" name="coreMag" value="2x" onmousedown="handleInputPress(event)">2x
-						<input type="radio" name="graphMag" value="Medium" onmousedown="handleInputPress(event)">Medium <br>
-						<input type="radio" name="coreMag" value="3x" onmousedown="handleInputPress(event)">3x
-						<input type="radio" name="graphMag" value="Small" onmousedown="handleInputPress(event)">Small <br>
-					</font>
-				</form>
-			</div>
-			<div id="mouseActionControls" style="height: 120px; width: 150px; left: 227px">
-				<font size="2" face="Arial">
-					<center> Mouse Actions </center>	
-				
-				<form style="width:60px;height:100px;top:35px;line-height:1.5">
-					<input type="radio" name="mouseMode" value="Draw" onmousedown="handleInputPress(event)" checked>Draw<br>
-					<input type="radio" name="mouseMode" value="Erase" onmousedown="handleInputPress(event)">Erase <br>
-					<input style="left:0px; width:60px" type="button" value="Undo" onmousedown="handleInputPress(event)"><br>
-					<input style="left:0px; width:60px; top: 64px" type="button" value="Redo" onmousedown="handleInputPress(event)">
-				</form>
-				<form style="width:70;height:100px;top:35px;left:60;line-height:1.5">
-					<input type="radio" name="mouseMark" value="Normal" onmousedown="handleInputPress(event)" checked>Normal<br>
-					<input type="radio" name="mouseMark" value="Wide" onmousedown="handleInputPress(event)">Wide<br>
-					<input type="radio" name="mouseMark" value="Absent" onmousedown="handleInputPress(event)">Absent<br>
-					<input type="radio" name="mouseMark" value="False" onmousedown="handleInputPress(event)">False
-				</form>
-				</font>
-			</div>
-			<div id="showHideControls" style="height: 120px; width: 69px; left: 378px">
-				<form style="width: 68.89px">
-					<font size="2" face="Arial" style="line-height:1.5">
-						<center > 
-							Show <br>
-							 or <br>
-							 hide <br><br><br>
-						</center>
-					</font>
-							<input style = "left: 0px; top: 77px; width: 68.88px" type="button" value="Answer" onmousedown="handleInputPress(event)">
-							<input style = "left: 0px; top: 99px; width: 68.88px" type="button" value="Master" onmousedown="handleInputPress(event)">
-						
-					
-				</form>	
-			</div>
-			<div id="coreSettingsControls" style="height: 120px; width: 133px; left: 448px">
-				<form style="line-height:1.5">
-					<font size="2" face="Arial">
-						<center style="position:relative; left:15px">
-							Core Series <br>
-							Settings <br><br>
-						</center>
-							<span style="line-height:1.6">
-							&nbsp &nbsp Sensitivity: <span id="sensitivityNumber"></span>
-
-							<input type="button" id="decreaseSensitivity" value=&#8249 style="padding:1px; left:97px" onmousedown="handleInputPress(event)">
-							<!--<div style="left:107;width:8;height:20.5;background:#c8c8c8"></div>-->
-							<input type="button" id="increaseSensitivity" value=&#8250 style="padding:1px; left:115px" onmousedown="handleInputPress(event)"> <br>
-							No. of Rings: <span id="ringNumber">1</span>
-							<input type="button" id="decreaseRings" value=&#8249 style="padding:1px;left:97px" onmousedown="handleInputPress(event)">
-							<!--<div style="left:107;width:8;height:20.5;background:#c8c8c8"></div>-->
-							<input type="button" id="increaseRings" value=&#8250 style="padding:1px;left:115px" onmousedown="handleInputPress(event)"> <br><br>
-							<input type="button" value="Restart a New Core" style="top:99" onmousedown="handleInputPress(event)">
-							</span>
-					</font>
-				</form>
-			</div>
-		</div>
-		<!--End Control Panel-->
-
-		<!-- Start Core Strip and Graphs-->
-		<canvas id="coreStrip" onmousedown="startDrag(event)">	
-		</canvas>
-		<div class="centerMark" style="top:134px"></div>
-		<div class="centerMark" style="top:164px"></div>
-		<div style="top:176px; left:270px">
-			<span id="hintText"></span>
-		</div>
-		<canvas id="userGraph" onmousedown="handleClick(event)">
-		</canvas>
-		<canvas id="masterGraph" onmousedown="startDrag(event)">
-		</canvas>
-		<div id="answerBox">
-			<div style="margin-left:10px">
-			<span id="answerText" size="3" face="Times" color="black" ></span>
-			</div>
-		</div>
-
-		<!-- End Core Strip and Graphs-->
+	<header class="site-header">
+	<div class="redbar"><div class="wrap"><a href="https://www.arizona.edu/">The University of Arizona</a></div></div>
+	<div class="wrap brand">
+		<a class="unit" href="https://ltrr.arizona.edu/">Laboratory of Tree-Ring Research</a>
+		<a class="site-title" href="introcrossdate.htm">Crossdating Tree Rings Using Skeleton Plotting</a>
 	</div>
-	<script> 		
+</header>
+<nav class="toc" aria-label="Tutorial pages">
+	<div class="wrap">
+		<details>
+			<summary>Contents</summary>
+			<ol>
+				<li><a href="introcrossdate.htm">Introduction</a></li>
+				<li><a href="applications.htm">Dendrochronology Applications</a></li>
+				<li><a href="exampleapplication.htm">Crossdating Application</a></li>
+				<li><a href="ringanomalies.htm">Ring-Growth Anomalies</a></li>
+				<li><a href="sensitivitycomplacency.htm">Sensitivity-Complacency</a></li>
+				<li><a href="plotting.htm">Skeleton Plotting</a></li>
+				<li><a href="relativescale.htm">Relative Scale</a></li>
+				<li><a href="masterchronology.htm">Master Chronology</a></li>
+				<li><a href="patternmatching.htm">Pattern Matching</a></li>
+				<li><a href="findingdates.htm">Finding the Dates</a></li>
+				<li><a href="absentfalse.htm">Absent/False Rings</a></li>
+				<li aria-current="page"><a href="SkeletonPlot19.htm">Try Skeleton Plotting for Yourself!</a></li>
+			</ol>
+		</details>
+		<span class="position">Page 12 of 12: Try Skeleton Plotting for Yourself!</span>
+	</div>
+</nav>
+<main class="wrap">
+<h1>Try Skeleton Plotting for Yourself!</h1>
+<div id="appFrame" class="widget skeleton-app">
+	<!--Control panel: radios and checkboxes report on change, buttons on click-->
+	<form id="panel" autocomplete="off" onsubmit="return false">
+		<fieldset>
+			<legend>Ring-growth anomalies</legend>
+			<label><input type="checkbox" value="Absents" onchange="handleInputPress(event)"> Absent rings</label>
+			<label><input type="checkbox" value="Falses" onchange="handleInputPress(event)"> False rings</label>
+			<button type="button" value="Hint" aria-pressed="false" onclick="handleInputPress(event)">Hint</button>
+		</fieldset>
+
+		<fieldset>
+			<legend>Magnification</legend>
+			<div class="columns">
+				<div role="radiogroup" aria-label="Core magnification">
+					<span class="group-label">Core</span>
+					<label><input type="radio" name="coreMag" value="1x" checked onchange="handleInputPress(event)"> 1x</label>
+					<label><input type="radio" name="coreMag" value="2x" onchange="handleInputPress(event)"> 2x</label>
+					<label><input type="radio" name="coreMag" value="3x" onchange="handleInputPress(event)"> 3x</label>
+				</div>
+				<div role="radiogroup" aria-label="Graph size">
+					<span class="group-label">Graphs</span>
+					<label><input type="radio" name="graphMag" value="Large" checked onchange="handleInputPress(event)"> Large</label>
+					<label><input type="radio" name="graphMag" value="Medium" onchange="handleInputPress(event)"> Medium</label>
+					<label><input type="radio" name="graphMag" value="Small" onchange="handleInputPress(event)"> Small</label>
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend>Marking</legend>
+			<div class="columns">
+				<div role="radiogroup" aria-label="Draw or erase">
+					<label><input type="radio" name="mouseMode" value="Draw" checked onchange="handleInputPress(event)"> Draw</label>
+					<label><input type="radio" name="mouseMode" value="Erase" onchange="handleInputPress(event)"> Erase</label>
+					<span class="buttons">
+						<button type="button" value="Undo" onclick="handleInputPress(event)">Undo</button>
+						<button type="button" value="Redo" onclick="handleInputPress(event)">Redo</button>
+					</span>
+				</div>
+				<div role="radiogroup" aria-label="Kind of mark">
+					<label><input type="radio" name="mouseMark" value="Normal" checked onchange="handleInputPress(event)"> Normal</label>
+					<label><input type="radio" name="mouseMark" value="Wide" onchange="handleInputPress(event)"> Wide</label>
+					<label><input type="radio" name="mouseMark" value="Absent" onchange="handleInputPress(event)"> Absent</label>
+					<label><input type="radio" name="mouseMark" value="False" onchange="handleInputPress(event)"> False</label>
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend>Show or hide</legend>
+			<button type="button" value="Answer" aria-pressed="false" onclick="handleInputPress(event)">Answer</button>
+			<button type="button" value="Master" aria-pressed="false" onclick="handleInputPress(event)">Master</button>
+		</fieldset>
+
+		<fieldset>
+			<legend>Core series settings</legend>
+			<div class="stepper">
+				<span>Sensitivity</span>
+				<button type="button" id="decreaseSensitivity" aria-label="Decrease sensitivity" onclick="handleInputPress(event)">&lsaquo;</button>
+				<output id="sensitivityNumber" aria-live="polite"></output>
+				<button type="button" id="increaseSensitivity" aria-label="Increase sensitivity" onclick="handleInputPress(event)">&rsaquo;</button>
+			</div>
+			<div class="stepper">
+				<span>Rings</span>
+				<button type="button" id="decreaseRings" aria-label="Fewer rings" onclick="handleInputPress(event)">&lsaquo;</button>
+				<output id="ringNumber" aria-live="polite"></output>
+				<button type="button" id="increaseRings" aria-label="More rings" onclick="handleInputPress(event)">&rsaquo;</button>
+			</div>
+			<button type="button" value="Restart a New Core" class="primary" onclick="handleInputPress(event)">Restart a new core</button>
+		</fieldset>
+	</form>
+
+	<!--Workspace: the core strip and graphs slide left and right inside it-->
+	<div id="workspace">
+		<canvas id="coreStrip" class="interactive" onpointerdown="startDrag(event)"></canvas>
+		<div class="centerMark top"></div>
+		<div class="centerMark bottom"></div>
+		<div id="hintBox"><span id="hintText"></span></div>
+		<canvas id="userGraph" class="interactive" onpointerdown="handleClick(event)"></canvas>
+		<canvas id="masterGraph" class="interactive" onpointerdown="startDrag(event)"></canvas>
+		<div id="answerBox" role="status">
+			<span id="answerText"></span>
+		</div>
+	</div>
+</div>
+<script>
 	appInit();
-	</script>
+</script>
 
-
-
-<CENTER>
-<HR>
-<A HREF="absentfalse.htm">Previous Page</A> |
-<A HREF="http://www.ltrr.arizona.edu">Next Page</A><BR>
-<A HREF="introcrossdate.htm">Introduction</A> |
-<A HREF="applications.htm">Dendrochronology Applications</A> |
-<A HREF="exampleapplication.htm">Crossdating Application</A> |
-<A HREF="ringanomalies.htm">Ring-Growth Anomalies</A><BR>
-<A HREF="sensitivitycomplacency.htm">Sensitivity-Complacency</A> |
-<A HREF="plotting.htm">Skeleton Plotting</A> |
-<A HREF="relativescale.htm">Relative Scale</A> |
-<A HREF="masterchronology.htm">Master Chronology</A><BR>
-<A HREF="patternmatching.htm">Pattern Matching</A> |
-<A HREF="findingdates.htm">Finding the Dates</A> |
-<A HREF="absentfalse.htm">Absent/False Rings</A> |
-<A HREF="SkeletonPlot19.htm">Try Skeleton Plotting for Yourself!</A><BR>
-<A HREF="http://www.ltrr.arizona.edu">Laboratory of Tree-Ring Research</A>
-</CENTER>
-<HR>
-<ADDRESS>Paul R. Sheppard<BR>
-Laboratory of Tree-Ring Research, The University of Arizona<BR>
-Tucson, Arizona 85721 USA<BR>
-office: (520) 621-6474, fax: (520) 621-8229<BR>
-Comments to: <A HREF="mailto:sheppard@ltrr.arizona.edu">sheppard@ltrr.arizona.edu</A>
-</ADDRESS><BR>
-Copyright &copy; 1998, Laboratory of Tree-Ring Research, The University of Arizona<BR>
-Revised -- December, 1998<BR>
-URL: <A HREF="SkeletonPlot18.htm">http://tree.ltrr.arizona.edu/skeletonplot/SkeletonPlot18.htm </A>
+<nav class="pager" aria-label="Previous and next page">
+	<a class="prev" rel="prev" href="absentfalse.htm"><span>&larr; Previous</span>Absent/False Rings</a>
+	<a class="next" href="https://ltrr.arizona.edu/"><span>Next &rarr;</span>Laboratory of Tree-Ring Research</a>
+</nav>
+</main>
+<footer class="site-footer">
+	<div class="wrap">
+		<p class="lab"><a href="https://ltrr.arizona.edu/">Laboratory of Tree-Ring Research</a>, The University of Arizona</p>
+		<p>Author: Paul R. Sheppard &middot; Tucson, Arizona 85721 USA &middot; Comments to: sheppard @ ltrr.arizona.edu</p>
+		<p>Copyright &copy; 1998&ndash;2026 Laboratory of Tree-Ring Research, The University of Arizona</p>
+	</div>
+</footer>
 </BODY>
 </HTML>
 

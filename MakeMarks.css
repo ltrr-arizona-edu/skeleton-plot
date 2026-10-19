@@ -1,7 +1,7 @@
 #appFrame2 {
 	width: 130px;
 	height: 165px;
-	background: #ffffcc; 
+	background: #f4ede5;	/*UA Warm Gray*/
 	position: relative;
 	overflow: hidden;
 	text-align: center;
@@ -9,7 +9,7 @@
 
 #userGraph2 {
 	position: absolute;
-	top:44;
+	top:44px;
 	left:0;
 }
 

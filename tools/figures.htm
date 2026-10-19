@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tutorial figure generator</title>
+<!--Draws the core diagrams used in the tutorial pages with the same renderer as the
+    interactive figures. Run tools/make-figures.sh to save them as PNGs.-->
+<script src="../common.js"></script>
+<style>
+	body { margin: 16px; background: #fff; font-family: proxima-nova, calibri, Arial, sans-serif; }
+	figure { margin: 0 0 24px; }
+	figcaption { font-size: 12px; color: #49595e; }
+	canvas { display: block; }
+</style>
+</head>
+<body>
+<figure><canvas id="senscomp"></canvas><figcaption>senscomp</figcaption></figure>
+<figure><canvas id="relative"></canvas><figcaption>relative</figcaption></figure>
+<figure><canvas id="overlap"></canvas><figcaption>overlap</figcaption></figure>
+<figure><canvas id="zoom"></canvas><figcaption>zoom</figcaption></figure>
+<pre id="output"></pre>
+<script>
+var BLUE = "#0c234b", RED = "#ab0520", AZURITE = "#1e5288", ASH = "#403635", WARM = "#f4ede5";
+var SANS = 'proxima-nova, calibri, -apple-system, "Segoe UI", Roboto, Arial, sans-serif';
+var COLORS = ["mediumLatewood", "darkLatewood", "mediumLatewood", "lightLatewood", "mediumLatewood"];
+
+//Deterministic stand-in for random numbers, so figures are identical every time
+function noise(i) {
+	var n = Math.imul(i ^ 0x5bd1e995, 0x45d9f3b);
+	n = Math.imul(n ^ (n >>> 16), 0x45d9f3b);
+	return ((n ^ (n >>> 16)) >>> 0) / 4294967296;
+}
+
+//Ring list for Skel.drawCoreStrip from ring widths in pixels
+function ringsFrom(widths, colorOffset) {
+	var x = 0;
+	return widths.map(function(w, i) {
+		x += w;
+		return {x: x, width: w, color: COLORS[(i + (colorOffset || 0)) % COLORS.length]};
+	});
+}
+
+//Draw a core onto a figure: build it on its own canvas, then copy it across
+function placeCore(ctx, widths, x, y, options) {
+	var strip = document.createElement("canvas");
+	var length = widths.reduce(function(a, b) {return a + b;}, 0);
+	Skel.drawCoreStrip(strip, ringsFrom(widths, options && options.colorOffset), length, 1,
+		{label: (options && options.label) || function() {return null;}});
+	ctx.drawImage(strip, x, y, Skel.width(strip), Skel.height(strip));
+	return Skel.width(strip);
+}
+
+function text(ctx, s, x, y, font, color, align) {
+	ctx.font = font;
+	ctx.fillStyle = color;
+	ctx.textAlign = align || "left";
+	ctx.fillText(s, x, y);
+	ctx.textAlign = "left";
+}
+
+function panel(canvas, w, h) {
+	Skel.sizeCanvas(canvas, w, h);
+	var ctx = canvas.getContext("2d");
+	ctx.fillStyle = WARM;
+	ctx.fillRect(0, 0, w, h);
+	return ctx;
+}
+
+//A highly variable ("sensitive") series of ring widths and the pattern used across figures
+var PATTERN = [22, 6, 30, 14, 4, 26, 18, 8, 34, 12, 5, 24, 28, 9, 16, 31, 7, 20, 13, 25, 10];
+
+//Sensitive versus complacent growth
+function senscomp() {
+	var complacent = PATTERN.map(function(w, i) {return Math.round(17 + 4*noise(i + 40));});
+	var ctx = panel(document.getElementById("senscomp"), 560, 112);
+	var decade = function(i) {return i % 10 == 0 ? {text: i, dots: 1} : null;};
+	text(ctx, "Sensitive", 128, 38, "bold 17px " + SANS, BLUE, "right");
+	placeCore(ctx, PATTERN, 138, 10, {label: decade});
+	text(ctx, "Complacent", 128, 90, "bold 17px " + SANS, BLUE, "right");
+	placeCore(ctx, complacent, 138, 62, {label: decade, colorOffset: 2});
+}
+
+//Skeleton plot of a ring-width series on a small piece of graph paper
+function miniPlot(ctx, widths, x, y) {
+	var unit = 5, mean = widths.reduce(function(a, b) {return a + b;}, 0) / widths.length;
+	var w = (widths.length + 5) * unit, h = 15*unit + 1, widest = Math.max.apply(null, widths);
+	ctx.save();
+	ctx.translate(x, y);
+	ctx.fillStyle = "#fff";
+	ctx.fillRect(0, 0, w, h);
+	Skel.drawGrid(ctx, 5*unit, w, h, unit);
+	ctx.lineWidth = 2;
+	widths.forEach(function(rw, i) {
+		var length = Math.round(10 * (1 - rw/(0.75*mean)));
+		var mx = (i + 5)*unit + .5;
+		if(length > 0) {Skel.drawBar(ctx, mx, h - length*unit, h);}
+		if(rw == widest) {Skel.drawWideMark(ctx, mx, 6.5*unit, "bold 13px Times");}
+	});
+	ctx.restore();
+	return w;
+}
+
+//The same pattern grown fast, average and slow gives the same skeleton plot
+function relative() {
+	var ctx = panel(document.getElementById("relative"), 720, 256);
+	var rates = [0.6, 1, 1.4];
+	rates.forEach(function(rate, row) {
+		var widths = PATTERN.map(function(w) {return Math.max(3, Math.round(w*rate));});
+		var y = 8 + row*82;
+		placeCore(ctx, widths, 8, y + 18, {colorOffset: row});
+		miniPlot(ctx, PATTERN, 582, y);
+	});
+}
+
+//Living tree, dead wood and archaeological samples overlap in time
+function overlap() {
+	var ctx = panel(document.getElementById("overlap"), 640, 196);
+	var years = {};
+	function width(year) {
+		if(!years[year]) {years[year] = Math.max(3, Math.round(4 + 22*Math.pow(noise(year), 1.3)));}
+		return years[year];
+	}
+	function series(from, count) {
+		var w = [];
+		for(var i = 0; i < count; ++i) {w.push(width(from + i));}
+		return w;
+	}
+	//Each sample: an inner fragment and an outer fragment, with years in between not shown
+	var samples = [
+		{name: "dendroarchaeological sample", inner: 800, outer: 1195, y: 136},
+		{name: "dead wood sample", inner: 1195, outer: 1495, y: 76},
+		{name: "living tree sample", inner: 1495, outer: 1982, y: 16, bark: 1990}
+	];
+	var n = 9, x = 8, positions = {};
+	samples.forEach(function(s, row) {
+		var innerX = row == 0 ? x : positions[s.inner];
+		var label = function(from) {
+			return function(i) {
+				var year = from + i;
+				if(year % 100 == 0) {return {text: year, dots: 3};}
+				return year == s.bark ? {text: year, dots: 0} : null;
+			};
+		};
+		var w1 = placeCore(ctx, series(s.inner, n), innerX, s.y, {label: label(s.inner), colorOffset: row});
+		var outerX = innerX + w1 + 26;
+		positions[s.outer] = outerX;
+		placeCore(ctx, series(s.outer, n), outerX, s.y, {label: label(s.outer), colorOffset: row + 1});
+		//Break between the fragments: the years in between are left out
+		ctx.strokeStyle = ASH;
+		ctx.lineWidth = 1.5;
+		ctx.beginPath();
+		ctx.moveTo(innerX + w1 + 4, s.y + 10);
+		ctx.lineTo(innerX + w1 + 10, s.y + 20);
+		ctx.lineTo(innerX + w1 + 4, s.y + 30);
+		ctx.moveTo(innerX + w1 + 16, s.y + 10);
+		ctx.lineTo(innerX + w1 + 22, s.y + 20);
+		ctx.lineTo(innerX + w1 + 16, s.y + 30);
+		ctx.stroke();
+		s.right = outerX + series(s.outer, n).reduce(function(a, b) {return a + b;}, 0) + 20;
+		s.left = innerX;
+	});
+	//Sample names: beside each core
+	samples.forEach(function(s) {
+		if(s.right + 8 < 640 - 150) {
+			text(ctx, s.name, s.right + 8, s.y + 25, "bold 13px " + SANS, RED);
+		}
+		else {
+			text(ctx, s.name, s.left - 8, s.y + 25, "bold 13px " + SANS, RED, "right");
+		}
+	});
+	//Matching rings line up where samples overlap
+	ctx.setLineDash([3, 3]);
+	ctx.strokeStyle = AZURITE;
+	ctx.lineWidth = 1;
+	[[1, 2], [0, 1]].forEach(function(pair) {
+		var upper = samples[pair[1]], lower = samples[pair[0]];
+		var x0 = upper.left + 10, x1 = x0 + series(upper.inner, n).reduce(function(a, b) {return a + b;}, 0);
+		[x0, x1].forEach(function(lx) {
+			ctx.beginPath();
+			ctx.moveTo(lx + .5, upper.y + 30);
+			ctx.lineTo(lx + .5, lower.y + 10);
+			ctx.stroke();
+		});
+	});
+	ctx.setLineDash([]);
+}
+
+//Magnifying the core around the blue centre line
+function zoom() {
+	var ctx = panel(document.getElementById("zoom"), 220, 150);
+	var widths = [18, 9, 24, 6, 15, 27, 11, 20, 8, 22, 16, 30, 7, 19];
+	var length = widths.reduce(function(a, b) {return a + b;}, 0);
+	var centre = 112, windowHalf = [30, 60, 90];
+	[1, 2, 3].forEach(function(mag, row) {
+		var strip = document.createElement("canvas");
+		var y = 6 + row*48;
+		Skel.drawCoreStrip(strip, ringsFrom(widths), length, mag, {label: function() {return null;}});
+		//Show a window of the strip centred on the same point of the core
+		var focus = 10 + (length/2)*mag;
+		var half = windowHalf[row];
+		var ratio = strip.width / Skel.width(strip);
+		ctx.drawImage(strip, (focus - half)*ratio, 0, 2*half*ratio, strip.height,
+			centre - half, y, 2*half, Skel.height(strip));
+		text(ctx, mag + "x", centre - half - 8, y + 26, "bold 15px " + SANS, RED, "right");
+	});
+	ctx.fillStyle = AZURITE;
+	ctx.fillRect(centre - 1, 2, 2, 146);
+}
+
+senscomp();
+relative();
+overlap();
+zoom();
+
+//Hand the PNGs to tools/make-figures.sh
+var out = {};
+["senscomp", "relative", "overlap", "zoom"].forEach(function(id) {
+	var c = document.getElementById(id);
+	out[id] = {png: c.toDataURL("image/png"), width: Skel.width(c), height: Skel.height(c)};
+});
+document.getElementById("output").textContent = JSON.stringify(out);
+</script>
+</body>
+</html>

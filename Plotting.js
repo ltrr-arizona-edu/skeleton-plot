@@ -68,6 +68,8 @@ function appInit1(){
 
 	graphUnit = 8;
 
+	Skel.initCanvas(userGraph);
+	Skel.initCanvas(document.getElementById("overlay"));
 
 	populateRings();
 	drawCoreStrip();
@@ -76,144 +78,26 @@ function appInit1(){
 }
 
 function drawCoreStrip() {
-	var coreStrip =document.getElementById("coreStrip");
-	var ctx = coreStrip.getContext("2d");
-	var coreEdge1, coreEdge2;
-	var i, txt, txtWidth;
-	var adjRingWidth, adjRingX, prevMag;
+	var coreStrip = document.getElementById("coreStrip");
 
-
-	coreStrip.height = 40;
-	coreStrip.width = 20 + data.coreLength;
-	
-	if(coreStrip.width >= 600) {appInit1();}
-	coreStrip.style.left = Math.floor(0.5 * (600-coreStrip.width));
-
-	coreEdge1 = 10; coreEdge2 = coreStrip.width-20;
-
-	ctx.clearRect(0, 0, coreStrip.width, coreStrip.height);
-
-	ctx.lineWidth = 1;
-	ctx.rect(10.5,10.5,coreStrip.width - 20,20);
-	ctx.strokeStyle="rgb(0,0,0)";
-	ctx.stroke();
-	ctx.fillStyle="rgb(255,255,41)";
-	ctx.fillRect(11.5,11.5,coreStrip.width-22,18);
-
-
-	for(i = 0; i < markData1.coreStrip.ring.length; ++i) {
-		adjRingX = markData1.coreStrip.ring[i].x + 10;;
-		adjRingWidth = markData1.coreStrip.ring[i].width;
-
-		switch(markData1.coreStrip.ring[i].color) {
-			case "earlyWood":
-				ctx.fillStyle="rgb(255,255,051)"
-			break;
-			case "lightLatewood":
-				ctx.fillStyle="rgb(255,204,051)"
-			break;
-			case "mediumLatewood":
-				ctx.fillStyle="rgb(204,153,000)"
-			break;
-			case "darkLatewood":
-				ctx.fillStyle="rgb(153,102,000)"
-			break;
-		}
-		ctx.beginPath();
-		if(adjRingWidth < 3) {
-			console.log(adjRingWidth);
-		}
-		ctx.fillRect(Math.floor(adjRingX-adjRingWidth*0.25), 11, Math.floor(adjRingWidth*0.25)+1, 19);
-		ctx.moveTo(adjRingX+.5, 10);
-		ctx.lineTo(adjRingX+.5, 30);
-		ctx.stroke();
-		ctx.closePath();
-		ctx.fillStyle="rgb(0,0,0)";
-		if(i % 10 == 0) {
-			ctx.beginPath();
-			ctx.arc(adjRingX-adjRingWidth/2, 20, 2, 0, 2*Math.PI);
-			ctx.fill();
-			ctx.closePath();
-			
-			ctx.font = "bold 12px Times";
-			txt = i;
-			txtWidth = ctx.measureText(txt).width;
-			ctx.fillText(txt, adjRingX-adjRingWidth/2-txtWidth/2, 40);
-			
-		}
+	//Start over with new rings if this core will not fit in the 600px frame
+	if(20 + data.coreLength >= 600) {
+		appInit1();
+		return;
 	}
+
+	Skel.drawCoreStrip(coreStrip, markData1.coreStrip.ring, data.coreLength, 1);
+	coreStrip.style.left = Math.floor(0.5 * (600 - Skel.width(coreStrip))) + "px";
 }
 
 function renderGraphPaper1(canvas) {
-	var height = canvas.height;
-	var width = canvas.width;
-	var mag = appSettings.graphMag;
+	var height = Skel.height(canvas);
+	var width = Skel.width(canvas);
 	var ctx = canvas.getContext("2d");
-	var i, txt, txtWidth, temp;
 
-
-	//Draw graph squares
-	ctx.lineWidth = 1;
-
-	//Draw vertical lines
 	//Leave 5 units for margin
-	for (i = graphUnit*5; i < width; i+=graphUnit) {
-		ctx.beginPath();
-		ctx.moveTo(i+.5, 0);
-		ctx.lineTo(i+.5, height);
-		if((i/graphUnit)%5 == 0) {	//Draw dark green line
-			ctx.strokeStyle = "rgb(000,204,051)"
-		}
-		else {	//Draw light green line
-			ctx.strokeStyle = "rgb(102,255,102)";
-		}
-		ctx.stroke();
-		ctx.closePath();
-	}
-
-	//Draw horizontal lines
-	for (i = 0; i < height; i+=graphUnit) {
-		ctx.beginPath();
-		ctx.moveTo(graphUnit*5, i+.5);	//Leave room for margin
-		ctx.lineTo(width, i+.5);
-		if((i/graphUnit)%5 == 0) {	//Dark green lines
-			ctx.strokeStyle = "rgb(000,204,051)"
-		}
-		else {	//Light green lines
-			ctx.strokeStyle = "rgb(102,255,102)";
-		}
-		ctx.stroke();
-		ctx.closePath();
-	}
-
-	for (i = graphUnit*5; i < width; i+=graphUnit*5) {
-		ctx.beginPath();
-		ctx.moveTo(i+.5, 0);
-		ctx.lineTo(i+.5, height);
-		ctx.strokeStyle = "rgb(000,204,051)";
-		ctx.stroke();
-		ctx.closePath();
-	}
-
-	for (i = 0; i < height; i+=graphUnit*5) {
-		ctx.beginPath();
-		ctx.moveTo(graphUnit*5, i+.5);
-		ctx.lineTo(width, i+.5);
-		ctx.strokeStyle = "rgb(000,204,051)"
-		ctx.stroke();
-		ctx.closePath();
-	}
-
-	
-
-	//Write Ring Numbers
-	for (i=graphUnit*5; i<width; i+=10*graphUnit) {
-		ctx.font = "italic bold 15px Times";
-		txt = i/graphUnit - 5;
-		txtWidth = ctx.measureText(txt).width;
-		ctx.fillText(txt, i-txtWidth/2, 4*graphUnit + 5);
-	}
-		
+	Skel.drawGrid(ctx, graphUnit*5, width, height, graphUnit);
+	Skel.drawRingNumbers(ctx, graphUnit*5, width, graphUnit, "italic bold 15px Times");
 }
 
 function redraw1(){
@@ -222,39 +106,32 @@ function redraw1(){
 	var overlay = document.getElementById("overlay");
 	var ctxU = userGraph.getContext("2d");	
 	var ctxO = overlay.getContext("2d");
-	var i, txt, txtWidth, x, y;
+	var i;
 
-	ctxU.clearRect(0, 0, userGraph.width, userGraph.height);
+	var userHeight = Skel.height(userGraph);
+	var coreBottom = Skel.height(coreStrip) - 10 + parseInt(coreStrip.style.top);
+
+	ctxU.clearRect(0, 0, Skel.width(userGraph), userHeight);
 	renderGraphPaper1(userGraph);
 
 
-	//Make normal marks
-
+	//Make normal marks, rising from the bottom
 	ctxU.lineWidth = 3;
-
 	for(i = 0; i < markData1.userGraph.normal.length; ++i) {
-		ctxU.beginPath();
-		ctxU.moveTo(markData1.userGraph.normal[i].x+.5, Math.floor(userGraph.height - markData1.userGraph.normal[i].y ) -.5);
-		ctxU.lineTo(markData1.userGraph.normal[i].x+.5, userGraph.height);
-		ctxU.strokeStyle = "rgb(0,0,0)";
-		ctxU.stroke();
-		ctxU.closePath();
+		Skel.drawBar(ctxU, markData1.userGraph.normal[i].x+.5, Math.floor(userHeight - markData1.userGraph.normal[i].y) -.5, userHeight);
 	}
 
 	for(i = 0; i < markData1.userGraph.wide.length; ++i) {
-		ctxU.font = "bold 16px Times  ";
-		txt = "b";
-		txtWidth = ctxU.measureText(txt).width;
-		ctxU.fillText(txt, markData1.userGraph.wide[i].x - txtWidth/2, 6.5*graphUnit);
+		Skel.drawWideMark(ctxU, markData1.userGraph.wide[i].x, 6.5*graphUnit, "bold 16px Times");
 	}
 
 	//Draw on Overlay
 
-	ctxO.clearRect(0,0,overlay.width,overlay.height);
+	ctxO.clearRect(0, 0, Skel.width(overlay), Skel.height(overlay));
 
-	markData1.overlay.narrow.start.y = coreStrip.height - 10 + parseInt(coreStrip.style.top);
-	markData1.overlay.medium.start.y = coreStrip.height - 10 + parseInt(coreStrip.style.top);
-	markData1.overlay.wide.start.y = coreStrip.height - 10 + parseInt(coreStrip.style.top);
+	markData1.overlay.narrow.start.y = coreBottom;
+	markData1.overlay.medium.start.y = coreBottom;
+	markData1.overlay.wide.start.y = coreBottom;
 
 
 	markData1.overlay.narrow.start.x = markData1.coreStrip.ring[markData1.index.narrow].x - .5*markData1.coreStrip.ring[markData1.index.narrow].width + parseInt(coreStrip.style.left) + 10;
@@ -400,20 +277,8 @@ function populateRings() {
 		//mising rings; can't be first or last
 
 
-		data.coreLength +=  Math.floor(index.all[ring]/2*data.targetRingWidth)+1 >=3 ? Math.floor(index.all[ring]/2*data.targetRingWidth)+1 : 3;
-		
-		var latewoodRandom = Math.random();
-		var newColor;
-		if(latewoodRandom > 0.85) {
-			newColor = "darkLatewood";
-		}
-		else if(latewoodRandom < 0.15) {
-			newColor = "lightLatewood";
-		}
-		else {
-			newColor = "mediumLatewood";
-		}
-		color.push(newColor);
+		data.coreLength += Skel.ringWidth(index.all[ring], data.targetRingWidth);
+		color.push(Skel.randomLatewood());
 	}
 
 	var tempFalses = 0;
@@ -425,8 +290,7 @@ function populateRings() {
 	while(ring < appSettings.rings){
 
 			
-				newWidth = Math.floor(index.all[ring]/2*data.targetRingWidth)+1;
-				if(newWidth < 3) {newWidth = 3};
+				newWidth = Skel.ringWidth(index.all[ring], data.targetRingWidth);
 				if(markData1.coreStrip.ring.length > 0) {
 				
 					newX = markData1.coreStrip.ring[ring - 1].x + Math.floor(newWidth);

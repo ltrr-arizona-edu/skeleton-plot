@@ -1,78 +1,389 @@
-A:link   { color: #CC0000; background-color: #FFFFCC; text-decoration: underline }
-A:visited{ color: #330099; background-color: #FFFFCC; text-decoration: underline }
-A:active { color: #FF3300; background-color: #FFFFCC; text-decoration: underline }
+/*Site styles for the crossdating tutorial, following University of Arizona brand colours and
+  type (values from Arizona Bootstrap 5). Proxima Nova is used where the browser has it
+  (e.g. via the university's Adobe Fonts kit); otherwise Calibri or the system sans-serif.*/
 
-H1 { color: #000000; background-color: #FFFFCC; font-family: Verdana, Arial, sans-serif; font-size: 150%; font-weight: normal; text-align: center; clear: left; text-decoration: none }
+:root {
+	--az-red: #ab0520;
+	--az-red-dark: #91041b;
+	--az-blue: #0c234b;
+	--az-midnight: #001c48;
+	--az-azurite: #1e5288;
+	--az-chili: #8b0015;
+	--az-cool-gray: #e2e9eb;
+	--az-warm-gray: #f4ede5;
+	--az-ash: #403635;
+	--text: #212529;
+	--muted: #49595e;
+	--sans: proxima-nova, calibri, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+	--condensed: proxima-nova-condensed, proxima-nova, calibri, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	--wrap: 1040px;
+}
 
-H2 { color: #000000; background-color: #FFFFCC; font-family: Verdana, Arial, sans-serif; font-size: 140%; font-weight: normal; text-align: center; clear: left }
+* {
+	box-sizing: border-box;
+}
 
-H3 { color: #000000; background-color: #FFFFCC; font-family: Verdana, Arial, sans-serif; font-size: 130%; font-weight: normal; text-align: center; clear: left }
+html {
+	-webkit-text-size-adjust: 100%;
+}
 
-H4 { color: #000000; background-color: #FFFFCC; font-family: Verdana, Arial, sans-serif; font-size: 120%; font-weight: normal; text-align: center; clear: left }
+body {
+	margin: 0;
+	background: #fff;
+	color: var(--text);
+	font-family: var(--sans);
+	font-size: 1.0625rem;
+	line-height: 1.55;
+}
 
-H5 { color: #000000; background-color: #FFFFCC; font-family: Verdana, Arial, sans-serif; font-size: 110%; font-weight: normal; text-align: center; clear: left }
+.wrap {
+	max-width: var(--wrap);
+	margin: 0 auto;
+	padding: 0 16px;
+}
 
-H6 { color: #000000; background-color: #FFFFCC; font-family: Verdana, Arial, sans-serif; font-size: 105%; font-weight: lighter; text-align: center; clear: left }
+/*Header: university red bar, then the site title*/
 
-BODY { color: #000000; background-color: #FFFFCC;
-       font-family: Verdana, sans-serif; font-size: small }
-P    { color: #000000; background-color: #FFFFCC;
-      font-family: Verdana, sans-serif; font-size: small; text-decoration: none }
-ADDRESS    { color: #000000; background-color: #FFFFCC;
-       font-family: Verdana, sans-serif; font-size: small; margin: 0em; text-decoration: none }
-OL   { color: #000000; background-color: #FFFFCC;
-       font-family: Verdana, sans-serif; font-size: small }
-UL   { color: #000000; background-color: #FFFFCC; 
-       margin-top: 0em;
-       font-family: Verdana, sans-serif; font-size: small }
-LI   { color: #000000; background-color: #FFFFCC; 
-       margin-top: 0em;
-       font-family: Verdana, sans-serif; font-size: small }
-DL   { color: #000000; background-color: #FFFFCC;
-      font-family: Verdana, sans-serif; font-size: small }
-DT   { color: #000000; background-color: #FFFFCC;
-       font-family: Verdana, sans-serif; font-size: 112%; font-weight: bold }
-DD   { color: #000000; background-color: #FFFFCC;
-       font-family: Verdana, sans-serif; font-size: small }
-PRE  { color: #000000;  background-color: #FFFFCC;
-       font-size: small }
-EM   { color: #CC3300; background-color: #FFFFCC; font-style: normal }
+.redbar {
+	background: var(--az-red);
+}
 
-TABLE  { color: #FFFFFF; background-color: #FFFFCC; font-family: Verdana, sans-serif;
-         border-color: #FFFFFF; border-width: 1px; border-style: solid;
-         vertical-align: baseline }
-TH     { color: #000000; background-color: #FFFFCC;
-         font-family: Verdana, sans-serif; font-size: medium; font-weight: normal}
-TD     { color: #000000; background-color: #FFFFCC;
-         font-family: Verdana, sans-serif; font-size: small }
-LABEL  { color: #000000; background-color: #FFFFCC;
-         font-family: Verdana, sans-serif }
-INPUT  { color: #000000; background-color: #FFFFCC;
-         font-family: Helvetica, sans-serif }
+.redbar a {
+	display: inline-block;
+	padding: 8px 0;
+	color: #fff;
+	font-family: var(--condensed);
+	font-size: 0.8125rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	text-decoration: none;
+}
 
-IMG.ICONIC { float: left; margin: 1em; height: 64px; width: 64px }
+.site-header {
+	border-bottom: 1px solid var(--az-cool-gray);
+}
 
-.DISPLAYFIG { margin: 12px 32px }
-.FORMPANEL   { color: #FFFFFF; background-color: #FFFFCC;
-               font-family: Verdana, sans-serif }
-.FORMPANE    { color: #FFFFFF; background-color: #FFFFCC;
-               font-family: Verdana, sans-serif }
-.FORMSUBPANE { color: #FFFFFF; background-color: #FFFFCC;
-               font-family: Verdana, sans-serif }
-.LOWKEY { color: #000000; background-color: #FFFFFF }
-.SEQUENCE { text-align: right }
-.BOXED { color: #000000; background-color: #FFFF33;
-         border: groove 0.5em #9999CC; padding:1em; width: 25%;
-         font-family: Verdana, sans-serif; font-size: small;
-         float: left; margin: 1em } 
-.CREDIT { color: #000000; background-color: #FFFFCC; text-align: center; 
-       font-family: Verdana, sans-serif; font-size: x-small }
-.FOOTER { color: #000000; background-color: #FFFFCC;
+.brand {
+	padding-top: 18px;
+	padding-bottom: 14px;
+}
 
-       font-family: Verdana, sans-serif; font-size: small; margin: 0em }
+.brand .unit {
+	display: block;
+	color: var(--az-azurite);
+	font-family: var(--condensed);
+	font-size: 0.9375rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	text-decoration: none;
+}
 
-.LINKS { color: #000000; background-color: #FFFFCC;
+.brand .site-title {
+	display: block;
+	margin-top: 2px;
+	color: var(--az-blue);
+	font-family: var(--condensed);
+	font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
+	font-weight: 700;
+	line-height: 1.15;
+	text-decoration: none;
+}
 
-       font-family: Verdana, sans-serif; font-size: small; margin: 0em }
+/*Contents and page position, under the header*/
 
+.toc {
+	background: var(--az-warm-gray);
+	font-size: 0.9375rem;
+}
 
+.toc .wrap {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 16px;
+	align-items: center;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.toc summary {
+	cursor: pointer;
+	color: var(--az-blue);
+	font-weight: 700;
+}
+
+.toc details[open] summary {
+	margin-bottom: 6px;
+}
+
+.toc ol {
+	margin: 0 0 6px;
+	padding-left: 1.6em;
+	columns: 2 260px;
+}
+
+.toc li {
+	margin: 2px 0;
+}
+
+.toc li[aria-current] a {
+	color: var(--text);
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.toc .position {
+	color: var(--muted);
+}
+
+/*Page content*/
+
+main {
+	padding-top: 8px;
+	padding-bottom: 32px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: var(--az-blue);
+	font-family: var(--sans);
+	font-weight: 700;
+	line-height: 1.2;
+	margin: 1.25em 0 0.6em;
+}
+
+h1 {
+	font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
+}
+
+a {
+	color: var(--az-red);
+}
+
+a:hover,
+a:focus {
+	color: var(--az-chili);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible {
+	outline: 2px solid var(--az-azurite);
+	outline-offset: 2px;
+}
+
+/*Old pages use <em> for labels such as "Note:" and "Good idea:"*/
+em {
+	color: var(--az-blue);
+	font-style: normal;
+	font-weight: 700;
+}
+
+ul, ol {
+	padding-left: 1.5em;
+}
+
+li {
+	margin: 0.15em 0;
+}
+
+li > ul,
+li > ol {
+	margin: 0.15em 0 0.35em;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	vertical-align: middle;
+}
+
+/*Replaces <CENTER>: centres tables and figures, keeps text inside them left-aligned*/
+.centered {
+	text-align: center;
+}
+
+.centered table {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+}
+
+table {
+	border-collapse: collapse;
+	margin: 1em 0;
+}
+
+td, th {
+	padding: 6px 12px;
+	vertical-align: top;
+}
+
+th {
+	color: var(--az-blue);
+	font-weight: 700;
+	text-align: center;
+}
+
+hr {
+	border: 0;
+	border-top: 1px solid var(--az-cool-gray);
+	margin: 24px 0;
+}
+
+/*Previous / next page links*/
+
+.pager {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 12px;
+	margin: 32px 0 0;
+	padding-top: 20px;
+	border-top: 1px solid var(--az-cool-gray);
+}
+
+.pager a {
+	display: block;
+	max-width: 48%;
+	padding: 10px 16px;
+	border: 2px solid var(--az-blue);
+	border-radius: 4px;
+	color: var(--az-blue);
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.pager a:hover,
+.pager a:focus {
+	background: var(--az-blue);
+	color: #fff;
+}
+
+.pager a span {
+	display: block;
+	font-size: 0.8125rem;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+.pager .next {
+	margin-left: auto;
+	text-align: right;
+}
+
+/*Footer*/
+
+.site-footer {
+	background: var(--az-blue);
+	color: #fff;
+	font-size: 0.9375rem;
+}
+
+.site-footer .wrap {
+	padding-top: 24px;
+	padding-bottom: 24px;
+}
+
+.site-footer p {
+	margin: 0 0 6px;
+}
+
+.site-footer a {
+	color: #fff;
+}
+
+.site-footer .lab {
+	font-family: var(--condensed);
+	font-weight: 700;
+	font-size: 1.0625rem;
+}
+
+/*Buttons inside the interactive figures*/
+
+.btn,
+.widget input[type="button"],
+.widget button {
+	font-family: var(--sans);
+	font-size: 0.875rem;
+	font-weight: 700;
+	color: #fff;
+	background: var(--az-blue);
+	border: 0;
+	border-radius: 4px;
+	padding: 5px 12px;
+	cursor: pointer;
+}
+
+.btn:hover,
+.widget input[type="button"]:hover,
+.widget button:hover {
+	background: var(--az-midnight);
+}
+
+@media (max-width: 600px) {
+	body {
+		font-size: 1rem;
+	}
+
+	td, th {
+		padding: 4px 6px;
+	}
+
+	.pager a {
+		max-width: 100%;
+	}
+}
+
+/*Interactive figures sit centred on a warm gray panel*/
+.widget {
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 4px;
+}
+
+/*Holder that Skel.fitWidget wraps around a widget it may shrink*/
+.widget-fit {
+	width: 100%;
+	overflow: hidden;
+}
+
+/*On narrow screens, stack the cells of layout tables so text and figures get the full width*/
+@media (max-width: 640px) {
+	main table,
+	main tbody,
+	main tr,
+	main td,
+	main th {
+		display: block;
+		width: auto !important;
+	}
+
+	main td,
+	main th {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+/*A site illustration with a photo of its tree rings beside it (sensitivitycomplacency.htm)*/
+.site-figure {
+	display: flex;
+	gap: 10px;
+	align-items: flex-start;
+}
+
+.site-figure .rings {
+	border-radius: 3px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/*Photo credits under images*/
+.CREDIT {
+	display: block;
+	margin-top: 4px;
+	color: var(--muted);
+	font-size: 0.8125rem;
+}

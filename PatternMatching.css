@@ -7,15 +7,11 @@ input {
 	font-family: "helvetica";
 }
 
-input:focus {
-	outline:none;
-
-}
 
 #appFrame {
 	width: 470px;
 	height: 330px;
-	background: #ffffcc;  
+	background: #f4ede5;	/*UA Warm Gray*/
 	position: relative;
 	overflow: hidden;
 	text-align: center;
