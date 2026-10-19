@@ -204,11 +204,13 @@ var Skel = (function() {
 	//Within each ring pale earlywood darkens gradually into latewood, then the next ring starts
 	//abruptly; a false ring's boundary is diffuse instead. Pencil dots mark every 10th ring:
 	//one dot, two at multiples of 50, three at multiples of 100.
-	function drawCoreStrip(canvas, rings, coreLength, mag) {
+	//options.label(i), if given, returns {text, dots} for ring i or null for no mark, in place
+	//of the ring count and decade dots.
+	function drawCoreStrip(canvas, rings, coreLength, mag, options) {
 		var ctx = canvas.getContext("2d");
 		var left = 10, top = 10, bottom = 30;
 		var right = left + coreLength*mag;
-		var i, x, w, prev, dots;
+		var i, x, w, prev, mark;
 
 		sizeCanvas(canvas, 20 + coreLength*mag, 40);
 
@@ -260,14 +262,21 @@ var Skel = (function() {
 
 		//Pencil dots and ring numbers
 		ctx.font = "bold 11px " + SANS;
-		for(i = 0; i < rings.length; i += 10) {
+		for(i = 0; i < rings.length; ++i) {
+			mark = options && options.label ? options.label(i) : decadeMark(i);
+			if(!mark) {continue;}
 			x = rings[i].x*mag + left;
 			w = rings[i].width*mag;
-			dots = (i > 0 && i % 100 == 0) ? 3 : (i > 0 && i % 50 == 0) ? 2 : 1;
-			drawPencilDots(ctx, x - w/2, (top + bottom)/2, dots);
+			drawPencilDots(ctx, x - w/2, (top + bottom)/2, mark.dots);
 			ctx.fillStyle = INK;
-			centredText(ctx, i, x - w/2, 39);
+			centredText(ctx, mark.text, x - w/2, 39);
 		}
+	}
+
+	//Dendrochronology convention: one dot per decade, two at 50, three at 100
+	function decadeMark(i) {
+		if(i % 10 != 0) {return null;}
+		return {text: i, dots: (i > 0 && i % 100 == 0) ? 3 : (i > 0 && i % 50 == 0) ? 2 : 1};
 	}
 
 	//Latewood: fades in from the earlywood and ends sharply at the ring boundary.
@@ -529,6 +538,7 @@ var Skel = (function() {
 		ringWidth: ringWidth,
 		randomLatewood: randomLatewood,
 		drawCoreStrip: drawCoreStrip,
+		drawPencilDots: drawPencilDots,
 		position: position,
 		fitWidget: fitWidget,
 		dragHoriz: dragHoriz,

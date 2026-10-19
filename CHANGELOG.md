@@ -92,6 +92,42 @@ Newest first.
 - `SkeletonPlot.css` rewritten and scoped to the app. The old stylesheet's
   `div { position: absolute }` applied to every div on the page.
 
+### Tutorial figures redrawn to match
+- Core diagrams redrawn with the new core renderer, replacing GIFs in the old flat yellow style:
+  - `figure-senscomp.png` (was `senscomp.gif`): sensitive vs complacent cores.
+  - `figure-relative.png` (was `relative.gif`): one ring pattern grown slow, average and fast,
+    each beside the same skeleton plot. As the page text says, the top sample grows slowest.
+  - `figure-overlap.png` (was `overlap.gif`): living tree (1500–1990), dead wood (1200–1500) and
+    dendroarchaeological (800–1200) samples. Each is shown as two core fragments with a break
+    between them. The overlapping fragments share the same ring pattern, with dashed lines
+    marking the overlap, and century pencil dots (three dots) at 800, 1200 and 1500.
+  - `figure-zoom.png` (was `zoom.gif`): the same stretch of core at 1x, 2x, 3x on the blue
+    centre line.
+- Screenshots of the old Java control panel replaced with captures of the new panel:
+  `figure-anomalies.png`, `figure-magnifications.png`, `figure-mouseactions.png`,
+  `figure-sensitivity.png`, `figure-showanswer.png`, `figure-showmaster.png` (Answer/Master
+  toggled on respectively) and `figure-answers.png` (the answer box).
+- All new figures are 2x-resolution PNGs with descriptive alt text. The 11 replaced GIFs were
+  removed from the repo. `changemarks.gif` is kept: it is only referenced inside a commented-out
+  section of `masterchronology.htm` about "Master Marks" settings that the current app doesn't
+  have.
+- **Regenerating:** `tools/make-figures.sh` rebuilds all of them (needs Chrome/Chromium and
+  ImageMagick). Core diagrams are drawn by `tools/figures.htm` using `common.js`; panel pictures
+  are cropped from `SkeletonPlot19.htm` in a fixed state. Rerun it after changing the renderer
+  or the panel.
+- `Skel.drawCoreStrip` takes an optional `options.label(i)` so figures can label calendar
+  years instead of ring counts. Default output is unchanged (verified pixel-identical).
+- Tutorial wording updated only where it named controls that no longer exist:
+  - `absentfalse.htm`: "square options" → "check boxes"; "Restart" button →
+    "Restart a new core" button.
+  - `sensitivitycomplacency.htm`: "scroll bars" → "the arrow buttons"; "the arrows of the
+    "Sensitivity"/"Number of Rings" scroll bar" → "the arrows next to "Sensitivity"/"Rings"".
+  - `relativescale.htm`: "magnification circle buttons" → "magnification options".
+  - `plotting.htm`: "panel of circle options" → "panel of Marking options"; "Erase" circle
+    option → "Erase" option.
+  - `findingdates.htm`: "a button to "Show or Hide Answers"" → "an "Answer" button under
+    "Show or hide"".
+
 ### Demo widgets fit narrow screens
 - New `Skel.fitWidget(frame)` in `common.js` shrinks a fixed-size widget (470–600px wide) with a
   CSS transform when its container is narrower, and refits when the window is resized. It is
