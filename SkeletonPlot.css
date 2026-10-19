@@ -118,7 +118,7 @@
 
 #workspace {
 	position: relative;
-	height: 430px;
+	height: 438px;
 	overflow: hidden;
 	background: #ebe2d6;
 	border-radius: 4px;
@@ -157,11 +157,14 @@
 	top: 40px;
 }
 
+/*Between the core strip (ending at 50px) and the user graph (starting at 74px), above both*/
 #hintBox {
 	position: absolute;
-	top: 50px;
+	top: 54px;
 	left: 0;
 	right: 0;
+	z-index: 2;
+	line-height: 16px;
 	text-align: center;
 	pointer-events: none;
 }
@@ -176,7 +179,7 @@
 	position: absolute;
 	top: 3px;
 	left: 10px;
-	z-index: 2;
+	z-index: 3;
 	width: 295px;
 	padding: 8px 12px;
 	background: #fff;

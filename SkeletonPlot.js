@@ -63,7 +63,7 @@ function appInit(){
 
 
 	//Position Elements
-	userGraph.style.top = "66px";
+	userGraph.style.top = "74px";
 	userGraph.style.left = "10px";
 
 	masterGraph.style.top = parseInt(userGraph.style.top) + Skel.height(userGraph) + "px";
@@ -132,7 +132,7 @@ function restart(){
 	};
 
 	//Reposition elements
-	userGraph.style.top = "66px";
+	userGraph.style.top = "74px";
 	userGraph.style.left = "10px";
 
 	masterGraph.style.top = parseInt(userGraph.style.top) + Skel.height(userGraph) + "px";

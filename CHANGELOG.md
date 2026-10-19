@@ -3,6 +3,16 @@
 Record of changes made while modernising the skeleton plot pages (branch `revamp`).
 Newest first.
 
+## Hint text no longer cut off
+- In `SkeletonPlot19.htm`, the hint ("Core is missing N rings…") sat in a 16px gap between the
+  core strip and the user graph. The graph canvas comes later in the page, so it painted over
+  the bottom half of the text.
+- The user graph now starts at 74px instead of 66px (`appInit`/`restart` in `SkeletonPlot.js`;
+  the master graph follows it), and the workspace is 8px taller (438px).
+- The hint is placed at 54px with a fixed 16px line height and `z-index: 2`, so it stays above
+  the strip and graphs wherever they are dragged. The answer box moved up to `z-index: 3` so it
+  still covers the hint where they overlap on narrow screens.
+
 ## Default page for the folder
 - Added `index.html`, which immediately sends visitors to `introcrossdate.htm` (meta refresh,
   plus a script redirect that keeps any `#fragment`, plus a plain link as a fallback).
