@@ -3,6 +3,31 @@
 Record of changes made while modernising the skeleton plot pages (branch `revamp`).
 Newest first.
 
+## Step 3 — Restyle (University of Arizona brand)
+
+### Lifelike core strips (`common.js`)
+- The core strip is now drawn as a sanded wood core instead of flat yellow blocks with
+  brown stripes, on every page that shows one (`SkeletonPlot19.htm`, `plotting.htm`,
+  `relativescale.htm`):
+  - Pale, creamy earlywood that varies slightly from ring to ring.
+  - Latewood that darkens gradually out of the earlywood and ends at a **sharp ring boundary**,
+    as in conifers. Narrow rings are mostly latewood, so they show as thin dark lines.
+  - The three latewood darknesses (light/medium/dark) are kept, now as browns.
+  - Fine grain texture along the core, cylinder shading (darker top and bottom edges),
+    rounded ends and a soft shadow on a neutral mount (UA Cool Gray `#E2E9EB`, replacing cyan).
+  - Pencil dots follow dendrochronology convention: one dot every 10th ring, two at multiples
+    of 50, three at multiples of 100. Ring numbers stay below the core.
+- **False rings now look like false rings:** the inner half of a split ring ends in a
+  *diffuse* band that fades out instead of a sharp boundary, the visual cue dendrochronologists
+  use. Previously a false ring looked identical to a true one. (`falseBoundary` flag set in
+  `SkeletonPlot.js` `populateRings`.)
+- Texture and colour variation come from a fixed hash, never `Math.random`, so drawing
+  doesn't change the random sequence that generates the core, and redraws don't shimmer.
+- The strip keeps its 40px height and core position (y 10–30), so page layouts and the
+  `plotting.htm` pointer lines are unaffected.
+- `sizeCanvas` caps the backing resolution so very long cores (400 rings at 3x) stay
+  within browsers' 32,000px canvas limit.
+
 ## Step 2 — Shared code, touch input, sharp rendering
 
 ### New shared files

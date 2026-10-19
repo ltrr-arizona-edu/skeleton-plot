@@ -818,7 +818,8 @@ function populateRings() {
 				}
 				else {newX = Math.floor(newWidth);}
 
-				markData.coreStrip.ring.push({x:Math.floor(newX), width: Math.floor(newWidth), color:color[ring]});
+				//The inner half of a split ring ends at the false ring's diffuse boundary
+				markData.coreStrip.ring.push({x:Math.floor(newX), width: Math.floor(newWidth), color:color[ring], falseBoundary: divisor == 2 && i == 1});
 			}
 			ring++;
 	}
