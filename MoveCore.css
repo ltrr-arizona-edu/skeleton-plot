@@ -1,7 +1,7 @@
 #appFrame {
 	width: 600px;
 	height: 65px;
-	background: #ffffcc; 
+	background: #f4ede5;	/*UA Warm Gray*/
 	position: relative;
 	overflow: hidden;
 	text-align: center;

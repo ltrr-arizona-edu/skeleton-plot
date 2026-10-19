@@ -28,6 +28,47 @@ Newest first.
 - `sizeCanvas` caps the backing resolution so very long cores (400 rings at 3x) stay
   within browsers' 32,000px canvas limit.
 
+### University of Arizona look for every page
+- `crossdatestyle.css` rewritten. Colours and fonts come from Arizona Bootstrap 5.1.5
+  (cdn.digital.arizona.edu):
+  - Arizona Red `#AB0520` for links and the top bar, Arizona Blue `#0C234B` for headings and the
+    footer, Chili `#8B0015` for link hover, Azurite `#1E5288`, Warm Gray `#F4EDE5` and
+    Cool Gray `#E2E9EB` for accents.
+  - The same font stack as UA sites: `proxima-nova, calibri, …system fonts`, with
+    `proxima-nova-condensed` for the banner and site title. Proxima Nova is a licensed font,
+    so it only shows where it's installed or loaded (e.g. through the university's Adobe Fonts
+    kit); everywhere else Calibri or the system sans-serif is used.
+  - Arizona Bootstrap itself is *not* loaded: its resets would disturb the widgets' fixed
+    layouts, and a CDN dependency would break pages opened offline.
+- Every page now has the same page shell (generated once by a script, then committed as
+  plain HTML):
+  - A red University of Arizona bar, then "Laboratory of Tree-Ring Research" and the site title
+    "Crossdating Tree Rings Using Skeleton Plotting" linking to the introduction.
+  - A Warm Gray bar with a collapsible **Contents** list of all 12 pages (current page bold)
+    and "Page N of 12: Title".
+  - Previous / Next buttons at the bottom, replacing the 15-link text footer.
+  - An Arizona Blue footer: lab name, author, comments address, copyright.
+- Footer contact details: kept the author, city and comments address; **dropped the 1998
+  office phone and fax numbers**. Copyright now reads 1998–2026 (pages previously said
+  1998, or 1999–2014).
+- Responsive basics: `viewport` meta tag, images shrink to fit narrow screens, fluid headings.
+- Obsolete markup replaced throughout: `<CENTER>` → `div.centered`, `<FONT COLOR>` →
+  coloured `<span>` (colours kept because the text refers to "the blue line" etc.),
+  `<U>` → `<strong>`, `&#150;` → `&ndash;`, `<BR>` after headings removed, commented-out
+  `<APPLET>` tags removed, `GENERATOR` meta tags removed.
+- `<em>` labels ("Note:", "Good idea:") are bold Arizona Blue instead of red.
+- LTRR links point at `https://ltrr.arizona.edu/` (the old `http://www.` address redirects there).
+- Fixed page titles: `SkeletonPlot19.htm` was titled "Relative Scale"; `absentfalse.htm`
+  had a generic title.
+- Introduction: the two split headings became one "Introduction" heading (the site title is
+  now in the header), and the Java wording was updated: "This presentation has
+  Java-language applets … you must have a Java-capable web browser" → "This presentation has
+  interactive figures … they work in any up-to-date web browser, with a mouse or on a touch
+  screen"; "Java applet" → "interactive exercise".
+- Demo widgets (`plotting.htm`, `relativescale.htm`, `patternmatching.htm`, `absentfalse.htm`):
+  Warm Gray panel instead of pale yellow, centred, and "Try Again" buttons styled as Arizona
+  Blue buttons. Removed `input:focus { outline: none }` so keyboard focus is visible.
+
 ## Step 2 — Shared code, touch input, sharp rendering
 
 ### New shared files

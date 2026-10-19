@@ -2,8 +2,8 @@
 <HTML>
 <HEAD>
    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
    <META NAME="Author" CONTENT="Paul R. Sheppard">
-   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; U) [Netscape]">
    <META NAME="KeyWords" CONTENT="dendrochronology, tree ring, crossdating, skeleton plot">
    <TITLE>Crossdating: Skeleton Plotting</TITLE>
    	<script src="common.js"></script>
@@ -15,8 +15,38 @@
 	<LINK REL=stylesheet HREF="crossdatestyle.css" TYPE="text/css">
 </HEAD>
 <BODY>
-<H1>Making Skeleton Plots</H1><BR>
-<CENTER><TABLE><TR><TD>
+<header class="site-header">
+	<div class="redbar"><div class="wrap"><a href="https://www.arizona.edu/">The University of Arizona</a></div></div>
+	<div class="wrap brand">
+		<a class="unit" href="https://ltrr.arizona.edu/">Laboratory of Tree-Ring Research</a>
+		<a class="site-title" href="introcrossdate.htm">Crossdating Tree Rings Using Skeleton Plotting</a>
+	</div>
+</header>
+<nav class="toc" aria-label="Tutorial pages">
+	<div class="wrap">
+		<details>
+			<summary>Contents</summary>
+			<ol>
+				<li><a href="introcrossdate.htm">Introduction</a></li>
+				<li><a href="applications.htm">Dendrochronology Applications</a></li>
+				<li><a href="exampleapplication.htm">Crossdating Application</a></li>
+				<li><a href="ringanomalies.htm">Ring-Growth Anomalies</a></li>
+				<li><a href="sensitivitycomplacency.htm">Sensitivity-Complacency</a></li>
+				<li aria-current="page"><a href="plotting.htm">Skeleton Plotting</a></li>
+				<li><a href="relativescale.htm">Relative Scale</a></li>
+				<li><a href="masterchronology.htm">Master Chronology</a></li>
+				<li><a href="patternmatching.htm">Pattern Matching</a></li>
+				<li><a href="findingdates.htm">Finding the Dates</a></li>
+				<li><a href="absentfalse.htm">Absent/False Rings</a></li>
+				<li><a href="SkeletonPlot19.htm">Try Skeleton Plotting for Yourself!</a></li>
+			</ol>
+		</details>
+		<span class="position">Page 6 of 12: Skeleton Plotting</span>
+	</div>
+</nav>
+<main class="wrap">
+<H1>Making Skeleton Plots</H1>
+<div class="centered"><TABLE><TR><TD>
 When skeleton plotting ring-width variation of a core, note that:
 	<UL>
 	<LI>Narrow rings merit marks on the skeleton plot
@@ -25,9 +55,9 @@ When skeleton plotting ring-width variation of a core, note that:
 	<LI>Normal or average rings <EM>DO NOT</EM> merit marks on the skeleton plot
 	<LI>For example, compare the core and skeleton plot below:
 		<UL>
-		<LI>The narrowest ring is connected (<FONT COLOR="blue">blue line</FONT>) with the longest skeleton mark
-		<LI>The widest ring is connected (<FONT COLOR="#669900">green line</FONT>) with a "b" mark (for big)
-		<LI>Note the <FONT COLOR="RED">red line</FONT>:
+		<LI>The narrowest ring is connected (<span style="color:blue">blue line</span>) with the longest skeleton mark
+		<LI>The widest ring is connected (<span style="color:#669900">green line</span>) with a "b" mark (for big)
+		<LI>Note the <span style="color:RED">red line</span>:
 <OL>
 <LI>Points to a ring of average width, but it seems narrow compared to the preceding ring
 <LI>Perhaps it merits a small mark because of the large year-to-year difference 
@@ -36,8 +66,7 @@ When skeleton plotting ring-width variation of a core, note that:
 	<LI><EM>Good idea:</EM> Hit the "Try Again" button to see more examples
 	</UL></TD></TR></TABLE><BR>
 
-<!--<APPLET code="Plotting.class" WIDTH="600" HEIGHT="220"></APPLET>-->
-<div id="appFrame1" >
+<div id="appFrame1" class="widget">
 		<canvas id="coreStrip" style="top:40px"></canvas>
 		<canvas id="userGraph1" style="left:180px; top:90px" height="121" width="241"></canvas>
 		<canvas id="overlay" width = "600" height = "220"></canvas>
@@ -78,8 +107,7 @@ When skeleton plotting ring-width variation of a core, note that:
 		</UL>
 	</UL>
 <TD>
-<!--<APPLET code="MakeMarks.class" WIDTH="130" HEIGHT="165"></APPLET>-->
-	<div id="appFrame2" >
+	<div id="appFrame2" class="widget">
 		<input type="button" value="Try Again" style="position:relative; top:10px" onmousedown="appInit2()">
 		<canvas id="userGraph2" class="interactive" onpointerdown="handleClick(event)"></canvas>
 	</div>
@@ -87,34 +115,18 @@ When skeleton plotting ring-width variation of a core, note that:
 		appInit2();
 	</script>
 </TR></TABLE><BR>
-</CENTER>
-<HR>
-<CENTER>
-<A HREF="sensitivitycomplacency.htm">Previous Page</A> |
-<A HREF="relativescale.htm">Next Page</A><BR>
-<A HREF="introcrossdate.htm">Introduction</A> |
-<A HREF="applications.htm">Dendrochronology Applications</A> |
-<A HREF="exampleapplication.htm">Crossdating Application</A> |
-<A HREF="ringanomalies.htm">Ring-Growth Anomalies</A><BR>
-<A HREF="sensitivitycomplacency.htm">Sensitivity-Complacency</A> |
-<A HREF="plotting.htm">Skeleton Plotting</A> |
-<A HREF="relativescale.htm">Relative Scale</A> |
-<A HREF="masterchronology.htm">Master Chronology</A><BR>
-<A HREF="patternmatching.htm">Pattern Matching</A> |
-<A HREF="findingdates.htm">Finding the Dates</A> |
-<A HREF="absentfalse.htm">Absent/False Rings</A> |
-<A HREF="SkeletonPlot19.htm">Try Skeleton Plotting for Yourself!</A><BR>
-<A HREF="http://www.ltrr.arizona.edu">Laboratory of Tree-Ring Research</A>
-</CENTER>
-<HR>
-<ADDRESS>Paul R. Sheppard<BR>
-Laboratory of Tree-Ring Research, The University of Arizona<BR>
-Tucson, Arizona 85721 USA<BR>
-office: (520) 621-6474, fax: (520) 621-8229<BR>
-Comments to: <A HREF="mailto:sheppard@ltrr.arizona.edu">sheppard@ltrr.arizona.edu</A>
-</ADDRESS><BR>
-Copyright &copy; 1998, Laboratory of Tree-Ring Research, The University of Arizona<BR>
-Revised -- December, 1998<BR>
-URL: <A HREF="plotting.htm">http://tree.ltrr.arizona.edu/skeletonplot/plotting.htm </A>
+</div>
+<nav class="pager" aria-label="Previous and next page">
+	<a class="prev" rel="prev" href="sensitivitycomplacency.htm"><span>&larr; Previous</span>Sensitivity-Complacency</a>
+	<a class="next" rel="next" href="relativescale.htm"><span>Next &rarr;</span>Relative Scale</a>
+</nav>
+</main>
+<footer class="site-footer">
+	<div class="wrap">
+		<p class="lab"><a href="https://ltrr.arizona.edu/">Laboratory of Tree-Ring Research</a>, The University of Arizona</p>
+		<p>Author: Paul R. Sheppard &middot; Tucson, Arizona 85721 USA &middot; Comments to: sheppard @ ltrr.arizona.edu</p>
+		<p>Copyright &copy; 1998&ndash;2026 Laboratory of Tree-Ring Research, The University of Arizona</p>
+	</div>
+</footer>
 </BODY>
 </HTML>
